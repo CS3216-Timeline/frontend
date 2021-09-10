@@ -1,6 +1,5 @@
 import { Box } from "@material-ui/core";
 import React, { Fragment } from "react";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import BottomNavBar from "../../components/layout/BottomNavBar";
 import TopNavBar from "../../components/layout/TopNavBar";
 
