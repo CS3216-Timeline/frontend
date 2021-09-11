@@ -17,7 +17,6 @@ export const ComboBox = ({ currentLocation }) => {
   const [predictions, setPredictions] = useState([]);
   // eslint-disable-next-line no-unused-vars
   const [selectedLocation, setSelectedLocation] = useState(null);
-  // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(false);
 
   const handleChangeLocation = (event, value) => {
