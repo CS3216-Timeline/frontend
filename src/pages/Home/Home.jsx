@@ -3,8 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import { mockLinesData } from "./data";
 import LineCard from "./LineCard";
-import BottomNavBar from "../../components/layout/BottomNavBar";
-import TopNavBar from "../../components/layout/TopNavBar";
 import { Button } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import { useHistory } from "react-router-dom";
@@ -41,7 +39,6 @@ const Home = () => {
   return (
     <Fragment>
       <div className={classes.root}>
-        <TopNavBar />
         {/* TODO: Add some info on how to use the app if there are no lines at first */}
         <Grid container spacing={3} className={classes.linesContainer}>
           <Grid item xs={12} className={classes.addLineButtonContainer}>
@@ -61,7 +58,6 @@ const Home = () => {
             </Grid>
           ))}
         </Grid>
-        <BottomNavBar />
       </div>
     </Fragment>
   );
