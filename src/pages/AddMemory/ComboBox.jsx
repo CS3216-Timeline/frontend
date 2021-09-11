@@ -3,15 +3,9 @@ import React, { useCallback } from "react";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useState } from "react";
-import axios from "axios";
 import _ from "lodash";
 import { CircularProgress, Typography } from "@material-ui/core";
-
-// store this somewhere next time
-const accessToken =
-  "pk.eyJ1IjoiYWN5YW5nOTciLCJhIjoiY2t0ZThvNTcwMDRwNzJybncxaTJpeG93aSJ9.0dQconyG7nAag70nDvrpew";
-
-const url = "https://api.mapbox.com/geocoding/v5/mapbox.places/";
+import { getLocationSuggestions } from "../../services/locationService";
 
 export const ComboBox = ({ currentLocation }) => {
   const [predictions, setPredictions] = useState([]);
@@ -26,13 +20,7 @@ export const ComboBox = ({ currentLocation }) => {
   const getSearchResults = async (newSearchValue) => {
     setLoading(true);
     try {
-      const searchTextInQuery = newSearchValue ? newSearchValue : "singapore";
-      let searchQuery = `${url}${searchTextInQuery}.json?worldview=cn&access_token=${accessToken}`;
-      if (!_.isEmpty(currentLocation)) {
-        searchQuery += `&proximity=${currentLocation.longitude},${currentLocation.latitude}`;
-      }
-
-      const res = await axios.get(searchQuery);
+      const res = await getLocationSuggestions(newSearchValue, currentLocation);
       const predictionsFromSearch = res.data.features.map((location) => {
         return {
           place_name: location.place_name,
