@@ -14,6 +14,7 @@ import Memory from "./pages/Memory/Memory";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
 import theme from "./theme/theme";
 import CreateNewLine from "./pages/CreateNewLine/CreateNewLine";
+// import UploadMediaForm from "./pages/UploadMediaForm";
 import AddMemory from "./pages/AddMemory/AddMemory";
 
 if (localStorage.token) {
