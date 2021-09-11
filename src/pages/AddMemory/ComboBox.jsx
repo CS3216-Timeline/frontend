@@ -55,6 +55,7 @@ export const ComboBox = ({ currentLocation }) => {
     []
   );
 
+  // Need a default 'search' parameter.
   const handleInputChange = async (event, newSearchValue) => {
     await delayedSearch(newSearchValue ? newSearchValue : "Singapore");
   };
