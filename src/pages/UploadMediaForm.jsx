@@ -20,7 +20,7 @@ const UploadMediaForm = props => {
 
   const handleChange = e => {
     const newFile = e.target.files[0];
-    if (newFile == file) {
+    if (newFile === file) {
       return;
     }
     if (newFile) {
