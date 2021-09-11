@@ -20,14 +20,13 @@ const UploadMediaForm = props => {
 
   const handleChange = e => {
     const newFile = e.target.files[0];
-    console.log(newFile)
     if (newFile == file) {
       return;
     }
     if (newFile) {
       console.log(newFile)
-      console.log(e.target.files[0]);
-      setFile(e.target.files[0]);
+      setFile(newFile);
+      setUrl(URL.createObjectURL(newFile));
     }
   }
 
@@ -48,6 +47,7 @@ const UploadMediaForm = props => {
         console.log("set up error alert here!");
         setUploadProgress(0);
         setFile(null);
+        setUrl(null);
       },
       () => {
         storage
@@ -71,7 +71,7 @@ const UploadMediaForm = props => {
         <h5>{file ? file.name : "No file selected"}</h5>
         <input ref={file} style={inputStyle()} type="file" accept="image/*" onChange={handleChange} />
         upload progress: {uploadProgress}%
-        <Button onClick={handleUpload} disabled={fileIsEmpty}>Upload</Button>
+        <Button onClick={handleUpload} disabled={fileIsEmpty}>Save</Button>
       </Box>
     </>
   )
