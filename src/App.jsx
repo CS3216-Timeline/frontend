@@ -14,7 +14,8 @@ import Memory from "./pages/Memory/Memory";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
 import theme from "./theme/theme";
 import CreateNewLine from "./pages/CreateNewLine/CreateNewLine";
-import UploadMediaForm from "./pages/UploadMediaForm";
+// import UploadMediaForm from "./pages/UploadMediaForm";
+import AddMemory from "./pages/AddMemory/AddMemory";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -34,7 +35,11 @@ const App = () => {
             <PrivateRoute exact path="/" component={Home} />
             <Switch>
               <PrivateRoute exact path="/line/:line_id" component={Line} />
-              <PrivateRoute exact path="/memory/:memory_id" component={Memory} />
+              <PrivateRoute
+                exact
+                path="/memory/:memory_id"
+                component={Memory}
+              />
               <Route exact path="/signin" component={SignIn} />
               <Route exact path="/signup" component={SignUp} />
               <PrivateRoute
@@ -42,6 +47,7 @@ const App = () => {
                 path="/createnewline"
                 component={CreateNewLine}
               />
+              <PrivateRoute exact path="/addmemory" component={AddMemory} />
             </Switch>
             {/* TODO: Create a notfound page */}
           </Fragment>

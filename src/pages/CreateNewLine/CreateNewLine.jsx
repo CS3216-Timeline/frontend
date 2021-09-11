@@ -7,8 +7,6 @@ import {
 } from "@material-ui/core";
 import React, { Fragment, useState } from "react";
 import AddIcon from "@material-ui/icons/Add";
-import BottomNavBar from "../../components/layout/BottomNavBar";
-import TopNavBar from "../../components/layout/TopNavBar";
 import { GithubPicker } from "react-color";
 import { COLORS } from "../../utils/colors";
 import { useDispatch } from "react-redux";
@@ -46,9 +44,6 @@ const CreateNewLine = () => {
 
   return (
     <Fragment>
-      <TopNavBar />
-      {/* Section Name */}
-
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <div className={classes.container}>
@@ -116,7 +111,6 @@ const CreateNewLine = () => {
           </div>
         </Grid>
       </Grid>
-      <BottomNavBar />
     </Fragment>
   );
 };

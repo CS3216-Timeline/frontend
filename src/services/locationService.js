@@ -1,0 +1,26 @@
+import axios from 'axios';
+import _ from 'lodash';
+
+// store these somewhere else in future
+const accessToken =
+  "pk.eyJ1IjoiYWN5YW5nOTciLCJhIjoiY2t0ZThvNTcwMDRwNzJybncxaTJpeG93aSJ9.0dQconyG7nAag70nDvrpew";
+
+const url = "https://api.mapbox.com/geocoding/v5/mapbox.places/";
+
+/**
+ * @param {string} newSearchValue 
+ * @param {{longitude: number, latitude: number}} currentLocation 
+ */
+export const getLocationSuggestions = async (newSearchValue, currentLocation) => {
+  try {
+    const searchTextInQuery = newSearchValue ? newSearchValue : "singapore";
+    let searchQuery = `${url}${searchTextInQuery}.json?worldview=cn&access_token=${accessToken}`;
+    if (!_.isEmpty(currentLocation)) {
+      searchQuery += `&proximity=${currentLocation.longitude},${currentLocation.latitude}`;
+    }
+    const res = await axios.get(searchQuery);
+    return res;
+  } catch (err) {
+    throw err;
+  }
+}
