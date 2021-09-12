@@ -7,14 +7,27 @@ import _ from "lodash";
 import { CircularProgress, Typography } from "@material-ui/core";
 import { getLocationSuggestions } from "../../services/locationService";
 
-export const ComboBox = ({ currentLocation }) => {
+export const ComboBox = ({
+  currentLocation,
+  selectedLocation,
+  setSelectedLocation,
+  viewport,
+  setViewport,
+}) => {
   const [predictions, setPredictions] = useState([]);
   // eslint-disable-next-line no-unused-vars
-  const [selectedLocation, setSelectedLocation] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const handleChangeLocation = (event, value) => {
     setSelectedLocation(value); // selected location object
+    if (value !== null) {
+      setViewport({
+        ...viewport,
+        latitude: value.geometry.coordinates[1],
+        longitude: value.geometry.coordinates[0],
+        zoom: 13,
+      });
+    }
   };
 
   const getSearchResults = async (newSearchValue) => {

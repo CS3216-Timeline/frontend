@@ -28,7 +28,7 @@ export const register =
     };
 
     try {
-      const res = await server.post("/user/register", body);
+      const res = await server.post("api/user/register", body);
       // res.data just contains the token, and now i need to set the token
       dispatch({
         type: REGISTER_SUCCESS,
@@ -55,7 +55,7 @@ export const login = (email, password) => async (dispatch) => {
 
   try {
     // WE WANT TO LOGIN
-    const res = await server.post("/auth/login", body);
+    const res = await server.post("api/auth/login", body);
     // data is the token
     dispatch({
       type: LOGIN_SUCCESS,
@@ -82,7 +82,7 @@ export const loadUser = () => async (dispatch) => {
 
   try {
     // this one bascially only job is to get the user.
-    const res = await server.get("/auth");
+    const res = await server.get("api/auth");
     dispatch({
       type: USER_LOADED,
       payload: res.data,

@@ -40,7 +40,7 @@ const Home = () => {
     <Fragment>
       <div className={classes.root}>
         {/* TODO: Add some info on how to use the app if there are no lines at first */}
-        <Grid container spacing={3} className={classes.linesContainer}>
+        <Grid container className={classes.linesContainer}>
           <Grid item xs={12} className={classes.addLineButtonContainer}>
             <Button
               fullWidth
