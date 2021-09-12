@@ -36,20 +36,24 @@ const AddMemory = () => {
     zoom: 10,
   });
 
-  const getCurrentLocation = async () => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      if (position.coords) {
-        setCurrentLocation({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        });
-      }
-    });
-  };
-
   useEffect(() => {
+    const getCurrentLocation = async () => {
+      navigator.geolocation.getCurrentPosition((position) => {
+        if (position.coords) {
+          setCurrentLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+          setViewport({
+            ...viewport,
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        }
+      });
+    };
     getCurrentLocation();
-  }, []);
+  }, [viewport]);
 
   return (
     <>
