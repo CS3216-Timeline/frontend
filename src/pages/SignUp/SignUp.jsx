@@ -15,6 +15,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../actions/auth";
 import { Redirect } from "react-router-dom";
+import { setAlert } from "../../actions/alert";
 
 function Copyright() {
   return (
@@ -74,6 +75,11 @@ const SignUp = () => {
   const onRegisterClick = (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
+      dispatch(
+        setAlert(
+          "Please make sure that Password and Confirm Password are the same"
+        )
+      );
       return;
     }
     dispatch(register(name, email, password));
