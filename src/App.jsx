@@ -9,7 +9,6 @@ import Home from "./pages/Home/Home";
 import setAuthToken from "./utils/setAuthToken";
 import { loadUser } from "./actions/auth";
 import Line from "./pages/Line/Line";
-import CustomAlert from "./components/alert/CustomAlert";
 import Memory from "./pages/Memory/Memory";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
 import theme from "./theme/theme";
@@ -18,6 +17,8 @@ import CreateNewLine from "./pages/CreateNewLine/CreateNewLine";
 import AddMemory from "./pages/AddMemory/AddMemory";
 import LineMap from "./pages/LineMap/LineMap";
 import "mapbox-gl/dist/mapbox-gl.css";
+import NotFound from "./pages/NotFound/NotFound";
+import ErrorSnackbar from "./components/snackbar/ErrorSnackbar";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -33,7 +34,7 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <Router>
           <Fragment>
-            <CustomAlert />
+            <ErrorSnackbar />
             <PrivateRoute exact path="/" component={Home} />
             <Switch>
               <PrivateRoute exact path="/line/:line_id" component={Line} />
@@ -51,10 +52,11 @@ const App = () => {
               />
               <PrivateRoute exact path="/addmemory" component={AddMemory} />
               {/* TODO: add a line_id param. Might also want to add the user_id as well, 
-              if we want to incorporate friends, so can see other people's maps */}
+                if we want to incorporate friends, so can see other people's maps.
+                This should apply to the line route as well. */}
               <PrivateRoute exact path="/linemap" component={LineMap} />
+              <Route component={NotFound} />
             </Switch>
-            {/* TODO: Create a notfound page */}
           </Fragment>
         </Router>
       </ThemeProvider>
