@@ -8,9 +8,10 @@ import { memoriesData } from "./data";
 const LineMap = () => {
   // TODO: UNCOMMENT THIS LATER
   // const { line_id } = useParams();
+  const { latitude, longitude } = memoriesData[0];
   const [viewport, setViewport] = useState({
-    latitude: memoriesData[0].latitude,
-    longitude: memoriesData[0].longitude,
+    latitude: latitude,
+    longitude: longitude,
     height: "100vh",
     width: "100vw",
     zoom: 10,
