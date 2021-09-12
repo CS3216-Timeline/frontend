@@ -1,7 +1,6 @@
 import React from "react";
 import ReactMapGL from "react-map-gl";
 import DeckGL from "@deck.gl/react";
-import { LineLayer } from "@deck.gl/layers";
 import { MAPBOX_API_TOKEN } from "../../services/locationService";
 import { getLineConnectors } from "../../utils/map";
 import MapMarker from "./MapMarker";

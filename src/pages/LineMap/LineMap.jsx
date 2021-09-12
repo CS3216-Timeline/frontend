@@ -2,7 +2,6 @@ import React, { useState } from "react";
 // import { useParams } from "react-router-dom";
 import MapDisplay from "./MapDisplay";
 import { memoriesData } from "./data";
-import { StaticMap } from "react-map-gl";
 // To show a line map with markers of locations of the memories
 // Will need the exact same data as the Line page
 
