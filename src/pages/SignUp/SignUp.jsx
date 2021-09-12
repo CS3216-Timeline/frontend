@@ -15,6 +15,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../actions/auth";
 import { Redirect } from "react-router-dom";
+import { setAlert } from "../../actions/alert";
 
 function Copyright() {
   return (
@@ -65,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
 const SignUp = () => {
   const classes = useStyles();
   const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassowrd] = useState("");
   const dispatch = useDispatch();
@@ -74,9 +75,14 @@ const SignUp = () => {
   const onRegisterClick = (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
+      dispatch(
+        setAlert(
+          "Please make sure that Password and Confirm Password are the same"
+        )
+      );
       return;
     }
-    dispatch(register(username, email, password));
+    dispatch(register(name, email, password));
   };
 
   if (auth.isAuthenticated) {
@@ -115,13 +121,13 @@ const SignUp = () => {
               margin="normal"
               required
               fullWidth
-              id="username"
-              label="Username"
-              name="username"
+              id="name"
+              label="Name"
+              name="name"
               autoFocus
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
             >
-              {username}
+              {name}
             </TextField>
             <TextField
               variant="outlined"
@@ -142,10 +148,10 @@ const SignUp = () => {
               margin="normal"
               required
               fullWidth
-              name="password"
-              label="Password"
+              name="confirmPassword"
+              label="Confirm Password"
               type="password"
-              id="password"
+              id="confirmPassword"
               autoComplete="current-password"
               onChange={(e) => setConfirmPassowrd(e.target.value)}
             >

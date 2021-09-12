@@ -16,19 +16,19 @@ import setAuthToken from "../utils/setAuthToken";
 
 export const register =
   (
-    username,
+    name,
     email,
     password
   ) =>
   async (dispatch) => {
     const body = {
-      username,
+      name,
       email,
       password
     };
 
     try {
-      const res = await server.post("api/user/register", body);
+      const res = await server.post("api/users/register", body);
       // res.data just contains the token, and now i need to set the token
       dispatch({
         type: REGISTER_SUCCESS,
