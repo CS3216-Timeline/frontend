@@ -7,7 +7,6 @@ import { useEffect } from "react";
 
 // https://stackoverflow.com/questions/67842338/how-to-use-react-map-gl-to-draw-line-between-two-point
 // how to draw a line between the 2 points
-
 const MapDisplay = ({ memoriesData, viewport, setViewport }) => {
   const lineConnectors = getLineConnectors(memoriesData);
   useEffect(() => {
@@ -34,9 +33,7 @@ const MapDisplay = ({ memoriesData, viewport, setViewport }) => {
         {...viewport}
         mapboxApiAccessToken={MAPBOX_API_TOKEN}
         mapStyle="mapbox://styles/mapbox/streets-v10"
-        onViewportChange={(v) => {
-          setViewport(v);
-        }}
+        onViewportChange={(v) => setViewport(v)}
       >
         <Source id="my-data" type="geojson" data={geojson}>
           <Layer {...layerStyle} />
