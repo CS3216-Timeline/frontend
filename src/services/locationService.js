@@ -2,7 +2,7 @@ import axios from 'axios';
 import _ from 'lodash';
 
 // store these somewhere else in future
-const accessToken =
+export const MAPBOX_API_TOKEN =
   "pk.eyJ1IjoiYWN5YW5nOTciLCJhIjoiY2t0ZThvNTcwMDRwNzJybncxaTJpeG93aSJ9.0dQconyG7nAag70nDvrpew";
 
 const url = "https://api.mapbox.com/geocoding/v5/mapbox.places/";
@@ -14,7 +14,7 @@ const url = "https://api.mapbox.com/geocoding/v5/mapbox.places/";
 export const getLocationSuggestions = async (newSearchValue, currentLocation) => {
   try {
     const searchTextInQuery = newSearchValue ? newSearchValue : "singapore";
-    let searchQuery = `${url}${searchTextInQuery}.json?worldview=cn&access_token=${accessToken}`;
+    let searchQuery = `${url}${searchTextInQuery}.json?worldview=cn&access_token=${MAPBOX_API_TOKEN}`;
     if (!_.isEmpty(currentLocation)) {
       searchQuery += `&proximity=${currentLocation.longitude},${currentLocation.latitude}`;
     }

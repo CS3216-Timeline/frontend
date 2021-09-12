@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import ComboBox from "./ComboBox";
 import { Grid, TextField, Typography } from "@material-ui/core";
+import MapDisplay from "./MapDisplay";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,6 +27,14 @@ const AddMemory = () => {
   const classes = useStyles();
   const [currentLocation, setCurrentLocation] = useState({});
   const [memoryTitle, setMemoryTitle] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [viewport, setViewport] = useState({
+    latitude: 1.3521,
+    longitude: 103.8198,
+    height: "50vh",
+    width: "100%",
+    zoom: 10,
+  });
 
   const getCurrentLocation = async () => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -63,7 +72,20 @@ const AddMemory = () => {
               </TextField>
             </div>
             <div className={classes.textFieldContainer}>
-              <ComboBox currentLocation={currentLocation} />
+              <ComboBox
+                currentLocation={currentLocation}
+                selectedLocation={selectedLocation}
+                setSelectedLocation={setSelectedLocation}
+                viewport={viewport}
+                setViewport={setViewport}
+              />
+            </div>
+            <div className={classes.textFieldContainer}>
+              <MapDisplay
+                selectedLocation={selectedLocation}
+                viewport={viewport}
+                setViewport={setViewport}
+              />
             </div>
             {/* section to add photo */}
             {/* Button to add the memory */}
