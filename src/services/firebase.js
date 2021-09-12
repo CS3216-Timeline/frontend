@@ -1,5 +1,6 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/storage";
+import { postMediaUrl } from "./media";
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -16,4 +17,32 @@ firebase.initializeApp(firebaseConfig);
 
 const storage = firebase.storage();
 
-export { storage, firebase as default }
+const ROOT = "user-media/"
+
+const uploadFile = (file, fileName, memory_id, progressHandler, errorHandler, successHandler) => {
+  const uploadTask = storage.ref(ROOT + memory_id + fileName).put(file)
+  uploadTask.on(
+    "state_changed",
+    snapshot => {
+      const progress = Math.round(
+        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+      )
+      progressHandler(progress);
+    }, 
+    error => {
+      errorHandler();
+    },
+    () => {
+      storage
+        .ref(ROOT)
+        .child(memory_id + fileName)
+        .getDownloadURL()
+        .then(url => {
+          postMediaUrl(url, memory_id); // send to backend
+          successHandler(url); // send success url to component
+        });
+    }
+  )
+}
+
+export { uploadFile, firebase as default }
