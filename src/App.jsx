@@ -16,6 +16,8 @@ import theme from "./theme/theme";
 import CreateNewLine from "./pages/CreateNewLine/CreateNewLine";
 // import UploadMediaForm from "./pages/UploadMediaForm";
 import AddMemory from "./pages/AddMemory/AddMemory";
+import LineMap from "./pages/LineMap/LineMap";
+import "mapbox-gl/dist/mapbox-gl.css";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -48,6 +50,9 @@ const App = () => {
                 component={CreateNewLine}
               />
               <PrivateRoute exact path="/addmemory" component={AddMemory} />
+              {/* TODO: add a line_id param. Might also want to add the user_id as well, 
+              if we want to incorporate friends, so can see other people's maps */}
+              <PrivateRoute exact path="/linemap/" component={LineMap} />
             </Switch>
             {/* TODO: Create a notfound page */}
           </Fragment>
