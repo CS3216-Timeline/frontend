@@ -52,7 +52,7 @@ const App = () => {
               <PrivateRoute exact path="/addmemory" component={AddMemory} />
               {/* TODO: add a line_id param. Might also want to add the user_id as well, 
               if we want to incorporate friends, so can see other people's maps */}
-              <PrivateRoute exact path="/linemap/" component={LineMap} />
+              <PrivateRoute exact path="/linemap" component={LineMap} />
             </Switch>
             {/* TODO: Create a notfound page */}
           </Fragment>
