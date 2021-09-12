@@ -5,9 +5,7 @@ import { uploadFile } from "../services/firebase"
 const DEFAULT_PHOTO = "https://firebasestorage.googleapis.com/v0/b/cs3216-timeline.appspot.com/o/user-media%2Fnone.jpg?alt=media&token=658f9a1d-9f16-4ace-ad56-c9a7c0e3132e"
 
 const inputStyle = () => ({
-  display: "block",
-  marginRight: "auto",
-  marginLeft: "auto"
+  display:"none"
 })
 
 const imageStyle = () => ({
@@ -75,7 +73,6 @@ const UploadMediaForm = props => {
       accept="image/*" 
       id="file-upload"
       onChange={handleChange} 
-      style={{display:"none"}}
       required
     />
   )
@@ -92,7 +89,7 @@ const UploadMediaForm = props => {
           {hiddenInputElement}
           Click to add or replace photo
         </label>
-        {uploadProgress != null && `upload progress: ${uploadProgress}%`}
+        {uploadProgress !== null && `upload progress: ${uploadProgress}%`}
         {/* Info displayed for testing purposes */}
         <h5>[TEST] File Name: {file ? file.name : "No file selected"}</h5>
         <h5>[TEST] URL: {url ? url : ""}</h5>
