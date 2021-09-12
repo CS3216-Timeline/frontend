@@ -10,6 +10,21 @@ const inputStyle = () => ({
   marginLeft: "auto"
 })
 
+const imageStyle = () => ({
+  maxWidth:  "100%",
+  maxHeight: "100%",
+})
+
+// const isLandscape = () => {
+//   const dim = Dimension.get("screen")
+//   return dim.width >= dim.height
+// }
+
+const imageContainerStyle = () => ({
+  height: "100vw",
+  width:  "100vw",
+})
+
 const UploadMediaForm = props => {
   const { memory_id } = props;
   const [file, setFile] = useState(null);
@@ -57,7 +72,9 @@ const UploadMediaForm = props => {
       {/* Just to view info */}
       <Box display="flex" flexDirection="column" style={{textAlign: "center"}}>
         <h3>Upload a photo</h3>
-        <img src={url || DEFAULT_PHOTO} alt="memory preview"/>
+        <div style={imageContainerStyle}>
+          <img style={imageStyle()} src={url || DEFAULT_PHOTO} alt="memory preview"/>
+        </div>
         <h5>{file ? file.name : "No file selected"}</h5>
         <input ref={file} style={inputStyle()} type="file" accept="image/*" onChange={handleChange} />
         {uploadProgress != null && `upload progress: ${uploadProgress}%`}
