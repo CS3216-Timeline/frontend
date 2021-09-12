@@ -11,18 +11,18 @@ const inputStyle = () => ({
 })
 
 const imageStyle = () => ({
-  maxWidth:  "100%",
-  maxHeight: "100%",
+  objectFit: "contain",
+  width: "100%",
+  height: "100%"
 })
-
-// const isLandscape = () => {
-//   const dim = Dimension.get("screen")
-//   return dim.width >= dim.height
-// }
 
 const imageContainerStyle = () => ({
   height: "100vw",
   width:  "100vw",
+  maxWidth: "500px",
+  maxHeight: "500px",
+  backgroundColor: "grey",
+  margin: "auto"
 })
 
 const UploadMediaForm = props => {
@@ -67,17 +67,35 @@ const UploadMediaForm = props => {
     uploadFile(file, file.name, memory_id, progressHandler, errorHandler, successHandler);
   }
 
+  const hiddenInputElement = (
+    <input 
+      ref={file} 
+      style={inputStyle()} 
+      type="file" 
+      accept="image/*" 
+      id="file-upload"
+      onChange={handleChange} 
+      style={{display:"none"}}
+      required
+    />
+  )
+
   return (
     <>
-      {/* Just to view info */}
       <Box display="flex" flexDirection="column" style={{textAlign: "center"}}>
         <h3>Upload a photo</h3>
-        <div style={imageContainerStyle}>
+        <div style={imageContainerStyle()}>
           <img style={imageStyle()} src={url || DEFAULT_PHOTO} alt="memory preview"/>
         </div>
-        <h5>{file ? file.name : "No file selected"}</h5>
-        <input ref={file} style={inputStyle()} type="file" accept="image/*" onChange={handleChange} />
+        <br />
+        <label for="file-upload" class="custom-file-upload">
+          {hiddenInputElement}
+          Click to add or replace photo
+        </label>
         {uploadProgress != null && `upload progress: ${uploadProgress}%`}
+        {/* Info displayed for testing purposes */}
+        <h5>[TEST] File Name: {file ? file.name : "No file selected"}</h5>
+        <h5>[TEST] URL: {url ? url : ""}</h5>
         <Button onClick={handleUpload} disabled={fileIsEmpty}>Save</Button>
       </Box>
     </>
