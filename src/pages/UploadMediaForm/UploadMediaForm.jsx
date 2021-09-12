@@ -1,27 +1,10 @@
 import { Box, Button } from "@material-ui/core";
 import { useState } from "react"
-import { uploadFile } from "../services/firebase"
+import { uploadFile } from "../../services/firebase"
+import HiddenFileInput from "./HiddenFileInput";
+import MemoryMedia from "./MemoryMedia";
 
 const DEFAULT_PHOTO = "https://firebasestorage.googleapis.com/v0/b/cs3216-timeline.appspot.com/o/user-media%2Fnone.jpg?alt=media&token=658f9a1d-9f16-4ace-ad56-c9a7c0e3132e"
-
-const inputStyle = () => ({
-  display:"none"
-})
-
-const imageStyle = () => ({
-  objectFit: "contain",
-  width: "100%",
-  height: "100%"
-})
-
-const imageContainerStyle = () => ({
-  height: "100vw",
-  width:  "100vw",
-  maxWidth: "500px",
-  maxHeight: "500px",
-  backgroundColor: "grey",
-  margin: "auto"
-})
 
 const UploadMediaForm = props => {
   const { memory_id } = props;
@@ -65,28 +48,14 @@ const UploadMediaForm = props => {
     uploadFile(file, file.name, memory_id, progressHandler, errorHandler, successHandler);
   }
 
-  const hiddenInputElement = (
-    <input 
-      ref={file} 
-      style={inputStyle()} 
-      type="file" 
-      accept="image/*" 
-      id="file-upload"
-      onChange={handleChange} 
-      required
-    />
-  )
-
   return (
     <>
       <Box display="flex" flexDirection="column" style={{textAlign: "center"}}>
         <h3>Upload a photo</h3>
-        <div style={imageContainerStyle()}>
-          <img style={imageStyle()} src={url || DEFAULT_PHOTO} alt="memory preview"/>
-        </div>
+        <MemoryMedia url={url || DEFAULT_PHOTO} />
         <br />
-        <label for="file-upload" class="custom-file-upload">
-          {hiddenInputElement}
+        <label htmlFor="file-upload" class="custom-file-upload">
+          <HiddenFileInput handleChange={handleChange} />
           Click to add or replace photo
         </label>
         {uploadProgress !== null && `upload progress: ${uploadProgress}%`}
