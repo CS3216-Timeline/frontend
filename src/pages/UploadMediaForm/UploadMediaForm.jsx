@@ -54,7 +54,7 @@ const UploadMediaForm = props => {
         {isCropView && <Cropper fileUrl={editFileUrl} cropHandler={handleCropDone} />}
         <div>
           {isCropView && <Button onClick={handleCancelCrop}>Cancel</Button>}
-          {!isCropView && <Button onClick={handleRepeatCrop}>Crop</Button>}
+          {!isCropView && fileUrl && <Button onClick={handleRepeatCrop}>Crop</Button>}
         </div>
         <br />
         <label htmlFor="file-upload" class="custom-file-upload">
