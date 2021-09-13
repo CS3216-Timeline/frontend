@@ -16,9 +16,10 @@ const useStyles = makeStyles((theme) => ({
   },
   header: {
     fontSize: "30pt",
-    letterSpacing: "3px",
+    letterSpacing: "8px",
     textAlign: "center",
     margin: "15px 0",
+    fontWeight: 500,
   },
   subContent: {
     padding: theme.spacing(2),
