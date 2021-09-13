@@ -26,7 +26,7 @@ const Memory = (props) => {
         <h1>{title}</h1>
         <img alt={title} className={classes.imageStyle} src={mediaUrl} />
         <h4>{date}</h4>
-        <div lcassName={classes.descriptionStyle}>
+        <div className={classes.descriptionStyle}>
           <p>{description}</p>
         </div>
       </Box>

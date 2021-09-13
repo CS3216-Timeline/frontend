@@ -69,8 +69,6 @@ const LineMap = () => {
         >
           <ArrowBackIcon />
         </Fab>
-
-        {/* Show */}
       </div>
     </>
   );
