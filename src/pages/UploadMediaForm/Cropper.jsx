@@ -41,7 +41,7 @@ const Cropper = props => {
     } catch (e) {
       console.error(e)
     }
-  }, [croppedAreaPixels])
+  }, [croppedAreaPixels, cropHandler, file])
 
   const saveCroppedImage = (e) => {
     e.preventDefault()
