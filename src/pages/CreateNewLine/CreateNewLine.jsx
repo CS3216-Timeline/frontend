@@ -7,11 +7,13 @@ import {
 } from "@material-ui/core";
 import React, { Fragment, useState } from "react";
 import AddIcon from "@material-ui/icons/Add";
+import LinearScaleIcon from "@material-ui/icons/LinearScale";
 import { GithubPicker } from "react-color";
 import { COLORS } from "../../utils/colors";
 import { useDispatch } from "react-redux";
 import { setAlert } from "../../actions/alert";
 import { createNewLine } from "../../services/lines";
+import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -52,7 +54,14 @@ const CreateNewLine = () => {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <div className={classes.container}>
-            <Typography variant="h2">Create a new line!</Typography>
+            <PrivatePageHeader
+              text={"Create a new line"}
+              icon={
+                <LinearScaleIcon
+                  style={{ fontSize: "30pt", color: COLORS.PRIMARY_PURPLE }}
+                />
+              }
+            />
             <TextField
               variant="outlined"
               margin="normal"
