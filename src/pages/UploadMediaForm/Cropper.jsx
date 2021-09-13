@@ -48,7 +48,6 @@ const Cropper = props => {
         fileUrl,
         croppedAreaPixels
       )
-      console.log('donee', { croppedImage })
       cropHandler(croppedImage)
     } catch (e) {
       console.error(e)
