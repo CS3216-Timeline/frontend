@@ -14,8 +14,8 @@ export const getLineConnectors = (memoriesData) => {
       geometry: {
         type: "LineString",
         coordinates: [
-          [memoriesData[i].latitude, memoriesData[i].longitude],
-          [memoriesData[i - 1].latitude, memoriesData[i - 1].longitude],
+          [memoriesData[i].longitude, memoriesData[i].latitude],
+          [memoriesData[i - 1].longitude, memoriesData[i - 1].latitude],
         ]
       }
     });

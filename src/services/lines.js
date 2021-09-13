@@ -1,4 +1,8 @@
-// Contains services for line component
+import server from "../utils/server";
+import {
+  addHash,
+  removeHash
+} from "./colors";
 
 const mockLineData = {
   line_id: 1,
@@ -20,6 +24,31 @@ const mockMemoryData = {
   }
 }
 
+
+export const getAllLinesByUserIdOrderByMostRecentMemory = async () => {
+  const res = await server.get('/api/lines');
+  let lines = res.data.lines;
+  if (lines.length !== 0) {
+    lines = lines.map(line => {
+      return {
+        ...line,
+        'colour_hex': addHash(line["colour_hex"]),
+      }
+    });
+  }
+  console.log(lines)
+  return lines;
+}
+
+export const createNewLine = async (lineTitle, selectedColor) => {
+  const body = {
+    "line-name": lineTitle,
+    "color-hex": removeHash(selectedColor),
+  }
+  const res = await server.post('/api/lines', body);
+  return res.lines;
+}
+
 // returns line data
 export const getLineById = (id) => {
   return mockLineData
@@ -27,5 +56,8 @@ export const getLineById = (id) => {
 
 // returns memory data
 export const getMemoryById = (id) => {
-  return {...mockMemoryData, memory_id: id}
+  return {
+    ...mockMemoryData,
+    memory_id: id
+  }
 }

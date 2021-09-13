@@ -7,6 +7,7 @@ import { IconButton, Typography } from "@material-ui/core";
 
 const MapDisplay = ({ selectedLocation, viewport, setViewport }) => {
   const [showPopup, setShowPopup] = useState(false);
+
   return (
     <>
       <ReactMapGL
@@ -14,7 +15,8 @@ const MapDisplay = ({ selectedLocation, viewport, setViewport }) => {
         mapboxApiAccessToken={MAPBOX_API_TOKEN}
         mapStyle="mapbox://styles/mapbox/streets-v10"
         // everytime user drag/zoom, will cause map to re-render
-        onViewportChange={(viewport) => setViewport(viewport)}
+        // onViewportChange={(viewport) => renderViewport(viewport)}
+        onViewportChange={(v) => setViewport(v)}
       >
         {selectedLocation && (
           <Marker
