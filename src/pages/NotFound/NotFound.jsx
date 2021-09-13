@@ -9,7 +9,7 @@ const NotFound = () => {
   if (auth.isAuthenticated) {
     return <Redirect to="/" />;
   } else {
-    return <Redirect to="/signin" />;
+    return <Redirect to="/landing" />;
   }
 };
 

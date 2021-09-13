@@ -16,5 +16,6 @@ export const COLORS = {
   LIGHT_BLUE: "#C4DEF6",
   LIGHT_DARK_BLUE: "#BED3F3",
   LIGHT_PURPLE: "#D4C4FB",
-  WHITE: '#fff'
+  WHITE: '#fff',
+  PRIMARY_PURPLE: '#756DFF'
 }

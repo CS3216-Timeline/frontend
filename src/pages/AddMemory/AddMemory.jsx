@@ -3,8 +3,11 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import ComboBox from "./ComboBox";
-import { Grid, TextField, Typography } from "@material-ui/core";
+import { Button, Grid, TextField } from "@material-ui/core";
 import MapDisplay from "./MapDisplay";
+import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
+import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
+import { COLORS } from "../../utils/colors";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -60,7 +63,14 @@ const AddMemory = () => {
       <div className={classes.root}>
         <Grid container className={classes.linesContainer}>
           <Grid item xs={12}>
-            <Typography variant="h2">Add a memory!</Typography>
+            <PrivatePageHeader
+              text={"Add Memory"}
+              icon={
+                <AddAPhotoIcon
+                  style={{ fontSize: "30pt", color: COLORS.PRIMARY_PURPLE }}
+                />
+              }
+            />
             <div className={classes.textFieldContainer}>
               <TextField
                 variant="outlined"
@@ -92,7 +102,18 @@ const AddMemory = () => {
               />
             </div>
             {/* section to add photo */}
-            {/* Button to add the memory */}
+            <div className={classes.textFieldContainer}>
+              <Button
+                fullWidth
+                color="primary"
+                variant="contained"
+                onClick={() => {
+                  console.log("creating memory");
+                }}
+              >
+                Add Line
+              </Button>
+            </div>
           </Grid>
         </Grid>
       </div>
