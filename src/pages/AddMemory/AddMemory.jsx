@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import ComboBox from "./ComboBox";
-import { Grid, TextField, Typography } from "@material-ui/core";
+import { Button, Grid, TextField, Typography } from "@material-ui/core";
 import MapDisplay from "./MapDisplay";
 
 const useStyles = makeStyles((theme) => ({
@@ -92,7 +92,18 @@ const AddMemory = () => {
               />
             </div>
             {/* section to add photo */}
-            {/* Button to add the memory */}
+            <div className={classes.textFieldContainer}>
+              <Button
+                fullWidth
+                color="primary"
+                variant="contained"
+                onClick={() => {
+                  console.log("creating memory");
+                }}
+              >
+                Add Line
+              </Button>
+            </div>
           </Grid>
         </Grid>
       </div>
