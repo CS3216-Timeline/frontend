@@ -28,6 +28,10 @@ const initCrop = () => {
   return { x: 0, y: 0, width: cropLength, height: cropLength }
 }
 
+const minZoom = 0.3
+
+const cropAspectRatio = 1 // SQUARE
+
 const Cropper = props => {
   // TODO: How to handle invalid photo URLS?
   // TODO: Allow BOTH videos and images 
@@ -72,14 +76,13 @@ const Cropper = props => {
           image={fileUrl} 
           crop={crop}
           zoom={zoom}
-          minZoom={0.3}
-          aspect={1}
+          minZoom={minZoom}
+          aspect={cropAspectRatio}
           onCropChange={onCropChange}
           onCropComplete={onCropComplete}
           onZoomChange={setZoom}
           restrictPosition={false}
           // zoomWithScroll={false}
-          // zoomSpeed={0.7}
         />
       </div>
       <Box>
