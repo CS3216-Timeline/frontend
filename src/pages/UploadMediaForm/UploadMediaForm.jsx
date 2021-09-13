@@ -46,25 +46,31 @@ const UploadMediaForm = props => {
     console.log("TODO: Send media to server")
   }
 
-  return (
-    <>
+  if (isCropView) {
+    return (
       <Box display="flex" flexDirection="column" style={{textAlign: "center"}}>
         <h3>Upload a photo</h3>
-        {!isCropView && <MemoryMedia url={cropUrl} />}
-        {isCropView && <Cropper fileUrl={editFileUrl} cropHandler={handleCropDone} />}
-        <div>
-          {isCropView && <Button onClick={handleCancelCrop}>Cancel</Button>}
-          {!isCropView && fileUrl && <Button onClick={handleRepeatCrop}>Crop</Button>}
-        </div>
+        <Cropper fileUrl={editFileUrl} cropHandler={handleCropDone} />
+        <Button onClick={handleCancelCrop}>Cancel</Button>
         <br />
-        <label htmlFor="file-upload" class="custom-file-upload">
-          {hasValidMedia ? "Change" : "New"} Photo
-          <HiddenFileInput handleChange={handleChange} />
-        </label>
         <h5>[TEST] Final URL: {cropUrl ? cropUrl : "No Image Uploaded"}</h5>
-        <Button onClick={handleUpload} disabled={!hasValidMedia}>Save</Button>
       </Box>
-    </>
+    )
+  }
+
+  return (
+    <Box display="flex" flexDirection="column" style={{textAlign: "center"}}>
+      <h3>Upload a photo</h3>
+      <MemoryMedia url={cropUrl} />
+      {fileUrl && <Button onClick={handleRepeatCrop}>Crop</Button>}
+      <br />
+      <label htmlFor="file-upload" class="custom-file-upload">
+        {hasValidMedia ? "Change" : "New"} Photo
+        <HiddenFileInput handleChange={handleChange} />
+      </label>
+      <h5>[TEST] Final URL: {cropUrl}</h5>
+      <Button onClick={handleUpload} disabled={!hasValidMedia}>Save</Button>
+    </Box>
   )
 }
 

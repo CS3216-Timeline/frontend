@@ -14,8 +14,6 @@ const cropperContainerStyle = () => ({
   position: "relative"
 })
 
-
-
 const vpWidth = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
 
 const cropFactor = 0.8 // can adjust
@@ -36,6 +34,7 @@ const Cropper = props => {
   // TODO: How to handle invalid photo URLS?
   // TODO: Allow BOTH videos and images 
   // TODO: In future, can allow Rotation
+  // TODO: Loading state
 
   const { cropHandler, fileUrl } = props;
   const [crop, setCrop] = useState(initCrop())
@@ -90,7 +89,7 @@ const Cropper = props => {
         onClick={saveCroppedImage}
         // Improve design
         >
-          Confirm Crop
+          Done
         </Button>
       </Box>
     </>
