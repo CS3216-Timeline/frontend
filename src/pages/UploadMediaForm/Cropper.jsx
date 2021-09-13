@@ -33,25 +33,23 @@ const Cropper = props => {
   // TODO: Allow BOTH videos and images 
   // TODO: In future, can allow Rotation
 
-  const { file, cropHandler, } = props;
+  const { cropHandler, fileUrl } = props;
   const [crop, setCrop] = useState(initCrop())
   const [zoom, setZoom] = useState(cropFactor)
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
-  // const [croppedImg, setCroppedImg] = useState(null)
 
   const showCroppedImage = useCallback(async e => {
     try {
       const croppedImage = await getCroppedImg(
-        URL.createObjectURL(file),
+        fileUrl,
         croppedAreaPixels
       )
       console.log('donee', { croppedImage })
-      // setCroppedImg(croppedImage)
       cropHandler(croppedImage)
     } catch (e) {
       console.error(e)
     }
-  }, [croppedAreaPixels, cropHandler, file])
+  }, [croppedAreaPixels, cropHandler, fileUrl])
 
   const saveCroppedImage = (e) => {
     e.preventDefault()
@@ -70,8 +68,8 @@ const Cropper = props => {
     <>
       <div style={cropperContainerStyle()}>
         <ReactCrop 
-          cropSize={cropSize} // need to adjust later on
-          image={URL.createObjectURL(file)} 
+          cropSize={cropSize}
+          image={fileUrl} 
           crop={crop}
           zoom={zoom}
           minZoom={0.3}
@@ -92,10 +90,6 @@ const Cropper = props => {
           Confirm Crop
         </Button>
       </Box>
-      {/* Uncomment below to preview cropped image */}
-      {/* <div style={cropperContainerStyle()}>
-        {croppedImg && <img width="100%" src={croppedImg} />}
-      </div> */}
     </>
   )
 }
