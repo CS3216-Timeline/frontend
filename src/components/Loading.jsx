@@ -5,16 +5,6 @@ import { COLORS } from "../utils/colors";
 import AppLogo from "./layout/AppLogo";
 
 const useStyles = makeStyles(() => ({
-  // loaderContainer: {
-  //   position: "absolute",
-  //   left: "50%",
-  //   top: "50%",
-  //   transform: "translate(-50%, -50%)",
-  // },
-  // items: {
-  //   display: "flex",
-  //   flexDirection: "column",
-  // },
   loaderContainer: {
     display: "flex",
     flexDirection: "column",
