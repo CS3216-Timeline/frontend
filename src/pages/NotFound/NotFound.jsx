@@ -1,16 +1,14 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { setAlert } from "../../actions/alert";
 
+// TODO: show a nice pic and have a button for them to navigate back to the
+// signin/ home page
 const NotFound = () => {
-  const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   if (auth.isAuthenticated) {
-    dispatch(setAlert("Invalid URL"));
     return <Redirect to="/" />;
   } else {
-    dispatch(setAlert("Invalid URL"));
     return <Redirect to="/signin" />;
   }
 };
