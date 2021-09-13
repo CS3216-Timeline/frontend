@@ -43,7 +43,7 @@ const Cropper = props => {
     }
   }, [croppedAreaPixels])
 
-  const saveCroppedImage = e => {
+  const saveCroppedImage = (e) => {
     e.preventDefault()
     showCroppedImage() 
   }
