@@ -1,14 +1,13 @@
 import { Box, Button } from '@material-ui/core';
 import { useState, useCallback } from 'react';
 import ReactCrop from 'react-easy-crop';
+import { COLORS } from '../../utils/colors';
 import getCroppedImg from '../../utils/cropImage';
 
 const cropperContainerStyle = () => ({
-  height: "100vw",
-  width:  "100vw",
-  maxWidth: "500px",
-  maxHeight: "500px",
-  backgroundColor: "grey",
+  height: "90vw",
+  width:  "90vw",
+  backgroundColor: COLORS.LIGHT_PURPLE,
   margin: "auto",
   padding: 0,
   position: "relative"
@@ -16,9 +15,11 @@ const cropperContainerStyle = () => ({
 
 const vpWidth = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
 
+const containerWidth = 0.9 * vpWidth
+
 const cropFactor = 0.8 // can adjust
 
-const cropLength = cropFactor * vpWidth
+const cropLength = cropFactor * containerWidth
 
 const cropSize = { "width": cropLength, "height": cropLength }
 
@@ -87,6 +88,7 @@ const Cropper = props => {
       <Box>
         <Button 
         onClick={saveCroppedImage}
+        color="primary"
         // Improve design
         >
           Done
