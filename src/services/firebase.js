@@ -1,6 +1,8 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/storage";
-import { postMediaUrl } from "./media";
+import {
+  postMediaUrl
+} from "./media";
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -28,7 +30,7 @@ const uploadFile = (file, fileName, memory_id, progressHandler, errorHandler, su
         (snapshot.bytesTransferred / snapshot.totalBytes) * 100
       )
       progressHandler(progress);
-    }, 
+    },
     error => {
       errorHandler();
     },
@@ -45,4 +47,8 @@ const uploadFile = (file, fileName, memory_id, progressHandler, errorHandler, su
   )
 }
 
-export { uploadFile, firebase as default }
+export {
+  uploadFile,
+  firebase as
+  default
+}
