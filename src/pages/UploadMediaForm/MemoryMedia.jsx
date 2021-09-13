@@ -9,6 +9,8 @@ const imageStyle = () => ({
 const imageContainerStyle = () => ({
   height: "90vw",
   width:  "90vw",
+  maxHeight: "500px",
+  maxWidth: "500px",
   backgroundColor: COLORS.LIGHT_PURPLE,
   margin: "auto",
 })
