@@ -36,7 +36,6 @@ export const getAllLinesByUserIdOrderByMostRecentMemory = async () => {
       }
     });
   }
-  console.log(lines)
   return lines;
 }
 

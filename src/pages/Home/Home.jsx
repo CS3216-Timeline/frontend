@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 // import { mockLinesData } from "./data";
 import LineCard from "./LineCard";
-import { Button, Typography } from "@material-ui/core";
+import { Button, TextField, Typography } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import HomeIcon from "@material-ui/icons/Home";
 import { useHistory } from "react-router-dom";
@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { setAlert } from "../../actions/alert";
 import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
 import { COLORS } from "../../utils/colors";
+import { filterLines } from "../../utils/lines";
 
 const useStyles = makeStyles((theme) => ({
   // root: {
@@ -30,12 +31,17 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     color: theme.palette.text.secondary,
   },
+  textFieldContainer: {
+    padding: theme.spacing(1, 0, 1, 0),
+  },
 }));
 
 const Home = () => {
   const classes = useStyles();
   // eslint-disable-next-line no-unused-vars
   const [lines, setLines] = useState([]);
+  const [searchText, setSearchtext] = useState("");
+  const [searchedLines, setSearchedLines] = useState([]);
   // const [lines, setLines] = useState(mockLinesData);
   const history = useHistory();
   const dispatch = useDispatch();
@@ -45,6 +51,7 @@ const Home = () => {
       try {
         const linesByUser = await getAllLinesByUserIdOrderByMostRecentMemory();
         setLines(linesByUser);
+        setSearchedLines(linesByUser);
       } catch (err) {
         dispatch(
           setAlert("Oops, Failed to get the lines, please try again!", "error")
@@ -56,6 +63,13 @@ const Home = () => {
 
   const onAddLineClick = () => {
     history.push("/createnewline");
+  };
+
+  const searchLines = (e) => {
+    e.preventDefault();
+    setSearchtext(e.target.value);
+    const filteredLines = filterLines(e.target.value, lines);
+    setSearchedLines(filteredLines);
   };
 
   return (
@@ -81,17 +95,45 @@ const Home = () => {
             >
               Add Line
             </Button>
+            <div className={classes.textFieldContainer}>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                label="Search Lines"
+                autoFocus
+                onChange={(e) => {
+                  searchLines(e);
+                }}
+              >
+                {searchText}
+              </TextField>
+            </div>
           </Grid>
-          {lines ? (
+          {searchText === "" ? (
             lines.map((line) => (
               <Grid item xs={12} key={line.line_id}>
                 <LineCard line={line} />
               </Grid>
             ))
+          ) : searchedLines.length > 0 ? (
+            searchedLines.map((line) => (
+              <Grid item xs={12} key={line.line_id}>
+                <LineCard line={line} />
+              </Grid>
+            ))
           ) : (
-            <Typography variant="h3">NO LINES CREATED YET</Typography>
+            <Typography variant="h3">No lines</Typography>
           )}
-          {/* Show something else if empty, make it nice */}
+          {/* TODO: Add a nice graphic when there are no avaialble lines */}
+          {lines.length === 0 && (
+            <>
+              <Typography variant="h3">
+                No lines added yet, create your first line now!
+              </Typography>
+            </>
+          )}
         </Grid>
       </div>
     </Fragment>
