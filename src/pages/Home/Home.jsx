@@ -17,15 +17,12 @@ import { filterLines } from "../../utils/lines";
 import NoLinesAvailable from "./NoLinesAvailable";
 
 const useStyles = makeStyles((theme) => ({
-  // root: {
-  //   backgroundColor: COLORS.WHITE,
-  // },
   addLineButtonContainer: {
     justifyContent: "center",
     width: "100%",
   },
   linesContainer: {
-    padding: theme.spacing(2, 2, 15, 2),
+    padding: theme.spacing(2, 2, 8, 2),
   },
   paper: {
     padding: theme.spacing(2),

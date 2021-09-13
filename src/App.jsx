@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import SignIn from "./pages/SignIn/SignIn";
@@ -20,15 +20,25 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import NotFound from "./pages/NotFound/NotFound";
 import CustomSnackbar from "./components/snackbar/CustomSnackbar";
 import Landing from "./pages/Landing/Landing";
+import Loading from "./components/Loading";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
 
 const App = () => {
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     store.dispatch(loadUser());
   }, []);
+
+  useEffect(() => {
+    setTimeout(() => setLoading(false), 500);
+  }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <Provider store={store}>
