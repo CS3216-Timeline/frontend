@@ -10,14 +10,19 @@ import {
 const theme = createTheme({
   // TODO: UPDATE THIS PALETTE
   palette: {
-    // primary: {
-    //   main: '#fefefe',
-    // },
+    primary: {
+      main: COLORS.PRIMARY_PURPLE
+    },
     // secondary: {
     // main: '#fff',
     // }
   },
   typography: {
+    fontFamily: 'Lato',
+    h1: {
+      fontFamily: "Lato",
+      fontSize: '50pt',
+    },
     h2: {
       fontSize: '18pt',
       fontWeight: 500,
@@ -28,8 +33,12 @@ const theme = createTheme({
     h4: {
       fontSize: '13pt',
     },
+    h6: {
+      fontSize: '10pt',
+    },
     body1: {
       fontSize: '10pt',
+
     },
     body2: {
       fontSize: '8pt',

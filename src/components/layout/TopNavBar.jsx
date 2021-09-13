@@ -44,7 +44,7 @@ const TopNavBar = () => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            App Name
+            TIMELINE
           </Typography>
           <Button color="inherit" onClick={(e) => logoutButtonClicked(e)}>
             Logout

@@ -19,6 +19,7 @@ import LineMap from "./pages/LineMap/LineMap";
 import "mapbox-gl/dist/mapbox-gl.css";
 import NotFound from "./pages/NotFound/NotFound";
 import CustomSnackbar from "./components/snackbar/CustomSnackbar";
+import Landing from "./pages/Landing/Landing";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -37,14 +38,15 @@ const App = () => {
             <CustomSnackbar />
             <PrivateRoute exact path="/" component={Home} />
             <Switch>
+              <Route exact path="/signin" component={SignIn} />
+              <Route exact path="/signup" component={SignUp} />
+              <Route exact path="/landing" component={Landing} />
               <PrivateRoute exact path="/line/:line_id" component={Line} />
               <PrivateRoute
                 exact
                 path="/memory/:memory_id"
                 component={Memory}
               />
-              <Route exact path="/signin" component={SignIn} />
-              <Route exact path="/signup" component={SignUp} />
               <PrivateRoute
                 exact
                 path="/createnewline"

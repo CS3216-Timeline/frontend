@@ -3,8 +3,11 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import ComboBox from "./ComboBox";
-import { Grid, TextField, Typography } from "@material-ui/core";
+import { Button, Grid, TextField } from "@material-ui/core";
 import MapDisplay from "./MapDisplay";
+import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
+import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
+import { COLORS } from "../../utils/colors";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,10 +26,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // https://docs.mapbox.com/help/tutorials/use-mapbox-gl-js-with-react/
+// TODO: pass line as a prop
 const AddMemory = () => {
   const classes = useStyles();
   const [currentLocation, setCurrentLocation] = useState({});
   const [memoryTitle, setMemoryTitle] = useState("");
+  const [memoryDescription, setMemoryDescription] = useState("");
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [viewport, setViewport] = useState({
     latitude: 1.3521,
@@ -55,12 +60,22 @@ const AddMemory = () => {
     getCurrentLocation();
   }, [viewport]);
 
+  // TODO: connect to backend
+  // const addMemoryToLine = () => {};
+
   return (
     <>
       <div className={classes.root}>
         <Grid container className={classes.linesContainer}>
           <Grid item xs={12}>
-            <Typography variant="h2">Add a memory!</Typography>
+            <PrivatePageHeader
+              text={"Add Memory"}
+              icon={
+                <AddAPhotoIcon
+                  style={{ fontSize: "30pt", color: COLORS.PRIMARY_PURPLE }}
+                />
+              }
+            />
             <div className={classes.textFieldContainer}>
               <TextField
                 variant="outlined"
@@ -73,6 +88,21 @@ const AddMemory = () => {
                 onChange={(e) => setMemoryTitle(e.target.value)}
               >
                 {memoryTitle}
+              </TextField>
+            </div>
+            <div className={classes.textFieldContainer}>
+              <TextField
+                id="filled-multiline-static"
+                label="Memory Description"
+                multiline
+                fullWidth
+                rows={4}
+                placeholder="Optional"
+                variant="outlined"
+                margin="normal"
+                onChange={(e) => setMemoryDescription(e.target.value)}
+              >
+                {memoryDescription}
               </TextField>
             </div>
             <div className={classes.textFieldContainer}>
@@ -92,7 +122,18 @@ const AddMemory = () => {
               />
             </div>
             {/* section to add photo */}
-            {/* Button to add the memory */}
+            <div className={classes.textFieldContainer}>
+              <Button
+                fullWidth
+                color="primary"
+                variant="contained"
+                onClick={() => {
+                  console.log("creating memory");
+                }}
+              >
+                Add Line
+              </Button>
+            </div>
           </Grid>
         </Grid>
       </div>
