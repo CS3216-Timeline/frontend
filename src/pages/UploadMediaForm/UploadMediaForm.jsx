@@ -21,7 +21,7 @@ const UploadMediaForm = props => {
     }
   }
 
-  const handleCrop = cropUrl => {
+  const handleCropDone = cropUrl => {
     setCropUrl(cropUrl);
     setFileUrl(editFileUrl);
     setEditFileUrl(null);
@@ -51,7 +51,7 @@ const UploadMediaForm = props => {
       <Box display="flex" flexDirection="column" style={{textAlign: "center"}}>
         <h3>Upload a photo</h3>
         {!isCropView && <MemoryMedia url={cropUrl} />}
-        {isCropView && <Cropper fileUrl={editFileUrl} cropHandler={handleCrop} />}
+        {isCropView && <Cropper fileUrl={editFileUrl} cropHandler={handleCropDone} />}
         <div>
           {isCropView && <Button onClick={handleCancelCrop}>Cancel</Button>}
           {!isCropView && <Button onClick={handleRepeatCrop}>Crop</Button>}
