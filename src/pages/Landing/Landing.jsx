@@ -5,12 +5,13 @@ import { Redirect, useHistory } from "react-router-dom";
 import aroundTheWorldImage from "../../assets/around-the-world.png";
 import friendshipImage from "../../assets/friendship.png";
 import momentsImage from "../../assets/moments.png";
-import logoImage from "../../assets/logo.png";
+import logoImage from "../../assets/timeline-logo.png";
 
 const useStyles = makeStyles((theme) => ({
   heroContent: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(2),
+    marginTop: theme.spacing(2),
     display: "flex",
     flexDirection: "column",
     fontFamily: "Lato",
@@ -31,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
   },
   logoImage: {
-    width: "40%",
+    width: "75%",
     height: "auto",
     display: "block",
     marginLeft: "auto",

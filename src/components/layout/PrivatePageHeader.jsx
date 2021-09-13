@@ -14,9 +14,9 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1),
   },
   authHeader: {
-    fontSize: "30pt",
+    fontSize: "24pt",
     textTransform: "uppercase",
-    letterSpacing: "5px",
+    letterSpacing: "3px",
     color: COLORS.PRIMARY_PURPLE,
     fontWeight: 600,
   },

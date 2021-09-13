@@ -32,6 +32,9 @@ const theme = createTheme({
     },
     h4: {
       fontSize: '13pt',
+      color: COLORS.PRIMARY_PURPLE,
+      letterSpacing: '1px',
+      fontWeight: '500'
     },
     h6: {
       fontSize: '10pt',

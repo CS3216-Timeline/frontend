@@ -7,11 +7,15 @@ import {
 } from "@material-ui/core";
 import React, { Fragment, useState } from "react";
 import AddIcon from "@material-ui/icons/Add";
+import LinearScaleIcon from "@material-ui/icons/LinearScale";
 import { GithubPicker } from "react-color";
 import { COLORS } from "../../utils/colors";
 import { useDispatch } from "react-redux";
 import { setAlert } from "../../actions/alert";
 import { createNewLine } from "../../services/lines";
+import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
+import Loading from "../../components/Loading";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -30,7 +34,9 @@ const useStyles = makeStyles((theme) => ({
 const CreateNewLine = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
   const [lineTitle, setLineTitle] = useState("");
+  const [loading, setLoading] = useState(false);
   const [selectedColor, setSelectedColor] = useState(COLORS.RED);
 
   const createLine = async () => {
@@ -39,20 +45,36 @@ const CreateNewLine = () => {
       return;
     }
     try {
+      setLoading(true);
       const line = await createNewLine(lineTitle, selectedColor);
       console.log(line);
       dispatch(setAlert("Line Successfully created", "success"));
+      // TODO: If want, can redirect to line page instead
+      history.push("/");
     } catch (err) {
       dispatch(setAlert(err.message, "error"));
+    } finally {
+      setLoading(false);
     }
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <Fragment>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <div className={classes.container}>
-            <Typography variant="h2">Create a new line!</Typography>
+            <PrivatePageHeader
+              text={"Create a new line"}
+              icon={
+                <LinearScaleIcon
+                  style={{ fontSize: "30pt", color: COLORS.PRIMARY_PURPLE }}
+                />
+              }
+            />
             <TextField
               variant="outlined"
               margin="normal"
@@ -98,10 +120,6 @@ const CreateNewLine = () => {
                 }}
               />
             </Grid>
-            {/* 
-              Next Button to go to the add memory page.
-              Create line on the backend, before going to the next new line page.
-            */}
             <Grid item xs={12} className={classes.addLineButtonContainer}>
               <Button
                 fullWidth

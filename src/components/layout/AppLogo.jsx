@@ -1,10 +1,10 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import logoImage from "../../assets/logo.png";
+import logoImage from "../../assets/timeline-logo.png";
 
 const useStyles = makeStyles(() => ({
   logoImage: {
-    width: "40%",
+    width: "80%",
     height: "auto",
     display: "block",
     marginLeft: "auto",
