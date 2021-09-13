@@ -58,11 +58,7 @@ const Landing = () => {
   return (
     <>
       <Box component="div" className={classes.heroContent}>
-        <img
-          className={classes.logoImage}
-          src={logoImage}
-          alt={"around the world"}
-        />
+        <img className={classes.logoImage} src={logoImage} alt={"logo"} />
         {/* <h3 className={classes.header}>TIMELINE</h3> */}
         <Box component="div" className={classes.subContent}>
           <Typography variant="h6" align="center">
