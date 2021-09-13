@@ -26,10 +26,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // https://docs.mapbox.com/help/tutorials/use-mapbox-gl-js-with-react/
+// TODO: pass line as a prop
 const AddMemory = () => {
   const classes = useStyles();
   const [currentLocation, setCurrentLocation] = useState({});
   const [memoryTitle, setMemoryTitle] = useState("");
+  const [memoryDescription, setMemoryDescription] = useState("");
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [viewport, setViewport] = useState({
     latitude: 1.3521,
@@ -58,6 +60,9 @@ const AddMemory = () => {
     getCurrentLocation();
   }, [viewport]);
 
+  // TODO: connect to backend
+  // const addMemoryToLine = () => {};
+
   return (
     <>
       <div className={classes.root}>
@@ -83,6 +88,21 @@ const AddMemory = () => {
                 onChange={(e) => setMemoryTitle(e.target.value)}
               >
                 {memoryTitle}
+              </TextField>
+            </div>
+            <div className={classes.textFieldContainer}>
+              <TextField
+                id="filled-multiline-static"
+                label="Memory Description"
+                multiline
+                fullWidth
+                rows={4}
+                placeholder="Optional"
+                variant="outlined"
+                margin="normal"
+                onChange={(e) => setMemoryDescription(e.target.value)}
+              >
+                {memoryDescription}
               </TextField>
             </div>
             <div className={classes.textFieldContainer}>
