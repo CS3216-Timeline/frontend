@@ -14,8 +14,18 @@ const cropperContainerStyle = () => ({
   position: "relative"
 })
 
+
+
+const vpWidth = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+
+const cropFactor = 0.8 // can adjust
+
+const cropLength = cropFactor * vpWidth
+
+const cropSize = { "width": cropLength, "height": cropLength }
+
 const initCrop = () => {
-  return { x: 0, y: 0 }
+  return { x: 0, y: 0, width: cropLength, height: cropLength }
 }
 
 const Cropper = props => {
@@ -25,7 +35,7 @@ const Cropper = props => {
 
   const { file, cropHandler, } = props;
   const [crop, setCrop] = useState(initCrop())
-  const [zoom, setZoom] = useState(1)
+  const [zoom, setZoom] = useState(cropFactor)
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
   // const [croppedImg, setCroppedImg] = useState(null)
 
@@ -60,7 +70,7 @@ const Cropper = props => {
     <>
       <div style={cropperContainerStyle()}>
         <ReactCrop 
-          // cropSize={{width: "80%", height: "80%"}} // need to adjust later on
+          cropSize={cropSize} // need to adjust later on
           image={URL.createObjectURL(file)} 
           crop={crop}
           zoom={zoom}
