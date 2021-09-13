@@ -5,11 +5,14 @@ import Grid from "@material-ui/core/Grid";
 import LineCard from "./LineCard";
 import { Button, Typography } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
+import HomeIcon from "@material-ui/icons/Home";
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import { getAllLinesByUserIdOrderByMostRecentMemory } from "../../services/lines";
 import { useDispatch } from "react-redux";
 import { setAlert } from "../../actions/alert";
+import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
+import { COLORS } from "../../utils/colors";
 
 const useStyles = makeStyles((theme) => ({
   // root: {
@@ -61,6 +64,14 @@ const Home = () => {
         {/* TODO: Add some info on how to use the app if there are no lines at first */}
         <Grid container className={classes.linesContainer}>
           <Grid item xs={12} className={classes.addLineButtonContainer}>
+            <PrivatePageHeader
+              text={"Home"}
+              icon={
+                <HomeIcon
+                  style={{ fontSize: "30pt", color: COLORS.PRIMARY_PURPLE }}
+                />
+              }
+            />
             <Button
               fullWidth
               color="primary"
