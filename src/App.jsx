@@ -18,7 +18,7 @@ import AddMemory from "./pages/AddMemory/AddMemory";
 import LineMap from "./pages/LineMap/LineMap";
 import "mapbox-gl/dist/mapbox-gl.css";
 import NotFound from "./pages/NotFound/NotFound";
-import ErrorSnackbar from "./components/snackbar/ErrorSnackbar";
+import CustomSnackbar from "./components/snackbar/CustomSnackbar";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -34,7 +34,7 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <Router>
           <Fragment>
-            <ErrorSnackbar />
+            <CustomSnackbar />
             <PrivateRoute exact path="/" component={Home} />
             <Switch>
               <PrivateRoute exact path="/line/:line_id" component={Line} />

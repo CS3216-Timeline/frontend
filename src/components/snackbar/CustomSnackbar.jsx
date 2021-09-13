@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Alert from "@material-ui/lab/Alert";
 import { removeAlert } from "../../actions/alert";
 
-const ErrorCustomSnackbar = () => {
+const CustomSnackbar = () => {
   const alerts = useSelector((state) => state.alerts);
   const dispatch = useDispatch();
   if (alerts.length === 0) {
@@ -27,7 +27,10 @@ const ErrorCustomSnackbar = () => {
             onClose={() => handleClose(alert.id)}
             key={alert.id}
           >
-            <Alert onClose={() => handleClose(alert.id)} severity="error">
+            <Alert
+              onClose={() => handleClose(alert.id)}
+              severity={alert.severity}
+            >
               {alert.message}
             </Alert>
           </Snackbar>
@@ -36,4 +39,4 @@ const ErrorCustomSnackbar = () => {
   );
 };
 
-export default ErrorCustomSnackbar;
+export default CustomSnackbar;

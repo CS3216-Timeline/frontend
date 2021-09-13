@@ -11,6 +11,7 @@ import { GithubPicker } from "react-color";
 import { COLORS } from "../../utils/colors";
 import { useDispatch } from "react-redux";
 import { setAlert } from "../../actions/alert";
+import { createNewLine } from "../../services/lines";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -32,14 +33,18 @@ const CreateNewLine = () => {
   const [lineTitle, setLineTitle] = useState("");
   const [selectedColor, setSelectedColor] = useState(COLORS.RED);
 
-  const createLine = () => {
+  const createLine = async () => {
     if (!lineTitle) {
-      dispatch(setAlert("Line Title cannot be empty"));
+      dispatch(setAlert("Line Title cannot be empty", "error"));
       return;
     }
-    // do a post request to the backend to create a line
-    // send the line color and line title
-    // after it is created, go to the add memory page
+    try {
+      const line = await createNewLine(lineTitle, selectedColor);
+      console.log(line);
+      dispatch(setAlert("Line Successfully created", "success"));
+    } catch (err) {
+      dispatch(setAlert(err.message, "error"));
+    }
   };
 
   return (
