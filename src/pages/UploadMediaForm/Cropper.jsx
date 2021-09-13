@@ -1,47 +1,58 @@
 import { Box, Button } from '@material-ui/core';
 import { useState, useCallback } from 'react';
 import ReactCrop from 'react-easy-crop';
+import { COLORS } from '../../utils/colors';
 import getCroppedImg from '../../utils/cropImage';
 
 const cropperContainerStyle = () => ({
-  height: "100vw",
-  width:  "100vw",
-  maxWidth: "500px",
-  maxHeight: "500px",
-  backgroundColor: "grey",
+  height: "90vw",
+  width:  "90vw",
+  backgroundColor: COLORS.LIGHT_PURPLE,
   margin: "auto",
   padding: 0,
   position: "relative"
 })
 
+const vpWidth = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+
+const containerWidth = 0.9 * vpWidth
+
+const cropFactor = 0.8 // can adjust
+
+const cropLength = cropFactor * containerWidth
+
+const cropSize = { "width": cropLength, "height": cropLength }
+
 const initCrop = () => {
-  return { x: 0, y: 0 }
+  return { x: 0, y: 0, width: cropLength, height: cropLength }
 }
+
+const minZoom = 0.3
+
+const cropAspectRatio = 1 // SQUARE
 
 const Cropper = props => {
   // TODO: How to handle invalid photo URLS?
   // TODO: Allow BOTH videos and images 
   // TODO: In future, can allow Rotation
+  // TODO: Loading state
 
-  const { file, cropHandler, } = props;
+  const { cropHandler, fileUrl } = props;
   const [crop, setCrop] = useState(initCrop())
-  const [zoom, setZoom] = useState(1)
+  const [zoom, setZoom] = useState(cropFactor)
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
-  // const [croppedImg, setCroppedImg] = useState(null)
 
   const showCroppedImage = useCallback(async e => {
     try {
       const croppedImage = await getCroppedImg(
-        URL.createObjectURL(file),
+        fileUrl,
         croppedAreaPixels
       )
-      console.log('donee', { croppedImage })
-      // setCroppedImg(croppedImage)
       cropHandler(croppedImage)
     } catch (e) {
       console.error(e)
     }
-  }, [croppedAreaPixels])
+  }, [croppedAreaPixels, cropHandler, fileUrl])
 
   const saveCroppedImage = (e) => {
     e.preventDefault()
@@ -60,32 +71,30 @@ const Cropper = props => {
     <>
       <div style={cropperContainerStyle()}>
         <ReactCrop 
-          // cropSize={{width: "80%", height: "80%"}} // need to adjust later on
-          image={URL.createObjectURL(file)} 
+          cropSize={cropSize}
+          image={fileUrl} 
           crop={crop}
           zoom={zoom}
-          minZoom={0.3}
-          aspect={1}
+          minZoom={minZoom}
+          aspect={cropAspectRatio}
           onCropChange={onCropChange}
           onCropComplete={onCropComplete}
           onZoomChange={setZoom}
           restrictPosition={false}
           // zoomWithScroll={false}
-          // zoomSpeed={0.7}
         />
       </div>
-      <Box>
+      <br />
+      <Box display="flex" flexDirection="column" style={{textAlign: "center"}}>
         <Button 
+        variant="outlined"
         onClick={saveCroppedImage}
+        color="primary"
         // Improve design
         >
-          Confirm Crop
+          Done
         </Button>
       </Box>
-      {/* Uncomment below to preview cropped image */}
-      {/* <div style={cropperContainerStyle()}>
-        {croppedImg && <img width="100%" src={croppedImg} />}
-      </div> */}
     </>
   )
 }

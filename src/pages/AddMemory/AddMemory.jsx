@@ -8,6 +8,7 @@ import MapDisplay from "./MapDisplay";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
 import { COLORS } from "../../utils/colors";
+import UploadMediaForm from "../UploadMediaForm/UploadMediaForm";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,6 +34,7 @@ const AddMemory = () => {
   const [memoryTitle, setMemoryTitle] = useState("");
   const [memoryDescription, setMemoryDescription] = useState("");
   const [selectedLocation, setSelectedLocation] = useState(null);
+  const [mediaUrl, setMediaUrl] = useState(null); // base64 encoded URL
   const [viewport, setViewport] = useState({
     latitude: 1.3521,
     longitude: 103.8198,
@@ -121,7 +123,12 @@ const AddMemory = () => {
                 setViewport={setViewport}
               />
             </div>
-            {/* section to add photo */}
+            <div className={classes.textFieldContainer}>
+              <UploadMediaForm
+                doneHandler={setMediaUrl}
+              />
+            </div>
+            <p>[TEST] Media Link: {mediaUrl && <a href={mediaUrl} rel="noreferrer" target="_blank">Copy This Link</a>}</p>
             <div className={classes.textFieldContainer}>
               <Button
                 fullWidth
@@ -131,7 +138,7 @@ const AddMemory = () => {
                   console.log("creating memory");
                 }}
               >
-                Add Line
+                Add Memory
               </Button>
             </div>
           </Grid>

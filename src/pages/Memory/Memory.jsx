@@ -10,7 +10,6 @@ const useStyles = makeStyles(() => ({
     textAlign: "center",
   },
   imageStyle: {
-    maxWidth: "500px",
     width: "90%",
     textAlign: "center",
   },
