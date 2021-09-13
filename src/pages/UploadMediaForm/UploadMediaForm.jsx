@@ -56,7 +56,6 @@ const UploadMediaForm = props => {
         <Cropper fileUrl={editFileUrl} cropHandler={handleCropDone} />
         <Button onClick={handleCancelCrop}>Cancel</Button>
         <br />
-        {/* <h5>[TEST] Final URL: {cropUrl ? cropUrl : "No Image Uploaded"}</h5> */}
       </Box>
     )
   }
@@ -75,7 +74,6 @@ const UploadMediaForm = props => {
         <HiddenFileInput handleChange={handleChange} />
       </label>
       </Button>
-      {/* <h5>[TEST] Final URL: {cropUrl}</h5> */}
     </Box>
   )
 }

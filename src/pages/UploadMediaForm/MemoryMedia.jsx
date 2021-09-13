@@ -11,8 +11,6 @@ const imageContainerStyle = () => ({
   width:  "90vw",
   backgroundColor: COLORS.LIGHT_PURPLE,
   margin: "auto",
-  display: "inline-block",
-  verticalAlign: "middle"
 })
 
 const MemoryMedia = props => {
