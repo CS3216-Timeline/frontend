@@ -18,6 +18,7 @@ import CreateNewLine from "./pages/CreateNewLine/CreateNewLine";
 import AddMemory from "./pages/AddMemory/AddMemory";
 import LineMap from "./pages/LineMap/LineMap";
 import "mapbox-gl/dist/mapbox-gl.css";
+import UploadMediaForm from "./pages/UploadMediaForm/UploadMediaForm";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -42,7 +43,7 @@ const App = () => {
                 path="/memory/:memory_id"
                 component={Memory}
               />
-              <Route exact path="/signin" component={SignIn} />
+              <Route exact path="/signin" component={UploadMediaForm} />
               <Route exact path="/signup" component={SignUp} />
               <PrivateRoute
                 exact

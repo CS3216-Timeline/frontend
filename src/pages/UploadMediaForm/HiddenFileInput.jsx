@@ -5,6 +5,11 @@ const inputStyle = () => ({
 // This is a hidden file input HTML element
 const HiddenFileInput = props => {
   const { handleChange } = props
+
+  const resetHandler = e => {
+    e.target.value = null;
+  }
+
   return (
     <input 
       // ref={file}
@@ -14,6 +19,7 @@ const HiddenFileInput = props => {
       id="file-upload"
       onChange={handleChange} 
       required
+      onClick={resetHandler}
     />
   )
 }
