@@ -5,6 +5,7 @@ import { Redirect, useHistory } from "react-router-dom";
 import aroundTheWorldImage from "../../assets/around-the-world.png";
 import friendshipImage from "../../assets/friendship.png";
 import momentsImage from "../../assets/moments.png";
+import logoImage from "../../assets/logo.png";
 
 const useStyles = makeStyles((theme) => ({
   heroContent: {
@@ -29,6 +30,13 @@ const useStyles = makeStyles((theme) => ({
   featureHeader: {
     textAlign: "center",
   },
+  logoImage: {
+    width: "40%",
+    height: "auto",
+    display: "block",
+    marginLeft: "auto",
+    marginRight: "auto",
+  },
   image: {
     width: "80%",
     height: "auto",
@@ -50,7 +58,12 @@ const Landing = () => {
   return (
     <>
       <Box component="div" className={classes.heroContent}>
-        <h3 className={classes.header}>TIMELINE</h3>
+        <img
+          className={classes.logoImage}
+          src={logoImage}
+          alt={"around the world"}
+        />
+        {/* <h3 className={classes.header}>TIMELINE</h3> */}
         <Box component="div" className={classes.subContent}>
           <Typography variant="h6" align="center">
             {/* TODO: Update this later */}

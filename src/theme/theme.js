@@ -18,6 +18,7 @@ const theme = createTheme({
     // }
   },
   typography: {
+    fontFamily: 'Lato',
     h1: {
       fontFamily: "Lato",
       fontSize: '50pt',
