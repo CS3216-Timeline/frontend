@@ -54,8 +54,8 @@ const UploadMediaForm = props => {
       <Box display="flex" flexDirection="column" style={{textAlign: "center"}}>
         <h3 style={{color: COLORS.PRIMARY_PURPLE}}>Upload Media</h3>
         <Cropper fileUrl={editFileUrl} cropHandler={handleCropDone} />
-        <Button onClick={handleCancelCrop}>Cancel</Button>
         <br />
+        <Button variant="outlined" onClick={handleCancelCrop}>Cancel</Button>
       </Box>
     )
   }
@@ -64,9 +64,11 @@ const UploadMediaForm = props => {
     <Box display="flex" flexDirection="column" style={{textAlign: "center"}}>
       <h3 style={{color: COLORS.PRIMARY_PURPLE}}>Upload Media</h3>
       <MemoryMedia url={cropUrl} />
-      {fileUrl && <Button onClick={handleRepeatCrop}>Crop</Button>}
+      <br />
+      {fileUrl && <Button variant="outlined" onClick={handleRepeatCrop}>Crop</Button>}
       <br />
       <Button
+        variant="outlined"
         color="primary"
       >
       <label htmlFor="file-upload" class="custom-file-upload">

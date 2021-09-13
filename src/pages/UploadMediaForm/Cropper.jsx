@@ -84,8 +84,10 @@ const Cropper = props => {
           // zoomWithScroll={false}
         />
       </div>
-      <Box>
+      <br />
+      <Box display="flex" flexDirection="column" style={{textAlign: "center"}}>
         <Button 
+        variant="outlined"
         onClick={saveCroppedImage}
         color="primary"
         // Improve design

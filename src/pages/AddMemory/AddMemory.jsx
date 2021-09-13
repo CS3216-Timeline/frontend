@@ -128,7 +128,7 @@ const AddMemory = () => {
                 doneHandler={setMediaUrl}
               />
             </div>
-            <p>[TEST] Media Link: {mediaUrl && <a href={mediaUrl} rel="noreferrer" target="_blank">Click Here</a>}</p>
+            <p>[TEST] Media Link: {mediaUrl && <a href={mediaUrl} rel="noreferrer" target="_blank">Copy This Link</a>}</p>
             <div className={classes.textFieldContainer}>
               <Button
                 fullWidth
