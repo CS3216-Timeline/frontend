@@ -3,9 +3,7 @@ import {
   REMOVE_ALERT,
 } from "../action-types/alert";
 
-const initialState = {
-  message: null,
-};
+const initialState = []
 
 const alertReducer = (state = initialState, action) => {
   const {
@@ -14,15 +12,9 @@ const alertReducer = (state = initialState, action) => {
   } = action;
   switch (type) {
     case SET_ALERT:
-      return {
-        ...state,
-        message: payload.message,
-      };
+      return [...state, payload];
     case REMOVE_ALERT:
-      return {
-        ...state,
-        message: null,
-      };
+      return state.filter((alert) => alert.id !== payload);
     default:
       return state;
   }

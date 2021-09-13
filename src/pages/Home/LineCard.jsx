@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Button,
   Card,
@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import HorizontalTimeline from "react-horizontal-timeline";
+// import HorizontalTimeline from "react-horizontal-timeline";
 // https://www.npmjs.com/package/react-vertical-timeline-component
 // https://www.npmjs.com/package/react-horizontal-timeline
 
@@ -15,12 +15,13 @@ const useStyles = makeStyles((theme) => ({
   card: {
     borderRadius: "20px",
     textAlign: "center",
+    margin: theme.spacing(1, 0),
   },
   titleContainer: {
     padding: theme.spacing(1),
   },
-  lineContainer: {},
-  descriptionContainer: {},
+  // lineContainer: {},
+  // descriptionContainer: {},
   cardActionsContainer: {
     justifyContent: "center",
     paddingBottom: theme.spacing(3),
@@ -29,34 +30,39 @@ const useStyles = makeStyles((theme) => ({
 
 const LineCard = ({ line }) => {
   const classes = useStyles();
-  const [value, setValue] = useState(0);
+  // const [value, setValue] = useState(0);
   // eslint-disable-next-line no-unused-vars
-  const [previous, setPrevious] = useState(0);
+  // const [previous, setPrevious] = useState(0);
 
   // Values should be only date
-  const VALUES = [
-    "2021-01-01",
-    "2021-01-02",
-    "2021-01-03",
-    "2021-01-04",
-    "2021-01-05",
-  ];
+  // const VALUES = [
+  //   "2021-01-01",
+  //   "2021-01-02",
+  //   "2021-01-03",
+  //   "2021-01-04",
+  //   "2021-01-05",
+  // ];
 
   // Description array corresponding to values
-  const description = [
-    "The event of 1 Jan 2021 : Happy New Year",
-    "The event of 2 Jan 2021 : Happy New Year",
-    "The event of 3 Jan 2021 : Happy New Year",
-    "The event of 4 Jan 2021 : Happy New Year",
-    "The event of 5 Jan 2021 : Happy New Year",
-  ];
+  // const description = [
+  //   "The event of 1 Jan 2021 : Happy New Year",
+  //   "The event of 2 Jan 2021 : Happy New Year",
+  //   "The event of 3 Jan 2021 : Happy New Year",
+  //   "The event of 4 Jan 2021 : Happy New Year",
+  //   "The event of 5 Jan 2021 : Happy New Year",
+  // ];
   return (
     <Card className={classes.card} variant="outlined">
       <CardContent>
         <div className={classes.titleContainer}>
-          <Typography variant="h3">{line.title}</Typography>
+          <Typography variant="h3">{line.name}</Typography>
         </div>
-        <div className={classes.lineContainer}>
+        <hr
+          style={{
+            border: `5px solid ${line["colour_hex"]}`,
+          }}
+        />
+        {/* <div className={classes.lineContainer}>
           <div
             style={{
               width: "100%",
@@ -66,8 +72,6 @@ const LineCard = ({ line }) => {
             }}
           >
             <HorizontalTimeline
-              // TODO: set this outline and foreground accordingly to the color of the line
-              // foreground will be the color of the line
               styles={{
                 outline: "#DFA867",
                 foreground: "#19295C",
@@ -83,7 +87,7 @@ const LineCard = ({ line }) => {
           <div className={classes.descriptionContainer}>
             <Typography variant="body1">{description[value]}</Typography>
           </div>
-        </div>
+        </div> */}
       </CardContent>
       <CardActions className={classes.cardActionsContainer}>
         <Button
@@ -92,7 +96,7 @@ const LineCard = ({ line }) => {
           variant="contained"
           // TODO: Update onClick function
           onClick={() => {
-            console.log("button clicked");
+            console.log(line);
           }}
           style={{ textTransform: "none" }}
         >

@@ -77,7 +77,8 @@ const SignUp = () => {
     if (password !== confirmPassword) {
       dispatch(
         setAlert(
-          "Please make sure that Password and Confirm Password are the same"
+          "Please make sure that Password and Confirm Password are the same",
+          "error"
         )
       );
       return;
