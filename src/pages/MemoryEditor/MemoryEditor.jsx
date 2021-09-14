@@ -66,10 +66,11 @@ const MemoryEditor = props => {
     const memory = getMemoryById(memoryId)
 
     // TODO: update component states to reflect existing memory data
+    // currently MOCK data
     setSelectedLocation(null)
-    setMemoryTitle(memory.title)
-    setMemoryDescription(null)
-    setMediaUrl(null)
+    setMemoryTitle(memory.title) 
+    setMemoryDescription(memory.description)
+    setMediaUrl(memory.media.source.url)
     setViewport(getDefaultViewport())
     // setCurrentLocation({})
 
@@ -159,11 +160,10 @@ const MemoryEditor = props => {
                 fullWidth
                 label="Memory Title"
                 name="memoryTitle"
-                autoFocus
+                autoFocus={!isEdit}
+                value={memoryTitle}
                 onChange={(e) => setMemoryTitle(e.target.value)}
-              >
-                {memoryTitle}
-              </TextField>
+              />
             </div>
             <div className={classes.textFieldContainer}>
               <TextField
@@ -175,10 +175,9 @@ const MemoryEditor = props => {
                 placeholder="Optional"
                 variant="outlined"
                 margin="normal"
+                value={memoryDescription}
                 onChange={(e) => setMemoryDescription(e.target.value)}
-              >
-                {memoryDescription}
-              </TextField>
+              />
             </div>
             <div className={classes.textFieldContainer}>
               <ComboBox
