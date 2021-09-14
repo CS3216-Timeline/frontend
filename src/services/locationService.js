@@ -24,3 +24,13 @@ export const getLocationSuggestions = async (newSearchValue, currentLocation) =>
     throw err;
   }
 }
+
+export const getGeographicFeature = async (latitude, longitude) => {
+  try {
+    let searchQuery = `${url}${longitude},${latitude}.json?worldview=cn&access_token=${MAPBOX_API_TOKEN}`;
+    const res = await axios.get(searchQuery);
+    return res;
+  } catch (err) {
+    throw err;
+  }
+}

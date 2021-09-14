@@ -70,6 +70,7 @@ export const ComboBox = ({
         getOptionSelected={(option, value) => (option.id = value.place_name)}
         onChange={handleChangeLocation}
         style={{ width: "100%" }}
+        value={selectedLocation}
         onInputChange={handleInputChange}
         renderInput={(params) => (
           <TextField

@@ -13,6 +13,7 @@ import { useHistory, useParams } from "react-router";
 import { getMemoryById } from "../../services/memories";
 import { useDispatch } from "react-redux";
 import { setAlert } from "../../actions/alert";
+import { getGeographicFeature } from "../../services/locationService";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -65,16 +66,36 @@ const MemoryEditor = props => {
   // if URL param contains memoryId, then there is existing memory
   const isEdit = memoryId ? true : false;
 
+  const getLocationFromCoordinates = async (latitude, longitude) => {
+    try {
+      const res = await getGeographicFeature(latitude, longitude);
+      const processedRes = res.data.features.map((location) => {
+        return {
+          place_name: location.place_name,
+          geometry: location.geometry,
+        };
+      })
+      if (!processedRes) {
+        return;
+      }
+      setSelectedLocation(processedRes[0])
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
   if (isEdit && !isDataLoaded) {
     console.log("isLineIdEmpty?", isEmpty(lineId))
     // fetch memory from backend, need error handling!
     const memory = getMemoryById(memoryId)
+
+    getLocationFromCoordinates(memory.latitude, memory.longitude)
 
     const existingViewport = {
       ...viewport,
       latitude: memory.latitude,
       longitude: memory.longitude,
     }
+
     // TODO: update component states to reflect existing memory data
     // currently MOCK data
     setSelectedLocation(null)
