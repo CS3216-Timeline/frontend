@@ -51,14 +51,16 @@ const MemoryEditor = props => {
   const [viewport, setViewport] = useState({...DEFAULT_VIEWPORT});
 
   const classes = useStyles();
-  const urlParams = useParams() // Read line from URL
-  const { memoryId, lineId } = urlParams;
+  const urlParams = useParams() // Read params from URL
+  // urlParams contain EITHER lineId (new) or memoryId (existing)
+  const { memoryId, lineId } = urlParams; 
 
   // if URL param contains memoryId, then there is existing memory
   const isEdit = memoryId ? true : false;
 
   if (isEdit && !isDataLoaded) {
-    // fetch memory from backend
+    console.log("isLineIdEmpty?", isEmpty(lineId))
+    // fetch memory from backend, need error handling!
     const memory = getMemoryById(memoryId)
 
     // TODO: update component states to reflect existing memory data
@@ -73,28 +75,35 @@ const MemoryEditor = props => {
     setIsDataLoaded(true)
   }
 
-  const saveHandler = () => {
+  const saveHandler = (e) => {
+    e.preventDefault();
     // add guard clauses here, to validate form
     if (isEmpty(memoryTitle)) {
       // alert empty title
-      return
+      console.log("Title cannot be empty.");
+      return;
     }
     if (isEmpty(memoryDescription)) {
       // alert empty description
-      return
+      console.log("Memory cannot be empty.");
+      return;
     }
     if (isEmpty(selectedLocation)) {
       // alert no location selected
-      return
+      console.log("Selected location cannot be empty");
+      return;
     }
     if (isEmpty(mediaUrl)) {
       // alert no media
-      return
+      console.log("Media url cannot be empty");
+      return;
     }
     if (isEdit) {
+      // TODO
       // save to existing memory
       // redirect back to Memory  page
     } else {
+      // TODO
       // add new memory to line
       // redirect to new memory page
     }
@@ -191,11 +200,9 @@ const MemoryEditor = props => {
                 fullWidth
                 color="primary"
                 variant="contained"
-                onClick={() => {
-                  console.log("creating memory");
-                }}
+                onClick={saveHandler}
               >
-                Add Memory
+                Save Memory
               </Button>
             </div>
           </Grid>
