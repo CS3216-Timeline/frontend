@@ -12,7 +12,7 @@ const mockLineData = {
 }
 
 export const getAllLinesByUserIdOrderByMostRecentMemory = async () => {
-  const res = await server.get('/api/lines');
+  const res = await server.get('lines');
   let lines = res.data.lines;
   if (lines.length !== 0) {
     lines = lines.map(line => {
@@ -30,7 +30,7 @@ export const createNewLine = async (lineTitle, selectedColor) => {
     "line-name": lineTitle,
     "color-hex": removeHash(selectedColor),
   }
-  const res = await server.post('/api/lines', body);
+  const res = await server.post('lines', body);
   return res.lines;
 }
 
