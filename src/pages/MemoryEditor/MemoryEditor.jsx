@@ -66,9 +66,9 @@ const MemoryEditor = props => {
     const memory = getMemoryById(memoryId)
 
     // TODO: update component states to reflect existing memory data
-    setSelectedLocation({})
+    setSelectedLocation(null)
     setMemoryTitle(memory.title)
-    setMemoryDescription("")
+    setMemoryDescription(null)
     setMediaUrl(null)
     setViewport({...DEFAULT_VIEWPORT})
     // setCurrentLocation({})
