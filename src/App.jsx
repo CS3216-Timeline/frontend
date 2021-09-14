@@ -50,7 +50,7 @@ const App = () => {
             <Switch>
               <Route exact path="/signin" component={SignIn} />
               <Route exact path="/register" component={SignUp} />
-              <Route exact path="/" component={Landing} />
+              <Route exact path="/landing" component={Landing} />
               <PrivateRoute exact path="/line/:line_id" component={Line} />
               <PrivateRoute
                 exact
