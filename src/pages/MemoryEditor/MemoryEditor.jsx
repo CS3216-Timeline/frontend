@@ -9,7 +9,7 @@ import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
 import { COLORS } from "../../utils/colors";
 import UploadMediaForm from "../UploadMediaForm/UploadMediaForm";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { getMemoryById } from "../../services/memories";
 
 const useStyles = makeStyles((theme) => ({
@@ -49,6 +49,8 @@ const MemoryEditor = props => {
   const [mediaUrl, setMediaUrl] = useState(null); // base64 encoded URL
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [viewport, setViewport] = useState({...DEFAULT_VIEWPORT});
+
+  const history = useHistory()
 
   const classes = useStyles();
   const urlParams = useParams() // Read params from URL
@@ -98,14 +100,19 @@ const MemoryEditor = props => {
       console.log("Media url cannot be empty");
       return;
     }
+    // TODO: maybe both can have same way of handling
+    // (if backend decides to use POST for editing as well)
     if (isEdit) {
-      // TODO
+      // TODO: backend PUT request
       // save to existing memory
       // redirect back to Memory  page
+      history.push(`memory/${memoryId}`)
     } else {
-      // TODO
+      // TODO: backend POST request
       // add new memory to line
+      const newMemoryId = 99 // will be created by backend
       // redirect to new memory page
+      history.push(`memory/${newMemoryId}`)
     }
   }
 
