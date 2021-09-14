@@ -9,6 +9,8 @@ import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
 import { COLORS } from "../../utils/colors";
 import UploadMediaForm from "../UploadMediaForm/UploadMediaForm";
+import { useParams } from "react-router";
+import { getMemoryById } from "../../services/memories";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,20 +30,75 @@ const useStyles = makeStyles((theme) => ({
 
 // https://docs.mapbox.com/help/tutorials/use-mapbox-gl-js-with-react/
 // TODO: pass line as a prop
-const AddMemory = () => {
-  const classes = useStyles();
+
+const DEFAULT_VIEWPORT = {
+  latitude: 1.3521,
+  longitude: 103.8198,
+  height: "50vh",
+  width: "100%",
+  zoom: 10,
+}
+
+const isEmpty = val => val === null || val === undefined || val === ""
+
+const MemoryEditor = props => {
   const [currentLocation, setCurrentLocation] = useState({});
-  const [memoryTitle, setMemoryTitle] = useState("");
-  const [memoryDescription, setMemoryDescription] = useState("");
+  const [memoryTitle, setMemoryTitle] = useState(null);
+  const [memoryDescription, setMemoryDescription] = useState(null);
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [mediaUrl, setMediaUrl] = useState(null); // base64 encoded URL
-  const [viewport, setViewport] = useState({
-    latitude: 1.3521,
-    longitude: 103.8198,
-    height: "50vh",
-    width: "100%",
-    zoom: 10,
-  });
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [viewport, setViewport] = useState({...DEFAULT_VIEWPORT});
+
+  const classes = useStyles();
+  const urlParams = useParams() // Read line from URL
+  const { memoryId, lineId } = urlParams;
+
+  // if URL param contains memoryId, then there is existing memory
+  const isEdit = memoryId ? true : false;
+
+  if (isEdit && !isDataLoaded) {
+    // fetch memory from backend
+    const memory = getMemoryById(memoryId)
+
+    // TODO: update component states to reflect existing memory data
+    setSelectedLocation({})
+    setMemoryTitle(memory.title)
+    setMemoryDescription("")
+    setMediaUrl(null)
+    setViewport({...DEFAULT_VIEWPORT})
+    // setCurrentLocation({})
+
+    // set isDataLoaded to true
+    setIsDataLoaded(true)
+  }
+
+  const saveHandler = () => {
+    // add guard clauses here, to validate form
+    if (isEmpty(memoryTitle)) {
+      // alert empty title
+      return
+    }
+    if (isEmpty(memoryDescription)) {
+      // alert empty description
+      return
+    }
+    if (isEmpty(selectedLocation)) {
+      // alert no location selected
+      return
+    }
+    if (isEmpty(mediaUrl)) {
+      // alert no media
+      return
+    }
+    if (isEdit) {
+      // save to existing memory
+      // redirect back to Memory  page
+    } else {
+      // add new memory to line
+      // redirect to new memory page
+    }
+  }
 
   useEffect(() => {
     const getCurrentLocation = async () => {
@@ -71,7 +128,7 @@ const AddMemory = () => {
         <Grid container className={classes.linesContainer}>
           <Grid item xs={12}>
             <PrivatePageHeader
-              text={"Add Memory"}
+              text={`${isEdit ? "Edit" : "Add"} Memory`}
               icon={
                 <AddAPhotoIcon
                   style={{ fontSize: "30pt", color: COLORS.PRIMARY_PURPLE }}
@@ -148,4 +205,4 @@ const AddMemory = () => {
   );
 };
 
-export default AddMemory;
+export default MemoryEditor;
