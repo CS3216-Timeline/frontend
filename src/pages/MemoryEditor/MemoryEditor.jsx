@@ -11,6 +11,8 @@ import { COLORS } from "../../utils/colors";
 import UploadMediaForm from "../UploadMediaForm/UploadMediaForm";
 import { useHistory, useParams } from "react-router";
 import { getMemoryById } from "../../services/memories";
+import { useDispatch } from "react-redux";
+import { setAlert } from "../../actions/alert";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,14 +45,17 @@ const isEmpty = val => val === null || val === undefined || val === ""
 
 const MemoryEditor = props => {
   const [currentLocation, setCurrentLocation] = useState({});
-  const [memoryTitle, setMemoryTitle] = useState(null);
-  const [memoryDescription, setMemoryDescription] = useState(null);
+  const [memoryTitle, setMemoryTitle] = useState("");
+  const [memoryDescription, setMemoryDescription] = useState("");
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [mediaUrl, setMediaUrl] = useState(null); // base64 encoded URL
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [viewport, setViewport] = useState(getDefaultViewport());
 
   const history = useHistory()
+  const dispatch = useDispatch()
+
+  const alertError = msg => dispatch(setAlert(msg, "error"));
 
   const classes = useStyles();
   const urlParams = useParams() // Read params from URL
@@ -78,27 +83,23 @@ const MemoryEditor = props => {
     setIsDataLoaded(true)
   }
 
+  //http://localhost:3000/line/1/add-memory
   const saveHandler = (e) => {
     e.preventDefault();
-    // add guard clauses here, to validate form
     if (isEmpty(memoryTitle)) {
-      // alert empty title
-      console.log("Title cannot be empty.");
+      alertError("Title cannot be empty.");
       return;
     }
     if (isEmpty(memoryDescription)) {
-      // alert empty description
-      console.log("Memory cannot be empty.");
+      alertError("Description cannot be empty.");
       return;
     }
     if (isEmpty(selectedLocation)) {
-      // alert no location selected
-      console.log("Selected location cannot be empty");
+      alertError("Location cannot be empty.");
       return;
     }
     if (isEmpty(mediaUrl)) {
-      // alert no media
-      console.log("Media url cannot be empty");
+      alertError("Please upload a media.");
       return;
     }
     // TODO: maybe both can have same way of handling
