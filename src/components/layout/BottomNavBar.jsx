@@ -30,14 +30,14 @@ const BottomNavBar = () => {
 
   return (
     <BottomNavigation className={classes.root}>
-      <BottomNavigationAction component={Link} to="/home" icon={<HomeIcon />} />
+      <BottomNavigationAction component={Link} to="/" icon={<HomeIcon />} />
       {/* TODO: change the links/icons for these 2 if necessary */}
-      <BottomNavigationAction component={Link} to="/home" icon={<FavoriteIcon />} />
-      <BottomNavigationAction component={Link} to="/home" icon={<PersonIcon />} />
+      <BottomNavigationAction component={Link} to="/" icon={<FavoriteIcon />} />
+      <BottomNavigationAction component={Link} to="/" icon={<PersonIcon />} />
       {/* TODO: create a how to use page */}
       <BottomNavigationAction
         component={Link}
-        to="/home"
+        to="/"
         icon={<HelpOutlineIcon />}
       />
     </BottomNavigation>

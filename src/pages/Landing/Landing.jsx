@@ -53,7 +53,7 @@ const Landing = () => {
   const auth = useSelector((state) => state.auth);
 
   if (auth.isAuthenticated) {
-    return <Redirect to="/home" />;
+    return <Redirect to="/" />;
   }
 
   return (

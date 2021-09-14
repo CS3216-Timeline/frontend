@@ -75,7 +75,7 @@ const SignIn = () => {
   };
 
   if (auth.isAuthenticated) {
-    return <Redirect to="/home" />;
+    return <Redirect to="/" />;
   }
 
   return (

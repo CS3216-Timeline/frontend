@@ -50,7 +50,7 @@ const CreateNewLine = () => {
       console.log(line);
       dispatch(setAlert("Line Successfully created", "success"));
       // TODO: If want, can redirect to line page instead
-      history.push("/home");
+      history.push("/");
     } catch (err) {
       dispatch(setAlert(err.message, "error"));
     } finally {

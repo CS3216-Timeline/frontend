@@ -46,7 +46,7 @@ const App = () => {
         <Router>
           <Fragment>
             <CustomSnackbar />
-            <PrivateRoute exact path="/home" component={Home} />
+            <PrivateRoute exact path="/" component={Home} />
             <Switch>
               <Route exact path="/signin" component={SignIn} />
               <Route exact path="/register" component={SignUp} />
