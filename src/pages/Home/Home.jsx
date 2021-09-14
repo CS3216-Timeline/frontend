@@ -60,7 +60,7 @@ const Home = () => {
   }, [dispatch]);
 
   const onAddLineClick = () => {
-    history.push("/createnewline");
+    history.push("/add-line");
   };
 
   const searchLines = (e) => {

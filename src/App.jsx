@@ -59,7 +59,7 @@ const App = () => {
               />
               <PrivateRoute
                 exact
-                path="/createnewline"
+                path="/add-line"
                 component={CreateNewLine}
               />
               <PrivateRoute exact path="/line/:lineId/add-memory" component={MemoryEditor} />
