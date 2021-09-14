@@ -131,6 +131,10 @@ const MemoryEditor = props => {
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
           });
+          if (isEdit) {
+            // do not set to current in edit mode
+            return;
+          }
           setViewport({
             ...viewport,
             latitude: position.coords.latitude,
@@ -140,7 +144,7 @@ const MemoryEditor = props => {
       });
     };
     getCurrentLocation();
-  }, [viewport]);
+  }, [viewport, isEdit]);
 
   // TODO: connect to backend
   // const addMemoryToLine = () => {};
