@@ -31,13 +31,13 @@ const useStyles = makeStyles((theme) => ({
 // https://docs.mapbox.com/help/tutorials/use-mapbox-gl-js-with-react/
 // TODO: pass line as a prop
 
-const DEFAULT_VIEWPORT = {
+const getDefaultViewport = () => ({
   latitude: 1.3521,
   longitude: 103.8198,
   height: "50vh",
   width: "100%",
   zoom: 10,
-}
+})
 
 const isEmpty = val => val === null || val === undefined || val === ""
 
@@ -48,7 +48,7 @@ const MemoryEditor = props => {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [mediaUrl, setMediaUrl] = useState(null); // base64 encoded URL
   const [isDataLoaded, setIsDataLoaded] = useState(false);
-  const [viewport, setViewport] = useState({...DEFAULT_VIEWPORT});
+  const [viewport, setViewport] = useState(getDefaultViewport());
 
   const history = useHistory()
 
@@ -70,7 +70,7 @@ const MemoryEditor = props => {
     setMemoryTitle(memory.title)
     setMemoryDescription(null)
     setMediaUrl(null)
-    setViewport({...DEFAULT_VIEWPORT})
+    setViewport(getDefaultViewport())
     // setCurrentLocation({})
 
     // set isDataLoaded to true
