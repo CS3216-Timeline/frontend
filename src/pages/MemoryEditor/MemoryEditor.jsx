@@ -70,13 +70,18 @@ const MemoryEditor = props => {
     // fetch memory from backend, need error handling!
     const memory = getMemoryById(memoryId)
 
+    const existingViewport = {
+      ...viewport,
+      latitude: memory.latitude,
+      longitude: memory.longitude,
+    }
     // TODO: update component states to reflect existing memory data
     // currently MOCK data
     setSelectedLocation(null)
     setMemoryTitle(memory.title) 
     setMemoryDescription(memory.description)
     setMediaUrl(memory.media.source.url)
-    setViewport(getDefaultViewport())
+    setViewport(existingViewport)
     // setCurrentLocation({})
 
     // set isDataLoaded to true

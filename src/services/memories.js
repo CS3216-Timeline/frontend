@@ -8,7 +8,9 @@ const mockMemoryData = {
     source: {
     url: "https://www.whiteroomstudio.com.sg/wordpress/wp-content/uploads/2020/05/Big-Family-Photoshoot-Singapore_003.jpg"
     }
-  }
+  },
+  latitude: 53.2734,
+  longitude: -7.77832031,
 }
 
 // returns memory data
