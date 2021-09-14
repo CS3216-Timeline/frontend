@@ -7,7 +7,7 @@ import { Redirect } from "react-router-dom";
 const NotFound = () => {
   const auth = useSelector((state) => state.auth);
   if (auth.isAuthenticated) {
-    return <Redirect to="/" />;
+    return <Redirect to="/home" />;
   } else {
     return <Redirect to="/landing" />;
   }
