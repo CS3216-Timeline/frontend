@@ -9,16 +9,18 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     flexDirection: "row",
     marginBottom: theme.spacing(1),
+    marginTop: theme.spacing(1),
   },
   icon: {
     marginRight: theme.spacing(1),
   },
   authHeader: {
-    fontSize: "24pt",
+    fontSize: "25pt",
     textTransform: "uppercase",
-    letterSpacing: "3px",
+    letterSpacing: "1.5px",
     color: COLORS.PRIMARY_PURPLE,
     fontWeight: 600,
+    textAlign: "center",
   },
 }));
 
@@ -27,7 +29,7 @@ const PrivatePageHeader = ({ text, icon }) => {
   return (
     <>
       <div className={classes.root}>
-        <div className={classes.icon}>{icon}</div>
+        {icon && <div className={classes.icon}>{icon}</div>}
         <Typography className={classes.authHeader}>{text}</Typography>
       </div>
     </>

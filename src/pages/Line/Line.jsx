@@ -1,22 +1,38 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Timeline from "@material-ui/lab/Timeline";
+import { Box, Button, Grid, makeStyles, Typography } from "@material-ui/core";
 import { getLineById } from "../../services/lines";
-import { getMemoryById } from "../../services/memories"
+import { getMemoryById } from "../../services/memories";
 import LineCard from "./LineCard";
-// import { useParams } from 'react-router-dom';
+import EditIcon from "@material-ui/icons/Edit";
+import LinearScaleIcon from "@material-ui/icons/LinearScale";
+import DeleteIcon from "@material-ui/icons/Delete";
+import ExploreIcon from "@material-ui/icons/Explore";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
+import { useHistory, useParams } from "react-router-dom";
+import { COLORS } from "../../utils/colors";
+import DeleteLineDialog from "./DeleteLineDialog";
+import Loading from "../../components/Loading";
+import LineMap from "../LineMap/LineMap";
 
-const getLineInfo = (id) => getLineById(id);
-const getMemories = (memoryIds) => memoryIds.map((id) => getMemoryById(id));
-
-const getLineStyle = () => {
-  // if mobile, {}
-  // return { padding: "50px 400px", }
-};
-
-const getLineTitleStyle = () => ({
-  textAlign: "center",
-  padding: "0 ",
-});
+const useStyles = makeStyles((theme) => ({
+  root: {
+    padding: theme.spacing(3, 0, 6, 0),
+  },
+  header: {
+    display: "flex",
+    justifyContent: "center",
+  },
+  mapButton: {
+    color: COLORS.WHITE,
+    backgroundColor: COLORS.BLUE,
+  },
+  deleteButton: {
+    color: COLORS.WHITE,
+    backgroundColor: COLORS.CANCEL_BUTTON,
+  },
+}));
 
 const isAlternating = () => {
   // if desktop, return true
@@ -24,15 +40,28 @@ const isAlternating = () => {
 };
 
 const getAlignment = (isAlternating) => {
-  // if desktop, return "alternate"
   return isAlternating ? "alternate" : "left";
 };
 
-const Line = (props) => {
-  const { lineId } = props;
-  // const { line_id } = useParams() // for edit purposes
-  const { title, color, memoryIds } = getLineInfo(lineId);
+const getLineInfo = (id) => getLineById(id);
+const getMemories = (memoryIds) => memoryIds.map((id) => getMemoryById(id));
 
+const Line = (props) => {
+  const classes = useStyles();
+  const { line_id } = useParams();
+  const history = useHistory();
+  const { title, color, memoryIds } = getLineInfo(line_id);
+  const [displayDeleteDialog, setDisplayDeleteDialog] = useState(false);
+  const [loading, setLoading] = useState(false);
+  // https://stackoverflow.com/questions/56608065/fix-cant-perform-a-react-state-update-on-an-unmounted-component-error
+  const [deleted, setDeleted] = useState(false);
+  const [showMap, setShowMap] = useState(false);
+
+  useEffect(() => {
+    if (deleted) {
+      history.push("/");
+    }
+  }, [deleted, history]);
   const memories = getMemories(memoryIds);
 
   const isAlt = isAlternating();
@@ -41,26 +70,109 @@ const Line = (props) => {
 
   const isFirstMemory = (idx) => idx === 0;
   const isLastMemory = (idx) => idx === lineSize - 1;
+
+  // TODO: useEffect to get the memoreies by line_id
+
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <>
-      <div style={getLineStyle()}>
-        <h1 style={getLineTitleStyle()}>{title}</h1>
-        <Timeline align={alignment}>
-          {memories.map((memory, idx) => (
-            <LineCard
-              isFirst={isFirstMemory(idx)}
-              isLast={isLastMemory(idx)}
-              alternate={isAlt}
-              memoryId={memory.memory_id}
-              key={memory.memory_id}
-              title={memory.title}
-              description={memory.description}
-              mediaUrl={memory.media.source.url}
-              date={memory.date}
-              color={color}
-            />
-          ))}
-        </Timeline>
+      <div className={classes.root}>
+        <div className={classes.header}>
+          <PrivatePageHeader text={title} />
+        </div>
+        <Box paddingTop={2}>
+          <Grid container>
+            <Grid item xs={4}>
+              <Box paddingX={1}>
+                <Button
+                  // TODO: add line_id as params
+                  onClick={() => setShowMap(!showMap)}
+                  fullWidth
+                  className={classes.mapButton}
+                  variant="contained"
+                  startIcon={!showMap ? <ExploreIcon /> : <LinearScaleIcon />}
+                >
+                  <Typography variant="body2">
+                    {!showMap ? "map" : "line"}
+                  </Typography>
+                </Button>
+              </Box>
+            </Grid>
+            <Grid item xs={4}>
+              <Box paddingX={1}>
+                <Button
+                  onClick={() => {
+                    history.push(`/edit-line/${line_id}`);
+                  }}
+                  fullWidth
+                  variant="contained"
+                  startIcon={<EditIcon />}
+                >
+                  <Typography variant="body2">Edit</Typography>
+                </Button>
+              </Box>
+            </Grid>
+            <Grid item xs={4}>
+              <Box paddingX={1}>
+                <Button
+                  onClick={() => {
+                    setDisplayDeleteDialog(!displayDeleteDialog);
+                  }}
+                  fullWidth
+                  className={classes.deleteButton}
+                  variant="contained"
+                  startIcon={<DeleteIcon />}
+                >
+                  <Typography variant="body2">Delete</Typography>
+                </Button>
+              </Box>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Box margin={3}>
+              <Button
+                fullWidth
+                color="primary"
+                variant="contained"
+                onClick={() => history.push(`/line/${line_id}`)}
+                startIcon={<ArrowBackIcon />}
+              >
+                Back to line page
+              </Button>
+            </Box>
+          </Grid>
+        </Box>
+        {/* TODO: send memories as a prop to LineMap */}
+        {showMap ? (
+          <LineMap />
+        ) : (
+          <Timeline align={alignment}>
+            {memories.map((memory, idx) => (
+              <LineCard
+                isFirst={isFirstMemory(idx)}
+                isLast={isLastMemory(idx)}
+                alternate={isAlt}
+                memoryId={memory.memory_id}
+                key={memory.memory_id}
+                title={memory.title}
+                description={memory.description}
+                mediaUrl={memory.media.source.url}
+                date={memory.date}
+                color={color}
+              />
+            ))}
+          </Timeline>
+        )}
+        <DeleteLineDialog
+          displayDeleteDialog={displayDeleteDialog}
+          setDisplayDeleteDialog={setDisplayDeleteDialog}
+          setLoading={setLoading}
+          line_id={line_id}
+          setDeleted={setDeleted}
+        />
       </div>
     </>
   );

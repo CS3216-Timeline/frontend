@@ -95,7 +95,10 @@ export const ComboBox = ({
         place_name: {selectedLocation && selectedLocation.place_name}
       </Typography>
       <Typography variant="body1">
-        coordinates: {selectedLocation && selectedLocation.geometry.coordinates}
+        coordinates:{" "}
+        {selectedLocation &&
+          `longitude: ${selectedLocation.geometry.coordinates[0]}, latitude: 
+         ${selectedLocation.geometry.coordinates[1]}`}
       </Typography>
     </>
   );

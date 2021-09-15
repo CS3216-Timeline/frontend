@@ -1,3 +1,5 @@
+// import server from "../utils/server"
+
 const mockMemoryData = {
   memory_id: 4,
   date: "19 May 2021",
@@ -6,11 +8,11 @@ const mockMemoryData = {
   media: {
     type: "IMAGE",
     source: {
-    url: "https://www.whiteroomstudio.com.sg/wordpress/wp-content/uploads/2020/05/Big-Family-Photoshoot-Singapore_003.jpg"
+      url: "https://www.whiteroomstudio.com.sg/wordpress/wp-content/uploads/2020/05/Big-Family-Photoshoot-Singapore_003.jpg"
     }
   },
-  latitude: 53.2734,
-  longitude: -7.77832031,
+  latitude: 1.359237,
+  longitude: 103.98934,
 }
 
 // returns memory data
@@ -19,4 +21,11 @@ export const getMemoryById = (id) => {
     ...mockMemoryData,
     memory_id: id
   }
+}
+
+// TODO: connect with backend
+export const deleteMemoryById = async (id) => {
+  console.log('deleted');
+  // const res = await server.delete(`${id}`);
+  // return res.data
 }

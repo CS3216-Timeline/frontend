@@ -1,7 +1,16 @@
-import { Box, makeStyles } from "@material-ui/core";
+import { Box, Button, Grid, makeStyles } from "@material-ui/core";
 import React from "react";
+import EditIcon from "@material-ui/icons/Edit";
+import DeleteIcon from "@material-ui/icons/Delete";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { useParams } from "react-router";
 import { getMemoryById } from "../../services/memories";
+import { COLORS } from "../../utils/colors";
+import { useState } from "react";
+import Loading from "../../components/Loading";
+import { useHistory } from "react-router-dom";
+import DeleteMemoryDialog from "./DeleteMemoryDialog";
+import { useEffect } from "react";
 
 const useStyles = makeStyles(() => ({
   alignCenter: {
@@ -11,6 +20,10 @@ const useStyles = makeStyles(() => ({
     padding: "0% 5%",
     textAlign: "center",
   },
+  deleteButton: {
+    color: COLORS.WHITE,
+    backgroundColor: COLORS.CANCEL_BUTTON,
+  },
   imageStyle: {
     width: "90%",
     textAlign: "center",
@@ -19,12 +32,28 @@ const useStyles = makeStyles(() => ({
 
 const Memory = (props) => {
   const classes = useStyles();
-
-  const { memory_id: memoryId } = useParams() 
-  const { title, description, media, date } = getMemoryById(memoryId)
-
-  const mediaUrl = media.source.url
+  const history = useHistory();
+  const { memory_id } = useParams();
+  const { title, description, media, date, line_id } = getMemoryById(memory_id);
+  const [loading, setLoading] = useState(false);
+  const [displayDeleteDialog, setDisplayDeleteDialog] = useState(false);
+  const [deleted, setDeleted] = useState(false);
+  // eslint-disable-next-line no-unused-vars
+  const mediaUrl = media.source.url;
   // const { title, description, mediaUrl, date } = props.location.state;
+
+  useEffect(() => {
+    if (deleted) {
+      history.push(`line/${line_id}`);
+    }
+  }, [deleted, history, line_id]);
+
+  // do a useEffect to get the memory after endpoint to get a memory is done
+
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <>
       <Box className={classes.alignCenter}>
@@ -35,6 +64,61 @@ const Memory = (props) => {
           <p>{description}</p>
         </div>
       </Box>
+      <Box paddingTop={5}>
+        <Grid container>
+          <Grid item xs={6}>
+            <Box paddingX={3}>
+              <Button
+                onClick={() => {
+                  console.log("editing");
+                }}
+                fullWidth
+                className={classes.editButton}
+                variant="contained"
+                startIcon={<EditIcon />}
+              >
+                Edit
+              </Button>
+            </Box>
+          </Grid>
+          <Grid item xs={6}>
+            <Box paddingX={3}>
+              <Button
+                onClick={() => {
+                  setDisplayDeleteDialog(true);
+                }}
+                fullWidth
+                className={classes.deleteButton}
+                variant="contained"
+                startIcon={<DeleteIcon />}
+              >
+                Delete
+              </Button>
+            </Box>
+          </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <Box margin={3}>
+            <Button
+              fullWidth
+              color="primary"
+              variant="contained"
+              onClick={() => history.push(`/line/${line_id}`)}
+              startIcon={<ArrowBackIcon />}
+            >
+              Back to line page
+            </Button>
+          </Box>
+        </Grid>
+      </Box>
+      <DeleteMemoryDialog
+        setLoading={setLoading}
+        displayDeleteDialog={displayDeleteDialog}
+        setDisplayDeleteDialog={setDisplayDeleteDialog}
+        memory_id={memory_id}
+        line_id={line_id}
+        setDeleted={setDeleted}
+      />
     </>
   );
 };

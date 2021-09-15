@@ -1,12 +1,8 @@
 import React, { useState } from "react";
 // import { useParams } from "react-router-dom";
 import MapDisplay from "./MapDisplay";
-import MapIcon from "@material-ui/icons/Map";
 import { memoriesData } from "./data";
-import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
-import { COLORS } from "../../utils/colors";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import { Fab, makeStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 // To show a line map with markers of locations of the memories
 // Will need the exact same data as the Line page
 
@@ -24,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// TODO: send memoryData here
 const LineMap = () => {
   const classes = useStyles();
   // TODO: UNCOMMENT THIS LATER
@@ -46,29 +43,11 @@ const LineMap = () => {
   return (
     <>
       <div className={classes.root}>
-        <PrivatePageHeader
-          text={"Memories Map"}
-          icon={
-            <MapIcon
-              style={{ fontSize: "30pt", color: COLORS.PRIMARY_PURPLE }}
-            />
-          }
-        />
         <MapDisplay
           memoriesData={memoriesData}
           viewport={viewport}
           setViewport={setViewport}
         />
-        <Fab
-          size="small"
-          color="primary"
-          className={classes.fab}
-          onClick={() => {
-            // TODO: go back to the memory timeline page
-          }}
-        >
-          <ArrowBackIcon />
-        </Fab>
       </div>
     </>
   );
