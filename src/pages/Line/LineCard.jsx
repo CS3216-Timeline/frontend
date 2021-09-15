@@ -57,7 +57,7 @@ const LineCard = props => {
       style={{ textDecoration: 'none' }}
       to={{
         pathname: "/memory/" + memoryId,
-        state: props
+        // state: props
       }}
       >
         <TimelineContent>

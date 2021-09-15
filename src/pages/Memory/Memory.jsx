@@ -1,5 +1,7 @@
 import { Box, makeStyles } from "@material-ui/core";
 import React from "react";
+import { useParams } from "react-router";
+import { getMemoryById } from "../../services/memories";
 
 const useStyles = makeStyles(() => ({
   alignCenter: {
@@ -17,8 +19,12 @@ const useStyles = makeStyles(() => ({
 
 const Memory = (props) => {
   const classes = useStyles();
-  // const { memory_id } = useParams() // for edit purposes
-  const { title, description, mediaUrl, date } = props.location.state;
+
+  const { memory_id: memoryId } = useParams() 
+  const { title, description, media, date } = getMemoryById(memoryId)
+
+  const mediaUrl = media.source.url
+  // const { title, description, mediaUrl, date } = props.location.state;
   return (
     <>
       <Box className={classes.alignCenter}>

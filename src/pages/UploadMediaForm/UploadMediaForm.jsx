@@ -71,7 +71,7 @@ const UploadMediaForm = props => {
         variant="outlined"
         color="primary"
       >
-      <label htmlFor="file-upload" class="custom-file-upload">
+      <label htmlFor="file-upload">
         {hasValidMedia ? "Change" : "Add New"} Media
         <HiddenFileInput handleChange={handleChange} />
       </label>

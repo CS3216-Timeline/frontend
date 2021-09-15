@@ -11,22 +11,8 @@ const mockLineData = {
   color: "blue",
 }
 
-const mockMemoryData = {
-  memory_id: 4,
-  date: "19 May 2021",
-  title: "Mok Family Gathering ",
-  description: "This is a mock card description. This is a mock card description. This is a mock card description. This is a mock card description. This is a mock card description.",
-  media: {
-    type: "IMAGE",
-    source: {
-      url: "https://www.whiteroomstudio.com.sg/wordpress/wp-content/uploads/2020/05/Big-Family-Photoshoot-Singapore_003.jpg"
-    }
-  }
-}
-
-
 export const getAllLinesByUserIdOrderByMostRecentMemory = async () => {
-  const res = await server.get('/api/lines');
+  const res = await server.get('lines');
   let lines = res.data.lines;
   if (lines.length !== 0) {
     lines = lines.map(line => {
@@ -44,19 +30,11 @@ export const createNewLine = async (lineTitle, selectedColor) => {
     "line-name": lineTitle,
     "color-hex": removeHash(selectedColor),
   }
-  const res = await server.post('/api/lines', body);
+  const res = await server.post('lines', body);
   return res.lines;
 }
 
 // returns line data
 export const getLineById = (id) => {
   return mockLineData
-}
-
-// returns memory data
-export const getMemoryById = (id) => {
-  return {
-    ...mockMemoryData,
-    memory_id: id
-  }
 }

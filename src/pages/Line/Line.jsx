@@ -1,6 +1,7 @@
 import React from "react";
 import Timeline from "@material-ui/lab/Timeline";
-import { getLineById, getMemoryById } from "../../services/lines";
+import { getLineById } from "../../services/lines";
+import { getMemoryById } from "../../services/memories"
 import LineCard from "./LineCard";
 // import { useParams } from 'react-router-dom';
 
