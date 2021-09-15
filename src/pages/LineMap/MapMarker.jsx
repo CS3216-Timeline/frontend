@@ -24,6 +24,7 @@ const MapMarker = ({ memory }) => {
           onClose={() => setShowPopup(false)}
         >
           <div>
+            {/* TODO: Do reverse geocoding to get the location name and display it here. Also add a button in each popup to go to the memory */}
             <Typography variant="h6">{memory.title}</Typography>
             <Typography variant="body1">{memory.description}</Typography>
             <Typography variant="body1">

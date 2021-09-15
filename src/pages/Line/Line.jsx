@@ -5,6 +5,7 @@ import { getLineById } from "../../services/lines";
 import { getMemoryById } from "../../services/memories";
 import LineCard from "./LineCard";
 import EditIcon from "@material-ui/icons/Edit";
+import LinearScaleIcon from "@material-ui/icons/LinearScale";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ExploreIcon from "@material-ui/icons/Explore";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
@@ -13,6 +14,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { COLORS } from "../../utils/colors";
 import DeleteLineDialog from "./DeleteLineDialog";
 import Loading from "../../components/Loading";
+import LineMap from "../LineMap/LineMap";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,6 +55,7 @@ const Line = (props) => {
   const [loading, setLoading] = useState(false);
   // https://stackoverflow.com/questions/56608065/fix-cant-perform-a-react-state-update-on-an-unmounted-component-error
   const [deleted, setDeleted] = useState(false);
+  const [showMap, setShowMap] = useState(false);
 
   useEffect(() => {
     if (deleted) {
@@ -86,15 +89,15 @@ const Line = (props) => {
               <Box paddingX={1}>
                 <Button
                   // TODO: add line_id as params
-                  onClick={() => {
-                    history.push(`/linemap`);
-                  }}
+                  onClick={() => setShowMap(!showMap)}
                   fullWidth
                   className={classes.mapButton}
                   variant="contained"
-                  startIcon={<ExploreIcon />}
+                  startIcon={!showMap ? <ExploreIcon /> : <LinearScaleIcon />}
                 >
-                  <Typography variant="body2">Map</Typography>
+                  <Typography variant="body2">
+                    {!showMap ? "map" : "line"}
+                  </Typography>
                 </Button>
               </Box>
             </Grid>
@@ -142,22 +145,27 @@ const Line = (props) => {
             </Box>
           </Grid>
         </Box>
-        <Timeline align={alignment}>
-          {memories.map((memory, idx) => (
-            <LineCard
-              isFirst={isFirstMemory(idx)}
-              isLast={isLastMemory(idx)}
-              alternate={isAlt}
-              memoryId={memory.memory_id}
-              key={memory.memory_id}
-              title={memory.title}
-              description={memory.description}
-              mediaUrl={memory.media.source.url}
-              date={memory.date}
-              color={color}
-            />
-          ))}
-        </Timeline>
+        {/* TODO: send memories as a prop to LineMap */}
+        {showMap ? (
+          <LineMap />
+        ) : (
+          <Timeline align={alignment}>
+            {memories.map((memory, idx) => (
+              <LineCard
+                isFirst={isFirstMemory(idx)}
+                isLast={isLastMemory(idx)}
+                alternate={isAlt}
+                memoryId={memory.memory_id}
+                key={memory.memory_id}
+                title={memory.title}
+                description={memory.description}
+                mediaUrl={memory.media.source.url}
+                date={memory.date}
+                color={color}
+              />
+            ))}
+          </Timeline>
+        )}
         <DeleteLineDialog
           displayDeleteDialog={displayDeleteDialog}
           setDisplayDeleteDialog={setDisplayDeleteDialog}

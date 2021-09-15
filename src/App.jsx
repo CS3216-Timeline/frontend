@@ -13,9 +13,7 @@ import Memory from "./pages/Memory/Memory";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
 import theme from "./theme/theme";
 import CreateNewLine from "./pages/CreateNewLine/CreateNewLine";
-// import UploadMediaForm from "./pages/UploadMediaForm";
 import MemoryEditor from "./pages/MemoryEditor/MemoryEditor";
-import LineMap from "./pages/LineMap/LineMap";
 import "mapbox-gl/dist/mapbox-gl.css";
 import NotFound from "./pages/NotFound/NotFound";
 import CustomSnackbar from "./components/snackbar/CustomSnackbar";
@@ -74,10 +72,6 @@ const App = () => {
                 path="/memory/:memoryId/edit"
                 component={MemoryEditor}
               />
-              {/* TODO: add a line_id param. Might also want to add the user_id as well, 
-                if we want to incorporate friends, so can see other people's maps.
-                This should apply to the line route as well. */}
-              <PrivateRoute exact path="/linemap" component={LineMap} />
               <Route component={NotFound} />
             </Switch>
           </Fragment>
