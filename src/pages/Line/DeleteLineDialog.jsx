@@ -30,7 +30,7 @@ const DeleteLineDialog = ({
   displayDeleteDialog,
   setDisplayDeleteDialog,
   setLoading,
-  line_id,
+  lineId,
   setDeleted,
 }) => {
   const classes = useStyles();
@@ -39,7 +39,7 @@ const DeleteLineDialog = ({
   const deleteLine = async () => {
     try {
       setLoading(true);
-      await deleteLineById(line_id);
+      await deleteLineById(lineId);
       setDisplayDeleteDialog(false);
       dispatch(setAlert("Successfully deleted line", "success"));
       setDeleted(true);

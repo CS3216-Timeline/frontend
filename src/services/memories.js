@@ -1,7 +1,7 @@
 // import server from "../utils/server"
 
 const mockMemoryData = {
-  memory_id: 4,
+  memoryId: 4,
   date: "19 May 2021",
   title: "Mock Memory Title",
   description: "This is a mock card description. This is a mock card description. This is a mock card description. This is a mock card description. This is a mock card description.",
@@ -19,7 +19,7 @@ const mockMemoryData = {
 export const getMemoryById = (id) => {
   return {
     ...mockMemoryData,
-    memory_id: id
+    memoryId: id
   }
 }
 

@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 
 const EditLine = () => {
   const classes = useStyles();
-  const { line_id } = useParams();
+  const { lineId } = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
   const [loading, setLoading] = useState(false);
@@ -52,8 +52,8 @@ const EditLine = () => {
       setLineTitle(line.title);
       setSelectedColor(line.color);
     };
-    getLineInfo(line_id);
-  }, [line_id]);
+    getLineInfo(lineId);
+  }, [lineId]);
 
   const editLine = async () => {
     if (!lineTitle) {
@@ -62,10 +62,10 @@ const EditLine = () => {
     }
     try {
       setLoading(true);
-      const editedLine = await editLineById(line_id, lineTitle, selectedColor);
+      const editedLine = await editLineById(lineId, lineTitle, selectedColor);
       console.log("editedLine", editedLine);
       dispatch(setAlert("Line Successfully edited", "success"));
-      history.push(`/line/${line_id}`);
+      history.push(`/line/${lineId}`);
     } catch (err) {
       dispatch(setAlert(err.message, "error"));
     } finally {
@@ -141,7 +141,7 @@ const EditLine = () => {
                   className={classes.cancelButton}
                   variant="contained"
                   startIcon={<CloseIcon />}
-                  onClick={() => history.push(`/line/${line_id}`)}
+                  onClick={() => history.push(`/line/${lineId}`)}
                 >
                   Cancel
                 </Button>
