@@ -17,6 +17,7 @@ import AppLogo from "../../components/layout/AppLogo";
 import AuthHeader from "../../components/layout/AuthHeader";
 import GoogleLogin from "react-google-login"
 import FacebookLogin from 'react-facebook-login';
+import FacebookIcon from "@material-ui/icons/Facebook";
 
 function Copyright() {
   return (
@@ -62,6 +63,34 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  facebookIcon: {
+    margin: "5px 17px 10px 7px",
+    color: "#4267B2"
+  },
+  facebookButton: {
+    backgroundColor: theme === 'dark' ? 'rgb(66, 133, 244)' : '#fff',
+    display: 'inline-flex',
+    alignItems: 'center',
+    color: theme === 'dark' ? '#fff' : 'rgba(0, 0, 0, .54)',
+    boxShadow: '0 2px 2px 0 rgba(0, 0, 0, .24), 0 0 1px 0 rgba(0, 0, 0, .24)',
+    padding: 0,
+    borderRadius: 2,
+    width: "100%",
+    border: '1px solid transparent',
+    fontSize: 14,
+    fontWeight: '500',
+    fontFamily: 'Roboto, sans-serif',
+    "&:hover": {
+      cursor: 'pointer',
+      opacity: 0.9
+    },
+    "&:active": {
+      cursor: 'pointer',
+      backgroundColor: theme === 'dark' ? '#3367D6' : '#eee',
+      color: theme === 'dark' ? '#fff' : 'rgba(0, 0, 0, .54)',
+      opacity: 1
+    },
+  }
 }));
 
 const SignIn = () => {
@@ -139,21 +168,29 @@ const SignIn = () => {
             >
               Sign In
             </Button>
-            <GoogleLogin
-              clientId="866388603635-ag2j3hkrh7glsd0rigj411l0igo53cks.apps.googleusercontent.com" // TODO: To store somewhere
-              buttonText="Log in with Google"
-              onSuccess={loginUserWithGoogle}
-              onFailure={loginUserWithGoogle} // TODO: change so that it just stays at the login page with some message
-              cookiePolicy={'single_host_origin'}
-              className="" // TODO: Style
-            />
-            <FacebookLogin
-              appId="3083491758550050" //TODO: Store somewhere
-              autoLoad={false}
-              fields="name,email,picture"
-              redirectUri={"http://localhost:3000/signin"}
-              callback={loginUserWithFacebook}
-            />
+            <Box display="flex" justifyContent="center" flexDirection="column">
+              <GoogleLogin
+                clientId="866388603635-ag2j3hkrh7glsd0rigj411l0igo53cks.apps.googleusercontent.com" // TODO: To store somewhere
+                buttonText="SIGN IN WITH GOOGLE"
+                onSuccess={loginUserWithGoogle}
+                onFailure={loginUserWithGoogle} // TODO: change so that it just stays at the login page with some message
+                cookiePolicy={'single_host_origin'}
+                className="" // TODO: Style
+              />
+              <br />
+              <FacebookLogin
+                appId="3083491758550050" //TODO: Store somewhere
+                autoLoad={false}
+                fields="name,email,picture"
+                redirectUri={"http://localhost:3000/signin"}
+                callback={loginUserWithFacebook}
+                size="small"
+                textButton="SIGN IN WITH FACEBOOK"
+                icon={<FacebookIcon className={classes.facebookIcon}/>}
+                cssClass={classes.facebookButton}
+              />
+              <br />
+            </Box>
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
