@@ -21,6 +21,7 @@ import NotFound from "./pages/NotFound/NotFound";
 import CustomSnackbar from "./components/snackbar/CustomSnackbar";
 import Landing from "./pages/Landing/Landing";
 import Loading from "./components/Loading";
+import EditLine from "./pages/EditLine/EditLine";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -57,13 +58,22 @@ const App = () => {
                 path="/memory/:memory_id"
                 component={Memory}
               />
+              <PrivateRoute exact path="/add-line" component={CreateNewLine} />
               <PrivateRoute
                 exact
-                path="/add-line"
-                component={CreateNewLine}
+                path="/edit-line/:line_id"
+                component={EditLine}
               />
-              <PrivateRoute exact path="/line/:lineId/add-memory" component={MemoryEditor} />
-              <PrivateRoute exact path="/memory/:memoryId/edit" component={MemoryEditor} />
+              <PrivateRoute
+                exact
+                path="/line/:lineId/add-memory"
+                component={MemoryEditor}
+              />
+              <PrivateRoute
+                exact
+                path="/memory/:memoryId/edit"
+                component={MemoryEditor}
+              />
               {/* TODO: add a line_id param. Might also want to add the user_id as well, 
                 if we want to incorporate friends, so can see other people's maps.
                 This should apply to the line route as well. */}

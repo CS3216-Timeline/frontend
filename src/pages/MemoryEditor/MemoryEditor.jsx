@@ -40,11 +40,12 @@ const getDefaultViewport = () => ({
   height: "50vh",
   width: "100%",
   zoom: 10,
-})
+});
 
-const isEmpty = val => val === null || val === undefined || val === ""
+const isEmpty = (val) => val === null || val === undefined || val === "";
 
-const MemoryEditor = props => {
+const MemoryEditor = (props) => {
+  const classes = useStyles();
   const [currentLocation, setCurrentLocation] = useState({});
   const [memoryTitle, setMemoryTitle] = useState("");
   const [memoryDescription, setMemoryDescription] = useState("");
@@ -53,15 +54,14 @@ const MemoryEditor = props => {
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [viewport, setViewport] = useState(getDefaultViewport());
 
-  const history = useHistory()
-  const dispatch = useDispatch()
+  const history = useHistory();
+  const dispatch = useDispatch();
 
-  const alertError = msg => dispatch(setAlert(msg, "error"));
+  const alertError = (msg) => dispatch(setAlert(msg, "error"));
 
-  const classes = useStyles();
-  const urlParams = useParams() // Read params from URL
+  const urlParams = useParams(); // Read params from URL
   // urlParams contain EITHER lineId (new) or memoryId (existing)
-  const { memoryId, lineId } = urlParams; 
+  const { memoryId, lineId } = urlParams;
 
   // if URL param contains memoryId, then there is existing memory
   const isEdit = memoryId ? true : false;
@@ -74,39 +74,39 @@ const MemoryEditor = props => {
           place_name: location.place_name,
           geometry: location.geometry,
         };
-      })
+      });
       if (!processedRes) {
         return;
       }
-      setSelectedLocation(processedRes[0])
+      setSelectedLocation(processedRes[0]);
     } catch (err) {
       console.log(err.message);
     }
   };
   if (isEdit && !isDataLoaded) {
-    console.log("isLineIdEmpty?", isEmpty(lineId))
+    console.log("isLineIdEmpty?", isEmpty(lineId));
     // fetch memory from backend, need error handling!
-    const memory = getMemoryById(memoryId)
+    const memory = getMemoryById(memoryId);
 
-    getLocationFromCoordinates(memory.latitude, memory.longitude)
+    getLocationFromCoordinates(memory.latitude, memory.longitude);
 
     const existingViewport = {
       ...viewport,
       latitude: memory.latitude,
       longitude: memory.longitude,
-    }
+    };
 
     // TODO: update component states to reflect existing memory data
     // currently MOCK data
-    setSelectedLocation(null)
-    setMemoryTitle(memory.title) 
-    setMemoryDescription(memory.description)
-    setMediaUrl(memory.media.source.url)
-    setViewport(existingViewport)
+    setSelectedLocation(null);
+    setMemoryTitle(memory.title);
+    setMemoryDescription(memory.description);
+    setMediaUrl(memory.media.source.url);
+    setViewport(existingViewport);
     // setCurrentLocation({})
 
     // set isDataLoaded to true
-    setIsDataLoaded(true)
+    setIsDataLoaded(true);
   }
 
   //http://localhost:3000/line/1/add-memory
@@ -134,15 +134,15 @@ const MemoryEditor = props => {
       // TODO: backend PUT request
       // save to existing memory
       // redirect back to Memory  page
-      history.push(`memory/${memoryId}`)
+      history.push(`memory/${memoryId}`);
     } else {
       // TODO: backend POST request
       // add new memory to line
-      const newMemoryId = 99 // will be created by backend
+      const newMemoryId = 99; // will be created by backend
       // redirect to new memory page
-      history.push(`memory/${newMemoryId}`)
+      history.push(`memory/${newMemoryId}`);
     }
-  }
+  };
 
   useEffect(() => {
     const getCurrentLocation = async () => {
@@ -227,11 +227,16 @@ const MemoryEditor = props => {
               />
             </div>
             <div className={classes.textFieldContainer}>
-              <UploadMediaForm
-                doneHandler={setMediaUrl}
-              />
+              <UploadMediaForm doneHandler={setMediaUrl} />
             </div>
-            <p>[TEST] Media Link: {mediaUrl && <a href={mediaUrl} rel="noreferrer" target="_blank">Copy This Link</a>}</p>
+            <p>
+              [TEST] Media Link:{" "}
+              {mediaUrl && (
+                <a href={mediaUrl} rel="noreferrer" target="_blank">
+                  Copy This Link
+                </a>
+              )}
+            </p>
             <div className={classes.textFieldContainer}>
               <Button
                 fullWidth

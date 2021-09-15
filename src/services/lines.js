@@ -1,3 +1,6 @@
+import {
+  COLORS
+} from "../utils/colors";
 import server from "../utils/server";
 import {
   addHash,
@@ -8,7 +11,7 @@ const mockLineData = {
   line_id: 1,
   memoryIds: [1, 2, 3],
   title: "Mok Family",
-  color: "blue",
+  color: COLORS.GREEN,
 }
 
 export const getAllLinesByUserIdOrderByMostRecentMemory = async () => {
@@ -34,7 +37,20 @@ export const createNewLine = async (lineTitle, selectedColor) => {
   return res.lines;
 }
 
+// TODO: update request endpoint after backend created the endpoint
+export const editLineById = async (line_id, lineTitle, selectedColor) => {
+  const body = {
+    line_id,
+    "line-name": lineTitle,
+    "color-hex": removeHash(selectedColor),
+  }
+  const res = await server.post('lines', body);
+  return res.lines;
+}
+
 // returns line data
+// remember to add a hash to the color
+// rememebr to change to async
 export const getLineById = (id) => {
   return mockLineData
 }

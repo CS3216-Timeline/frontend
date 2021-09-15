@@ -1,22 +1,23 @@
 import React from "react";
 import Timeline from "@material-ui/lab/Timeline";
+import { IconButton, makeStyles } from "@material-ui/core";
 import { getLineById } from "../../services/lines";
-import { getMemoryById } from "../../services/memories"
+import { getMemoryById } from "../../services/memories";
 import LineCard from "./LineCard";
+import EditIcon from "@material-ui/icons/Edit";
+import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
+import { useHistory, useParams } from "react-router-dom";
 // import { useParams } from 'react-router-dom';
 
-const getLineInfo = (id) => getLineById(id);
-const getMemories = (memoryIds) => memoryIds.map((id) => getMemoryById(id));
-
-const getLineStyle = () => {
-  // if mobile, {}
-  // return { padding: "50px 400px", }
-};
-
-const getLineTitleStyle = () => ({
-  textAlign: "center",
-  padding: "0 ",
-});
+const useStyles = makeStyles((theme) => ({
+  root: {
+    padding: theme.spacing(3, 0, 6, 0),
+  },
+  header: {
+    display: "flex",
+    justifyContent: "center",
+  },
+}));
 
 const isAlternating = () => {
   // if desktop, return true
@@ -24,14 +25,19 @@ const isAlternating = () => {
 };
 
 const getAlignment = (isAlternating) => {
-  // if desktop, return "alternate"
   return isAlternating ? "alternate" : "left";
 };
 
+const getLineInfo = (id) => getLineById(id);
+const getMemories = (memoryIds) => memoryIds.map((id) => getMemoryById(id));
+
 const Line = (props) => {
-  const { lineId } = props;
+  const classes = useStyles();
+  const { line_id } = useParams();
+  // const { lineId } = props;
+  const histroy = useHistory();
   // const { line_id } = useParams() // for edit purposes
-  const { title, color, memoryIds } = getLineInfo(lineId);
+  const { title, color, memoryIds } = getLineInfo(line_id);
 
   const memories = getMemories(memoryIds);
 
@@ -41,10 +47,22 @@ const Line = (props) => {
 
   const isFirstMemory = (idx) => idx === 0;
   const isLastMemory = (idx) => idx === lineSize - 1;
+
+  // TODO: useEffect to get the memoreies by line_id
+
   return (
     <>
-      <div style={getLineStyle()}>
-        <h1 style={getLineTitleStyle()}>{title}</h1>
+      <div className={classes.root}>
+        <div className={classes.header}>
+          <PrivatePageHeader text={title} />
+          <IconButton
+            onClick={() => {
+              histroy.push(`/edit-line/${line_id}`);
+            }}
+          >
+            <EditIcon color="primary" />
+          </IconButton>
+        </div>
         <Timeline align={alignment}>
           {memories.map((memory, idx) => (
             <LineCard
