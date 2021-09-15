@@ -138,7 +138,7 @@ const Line = (props) => {
         {showMap ? (
           <LineMap />
         ) : (
-          <Timeline align={"left"}>
+          <Timeline align="left">
             {memories.map((memory, idx) => (
               <LineCard
                 isFirst={isFirstMemory(idx)}
