@@ -6,11 +6,11 @@ const createImage = url =>
     image.src = url
   })
 
-function getRadianAngle(degreeValue) {
+const getRadianAngle = (degreeValue) => {
   return (degreeValue * Math.PI) / 180
 }
 
-export default async function getCroppedImg(imageSrc, pixelCrop, rotation = 0) {
+export const getCroppedImage = async (imageSrc, pixelCrop, rotation = 0) => {
   const image = await createImage(imageSrc)
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')
