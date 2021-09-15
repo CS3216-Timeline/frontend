@@ -34,15 +34,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const isAlternating = () => {
-  // if desktop, return true
-  return false;
-};
-
-const getAlignment = (isAlternating) => {
-  return isAlternating ? "alternate" : "left";
-};
-
 const getLineInfo = (id) => getLineById(id);
 const getMemories = (memoryIds) => memoryIds.map((id) => getMemoryById(id));
 
@@ -64,8 +55,6 @@ const Line = (props) => {
   }, [deleted, history]);
   const memories = getMemories(memoryIds);
 
-  const isAlt = isAlternating();
-  const alignment = getAlignment(isAlt);
   const lineSize = memoryIds.length;
 
   const isFirstMemory = (idx) => idx === 0;
@@ -149,7 +138,7 @@ const Line = (props) => {
         {showMap ? (
           <LineMap />
         ) : (
-          <Timeline align={alignment}>
+          <Timeline align={"left"}>
             {memories.map((memory, idx) => (
               <LineCard
                 isFirst={isFirstMemory(idx)}
