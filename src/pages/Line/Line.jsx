@@ -8,7 +8,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import LinearScaleIcon from "@material-ui/icons/LinearScale";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ExploreIcon from "@material-ui/icons/Explore";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import AddIcon from '@material-ui/icons/Add';
 import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
 import { useHistory, useParams } from "react-router-dom";
 import { COLORS } from "../../utils/colors";
@@ -32,6 +32,10 @@ const useStyles = makeStyles((theme) => ({
     color: COLORS.WHITE,
     backgroundColor: COLORS.CANCEL_BUTTON,
   },
+  addMemoryButton: {
+    color: COLORS.BLACK,
+    backgroundColor: COLORS.LIGHT_GREEN
+  }
 }));
 
 const getLineInfo = (id) => getLineById(id);
@@ -74,7 +78,7 @@ const Line = (props) => {
         </div>
         <Box paddingTop={2}>
           <Grid container>
-            <Grid item xs={4}>
+            <Grid item xs={3}>
               <Box paddingX={1}>
                 <Button
                   // TODO: add line_id as params
@@ -90,7 +94,22 @@ const Line = (props) => {
                 </Button>
               </Box>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={3}>
+              <Box paddingX={1}>
+                <Button
+                  onClick={() => {
+                    history.push(`/line/${line_id}/add-memory`);
+                  }}
+                  fullWidth
+                  variant="contained"
+                  className={classes.addMemoryButton}
+                  startIcon={<AddIcon />}
+                >
+                  <Typography variant="body2">Memory</Typography>
+                </Button>
+              </Box>
+            </Grid>
+            <Grid item xs={3}>
               <Box paddingX={1}>
                 <Button
                   onClick={() => {
@@ -104,7 +123,7 @@ const Line = (props) => {
                 </Button>
               </Box>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={3}>
               <Box paddingX={1}>
                 <Button
                   onClick={() => {
