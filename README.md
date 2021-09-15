@@ -6,7 +6,7 @@ This is the frontend repository for CS3216 Assignment 3.
 
 ## How to setup together with backend
 
-In the `server.js` file in `src/services`, changed `baseURL` to `http://localhost:5000`.
+In the `server.js` file in `src/utils`, changed `baseURL` to `http://localhost:5000`.
 
 Setup the backend by creating the database locally. Change everything in `db.js` to local config, example shown below. Make sure you create the tables too.
 

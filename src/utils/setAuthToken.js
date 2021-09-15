@@ -2,10 +2,10 @@ import server from "./server";
 
 const setAuthToken = (token) => {
   if (token) {
-    server.defaults.headers.common["x-auth-token"] = token;
+    server.defaults.headers.common["Authorization"] = "Bearer " + token;
     localStorage.setItem("token", token);
   } else {
-    delete server.defaults.headers.common["x-auth-token"];
+    delete server.defaults.headers.common["Authorization"];
     localStorage.removeItem("token");
   }
 };
