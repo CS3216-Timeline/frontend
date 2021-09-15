@@ -59,7 +59,7 @@ const Line = (props) => {
 
   useEffect(() => {
     if (deleted) {
-      history.push("/home");
+      history.push("/");
     }
   }, [deleted, history]);
   const memories = getMemories(memoryIds);

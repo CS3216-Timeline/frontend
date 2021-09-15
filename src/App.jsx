@@ -14,12 +14,12 @@ import ThemeProvider from "@material-ui/styles/ThemeProvider";
 import theme from "./theme/theme";
 import CreateNewLine from "./pages/CreateNewLine/CreateNewLine";
 import MemoryEditor from "./pages/MemoryEditor/MemoryEditor";
-import "mapbox-gl/dist/mapbox-gl.css";
 import NotFound from "./pages/NotFound/NotFound";
 import CustomSnackbar from "./components/snackbar/CustomSnackbar";
 import Landing from "./pages/Landing/Landing";
 import Loading from "./components/Loading";
 import EditLine from "./pages/EditLine/EditLine";
+import "mapbox-gl/dist/mapbox-gl.css";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
