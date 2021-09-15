@@ -22,10 +22,12 @@ export const getAllLinesByUserIdOrderByMostRecentMemory = async () => {
       return {
         ...line,
         'colour_hex': addHash(line["colour_hex"]),
+        // TODO: remove once backend is fixed to camelCase
+        lineId: line.lineId ? line.lineId : line.line_id
       }
     });
   }
-  return lines;
+  return lines; 
 }
 
 export const createNewLine = async (lineTitle, selectedColor) => {

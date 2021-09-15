@@ -7,6 +7,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { useHistory } from "react-router";
 // import HorizontalTimeline from "react-horizontal-timeline";
 // https://www.npmjs.com/package/react-vertical-timeline-component
 // https://www.npmjs.com/package/react-horizontal-timeline
@@ -30,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 const LineCard = ({ line }) => {
   const classes = useStyles();
+  const history = useHistory();
   // const [value, setValue] = useState(0);
   // eslint-disable-next-line no-unused-vars
   // const [previous, setPrevious] = useState(0);
@@ -96,7 +98,7 @@ const LineCard = ({ line }) => {
           variant="contained"
           // TODO: Update onClick function
           onClick={() => {
-            console.log(line);
+            history.push(`/line/${line.lineId}`);
           }}
           style={{ textTransform: "none" }}
         >
