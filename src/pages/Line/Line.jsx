@@ -3,7 +3,7 @@ import Timeline from "@material-ui/lab/Timeline";
 import { Box, Button, Grid, makeStyles, Typography } from "@material-ui/core";
 import { getLineById } from "../../services/lines";
 import { getMemoryById } from "../../services/memories";
-import LineCard from "./LineCard";
+import MemoryCard from "./MemoryCard";
 import EditIcon from "@material-ui/icons/Edit";
 import LinearScaleIcon from "@material-ui/icons/LinearScale";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -146,7 +146,7 @@ const Line = (props) => {
         ) : (
           <Timeline align="left">
             {memories.map((memory, idx) => (
-              <LineCard
+              <MemoryCard
                 isFirst={isFirstMemory(idx)}
                 isLast={isLastMemory(idx)}
                 memoryId={memory.memory_id}
