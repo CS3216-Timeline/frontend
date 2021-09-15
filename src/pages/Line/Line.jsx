@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import Timeline from "@material-ui/lab/Timeline";
 import { IconButton, makeStyles } from "@material-ui/core";
 import { getLineById } from "../../services/lines";
 import { getMemoryById } from "../../services/memories";
 import LineCard from "./LineCard";
 import EditIcon from "@material-ui/icons/Edit";
+import DeleteIcon from "@material-ui/icons/Delete";
 import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
 import { useHistory, useParams } from "react-router-dom";
-// import { useParams } from 'react-router-dom';
+import { COLORS } from "../../utils/colors";
+import DeleteLineDialog from "./DeleteLineDialog";
+import Loading from "../../components/Loading";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
   header: {
     display: "flex",
     justifyContent: "center",
+  },
+  deleteIcon: {
+    color: COLORS.CANCEL_BUTTON,
   },
 }));
 
@@ -34,10 +40,10 @@ const getMemories = (memoryIds) => memoryIds.map((id) => getMemoryById(id));
 const Line = (props) => {
   const classes = useStyles();
   const { line_id } = useParams();
-  // const { lineId } = props;
   const histroy = useHistory();
-  // const { line_id } = useParams() // for edit purposes
   const { title, color, memoryIds } = getLineInfo(line_id);
+  const [displayDeleteDialog, setDisplayDeleteDialog] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const memories = getMemories(memoryIds);
 
@@ -50,17 +56,31 @@ const Line = (props) => {
 
   // TODO: useEffect to get the memoreies by line_id
 
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <>
       <div className={classes.root}>
         <div className={classes.header}>
           <PrivatePageHeader text={title} />
+        </div>
+        <div className={classes.header}>
           <IconButton
             onClick={() => {
               histroy.push(`/edit-line/${line_id}`);
             }}
           >
             <EditIcon color="primary" />
+          </IconButton>
+          <IconButton
+            onClick={() => {
+              setDisplayDeleteDialog(!displayDeleteDialog);
+            }}
+            className={classes.deleteIcon}
+          >
+            <DeleteIcon />
           </IconButton>
         </div>
         <Timeline align={alignment}>
@@ -79,6 +99,12 @@ const Line = (props) => {
             />
           ))}
         </Timeline>
+        <DeleteLineDialog
+          displayDeleteDialog={displayDeleteDialog}
+          setDisplayDeleteDialog={setDisplayDeleteDialog}
+          setLoading={setLoading}
+          line_id={line_id}
+        />
       </div>
     </>
   );

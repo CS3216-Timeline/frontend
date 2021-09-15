@@ -48,6 +48,12 @@ export const editLineById = async (line_id, lineTitle, selectedColor) => {
   return res.lines;
 }
 
+// TODO: connect to backend after delete by id route is created
+export const deleteLineById = async (line_id) => {
+  console.log('deleted')
+  // await server.delete(`lines/${line_id}`);
+}
+
 // returns line data
 // remember to add a hash to the color
 // rememebr to change to async
