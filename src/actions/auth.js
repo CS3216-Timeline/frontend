@@ -74,6 +74,53 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
+export const loginWithGoogle = googleData => async (dispatch) => {
+  const body = {
+    token: googleData.tokenId
+  };
+  try {
+    const res = await server.post("api/auth/login/google", body);
+    console.log(res.data)
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: res.data,
+    });
+    dispatch(loadUser());
+  } catch (err) {
+    console.log(err.response)
+    const error = err.response.data.error;
+    if (error) {
+      dispatch(setAlert(error, "error"));
+    }
+    dispatch({
+      type: LOGIN_FAIL,
+    });
+  }
+}
+
+export const loginWithFacebook = facebookData => async (dispatch) => {
+  const body = {
+    access_token: facebookData.accessToken
+  };
+  try {
+    const res = await server.post("api/auth/login/facebook", body);
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: res.data,
+    });
+    dispatch(loadUser());
+  } catch (err) {
+    console.log(err.response)
+    const error = err.response.data.error;
+    if (error) {
+      dispatch(setAlert(error, "error"));
+    }
+    dispatch({
+      type: LOGIN_FAIL,
+    });
+  }
+}
+
 export const loadUser = () => async (dispatch) => {
   // check local storage
   if (localStorage.token) {
