@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Timeline from "@material-ui/lab/Timeline";
-import { IconButton, makeStyles } from "@material-ui/core";
+import { Box, Button, Grid, makeStyles, Typography } from "@material-ui/core";
 import { getLineById } from "../../services/lines";
 import { getMemoryById } from "../../services/memories";
 import LineCard from "./LineCard";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
+import ExploreIcon from "@material-ui/icons/Explore";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
 import { useHistory, useParams } from "react-router-dom";
 import { COLORS } from "../../utils/colors";
@@ -20,8 +22,13 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
   },
-  deleteIcon: {
-    color: COLORS.CANCEL_BUTTON,
+  mapButton: {
+    color: COLORS.WHITE,
+    backgroundColor: COLORS.BLUE,
+  },
+  deleteButton: {
+    color: COLORS.WHITE,
+    backgroundColor: COLORS.CANCEL_BUTTON,
   },
 }));
 
@@ -40,7 +47,7 @@ const getMemories = (memoryIds) => memoryIds.map((id) => getMemoryById(id));
 const Line = (props) => {
   const classes = useStyles();
   const { line_id } = useParams();
-  const histroy = useHistory();
+  const history = useHistory();
   const { title, color, memoryIds } = getLineInfo(line_id);
   const [displayDeleteDialog, setDisplayDeleteDialog] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -49,10 +56,9 @@ const Line = (props) => {
 
   useEffect(() => {
     if (deleted) {
-      histroy.push("/home");
+      history.push("/home");
     }
-  }, [deleted, histroy]);
-
+  }, [deleted, history]);
   const memories = getMemories(memoryIds);
 
   const isAlt = isAlternating();
@@ -74,23 +80,68 @@ const Line = (props) => {
         <div className={classes.header}>
           <PrivatePageHeader text={title} />
         </div>
-        <div className={classes.header}>
-          <IconButton
-            onClick={() => {
-              histroy.push(`/edit-line/${line_id}`);
-            }}
-          >
-            <EditIcon color="primary" />
-          </IconButton>
-          <IconButton
-            onClick={() => {
-              setDisplayDeleteDialog(!displayDeleteDialog);
-            }}
-            className={classes.deleteIcon}
-          >
-            <DeleteIcon />
-          </IconButton>
-        </div>
+        <Box paddingTop={2}>
+          <Grid container>
+            <Grid item xs={4}>
+              <Box paddingX={1}>
+                <Button
+                  // TODO: add line_id as params
+                  onClick={() => {
+                    history.push(`/linemap`);
+                  }}
+                  fullWidth
+                  className={classes.mapButton}
+                  variant="contained"
+                  startIcon={<ExploreIcon />}
+                >
+                  <Typography variant="body2">Map</Typography>
+                </Button>
+              </Box>
+            </Grid>
+            <Grid item xs={4}>
+              <Box paddingX={1}>
+                <Button
+                  onClick={() => {
+                    history.push(`/edit-line/${line_id}`);
+                  }}
+                  fullWidth
+                  variant="contained"
+                  startIcon={<EditIcon />}
+                >
+                  <Typography variant="body2">Edit</Typography>
+                </Button>
+              </Box>
+            </Grid>
+            <Grid item xs={4}>
+              <Box paddingX={1}>
+                <Button
+                  onClick={() => {
+                    setDisplayDeleteDialog(!displayDeleteDialog);
+                  }}
+                  fullWidth
+                  className={classes.deleteButton}
+                  variant="contained"
+                  startIcon={<DeleteIcon />}
+                >
+                  <Typography variant="body2">Delete</Typography>
+                </Button>
+              </Box>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Box margin={3}>
+              <Button
+                fullWidth
+                color="primary"
+                variant="contained"
+                onClick={() => history.push(`/line/${line_id}`)}
+                startIcon={<ArrowBackIcon />}
+              >
+                Back to line page
+              </Button>
+            </Box>
+          </Grid>
+        </Box>
         <Timeline align={alignment}>
           {memories.map((memory, idx) => (
             <LineCard
