@@ -33,8 +33,8 @@ const useStyles = makeStyles(() => ({
 const Memory = (props) => {
   const classes = useStyles();
   const history = useHistory();
-  const { memory_id } = useParams();
-  const { title, description, media, date, line_id } = getMemoryById(memory_id);
+  const { memoryId } = useParams();
+  const { title, description, media, date, lineId } = getMemoryById(memoryId);
   const [loading, setLoading] = useState(false);
   const [displayDeleteDialog, setDisplayDeleteDialog] = useState(false);
   const [deleted, setDeleted] = useState(false);
@@ -44,9 +44,9 @@ const Memory = (props) => {
 
   useEffect(() => {
     if (deleted) {
-      history.push(`line/${line_id}`);
+      history.push(`line/${lineId}`);
     }
-  }, [deleted, history, line_id]);
+  }, [deleted, history, lineId]);
 
   // do a useEffect to get the memory after endpoint to get a memory is done
 
@@ -103,7 +103,7 @@ const Memory = (props) => {
               fullWidth
               color="primary"
               variant="contained"
-              onClick={() => history.push(`/line/${line_id}`)}
+              onClick={() => history.push(`/line/${lineId}`)}
               startIcon={<ArrowBackIcon />}
             >
               Back to line page
@@ -115,8 +115,8 @@ const Memory = (props) => {
         setLoading={setLoading}
         displayDeleteDialog={displayDeleteDialog}
         setDisplayDeleteDialog={setDisplayDeleteDialog}
-        memory_id={memory_id}
-        line_id={line_id}
+        memoryId={memoryId}
+        lineId={lineId}
         setDeleted={setDeleted}
       />
     </>

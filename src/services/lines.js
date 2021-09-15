@@ -8,7 +8,7 @@ import {
 } from "./colors";
 
 const mockLineData = {
-  line_id: 1,
+  lineId: 1,
   memoryIds: [1, 2, 3],
   title: "Mok Family",
   color: COLORS.GREEN,
@@ -22,10 +22,12 @@ export const getAllLinesByUserIdOrderByMostRecentMemory = async () => {
       return {
         ...line,
         'colour_hex': addHash(line["colour_hex"]),
+        // TODO: remove once backend is fixed to camelCase
+        lineId: line.lineId ? line.lineId : line.line_id
       }
     });
   }
-  return lines;
+  return lines; 
 }
 
 export const createNewLine = async (lineTitle, selectedColor) => {
@@ -38,9 +40,9 @@ export const createNewLine = async (lineTitle, selectedColor) => {
 }
 
 // TODO: update request endpoint after backend created the endpoint
-export const editLineById = async (line_id, lineTitle, selectedColor) => {
+export const editLineById = async (lineId, lineTitle, selectedColor) => {
   const body = {
-    line_id,
+    lineId,
     "line-name": lineTitle,
     "color-hex": removeHash(selectedColor),
   }
@@ -49,9 +51,9 @@ export const editLineById = async (line_id, lineTitle, selectedColor) => {
 }
 
 // TODO: connect to backend after delete by id route is created
-export const deleteLineById = async (line_id) => {
+export const deleteLineById = async (lineId) => {
   console.log('deleted')
-  // await server.delete(`lines/${line_id}`);
+  // await server.delete(`lines/${lineId}`);
 }
 
 // returns line data

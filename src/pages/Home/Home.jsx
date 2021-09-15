@@ -111,13 +111,13 @@ const Home = () => {
           </Grid>
           {searchText === "" ? (
             lines.map((line) => (
-              <Grid item xs={12} key={line.line_id}>
+              <Grid item xs={12} key={line.lineId}>
                 <LineCard line={line} />
               </Grid>
             ))
           ) : searchedLines.length > 0 ? (
             searchedLines.map((line) => (
-              <Grid item xs={12} key={line.line_id}>
+              <Grid item xs={12} key={line.lineId}>
                 <LineCard line={line} />
               </Grid>
             ))

@@ -21,8 +21,8 @@ const storage = firebase.storage();
 
 const ROOT = "user-media/"
 
-const uploadFile = (file, fileName, memory_id, progressHandler, errorHandler, successHandler) => {
-  const uploadTask = storage.ref(ROOT + memory_id + fileName).put(file)
+const uploadFile = (file, fileName, memoryId, progressHandler, errorHandler, successHandler) => {
+  const uploadTask = storage.ref(ROOT + memoryId + fileName).put(file)
   uploadTask.on(
     "state_changed",
     snapshot => {
@@ -37,10 +37,10 @@ const uploadFile = (file, fileName, memory_id, progressHandler, errorHandler, su
     () => {
       storage
         .ref(ROOT)
-        .child(memory_id + fileName)
+        .child(memoryId + fileName)
         .getDownloadURL()
         .then(url => {
-          postMediaUrl(url, memory_id); // send to backend
+          postMediaUrl(url, memoryId); // send to backend
           successHandler(url); // send success url to component
         });
     }

@@ -247,6 +247,16 @@ const MemoryEditor = (props) => {
                 Save Memory
               </Button>
             </div>
+            <div className={classes.textFieldContainer}>
+              <Button
+                fullWidth
+                color="primary"
+                variant="outlined"
+                onClick={history.goBack}
+              >
+                Cancel
+              </Button>
+            </div>
           </Grid>
         </Grid>
       </div>
