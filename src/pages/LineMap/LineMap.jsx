@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 const LineMap = () => {
   const classes = useStyles();
   // TODO: UNCOMMENT THIS LATER
-  // const { line_id } = useParams();
+  // const { lineId } = useParams();
   const { latitude, longitude } = memoriesData[0];
   const [viewport, setViewport] = useState({
     latitude: latitude,
@@ -35,7 +35,7 @@ const LineMap = () => {
   });
 
   // TODO: useEffect to get the data of the memories of the
-  // line based on the line_id and userId
+  // line based on the lineId and userId
   // Preferbly at backend, it is already sorted from most recent one being the first
   // After that, we will have to create the line connectors that connect line from one
   // marker to another

@@ -48,9 +48,9 @@ const getMemories = (memoryIds) => memoryIds.map((id) => getMemoryById(id));
 
 const Line = (props) => {
   const classes = useStyles();
-  const { line_id } = useParams();
+  const { lineId } = useParams();
   const history = useHistory();
-  const { title, color, memoryIds } = getLineInfo(line_id);
+  const { title, color, memoryIds } = getLineInfo(lineId);
   const [displayDeleteDialog, setDisplayDeleteDialog] = useState(false);
   const [loading, setLoading] = useState(false);
   // https://stackoverflow.com/questions/56608065/fix-cant-perform-a-react-state-update-on-an-unmounted-component-error
@@ -71,7 +71,7 @@ const Line = (props) => {
   const isFirstMemory = (idx) => idx === 0;
   const isLastMemory = (idx) => idx === lineSize - 1;
 
-  // TODO: useEffect to get the memoreies by line_id
+  // TODO: useEffect to get the memoreies by lineId
 
   if (loading) {
     return <Loading />;
@@ -88,7 +88,7 @@ const Line = (props) => {
             <Grid item xs={4}>
               <Box paddingX={1}>
                 <Button
-                  // TODO: add line_id as params
+                  // TODO: add lineId as params
                   onClick={() => setShowMap(!showMap)}
                   fullWidth
                   className={classes.mapButton}
@@ -105,7 +105,7 @@ const Line = (props) => {
               <Box paddingX={1}>
                 <Button
                   onClick={() => {
-                    history.push(`/edit-line/${line_id}`);
+                    history.push(`/edit-line/${lineId}`);
                   }}
                   fullWidth
                   variant="contained"
@@ -137,7 +137,7 @@ const Line = (props) => {
                 fullWidth
                 color="primary"
                 variant="contained"
-                onClick={() => history.push(`/line/${line_id}`)}
+                onClick={() => history.push(`/line/${lineId}`)}
                 startIcon={<ArrowBackIcon />}
               >
                 Back to line page
@@ -155,8 +155,8 @@ const Line = (props) => {
                 isFirst={isFirstMemory(idx)}
                 isLast={isLastMemory(idx)}
                 alternate={isAlt}
-                memoryId={memory.memory_id}
-                key={memory.memory_id}
+                memoryId={memory.memoryId}
+                key={memory.memoryId}
                 title={memory.title}
                 description={memory.description}
                 mediaUrl={memory.media.source.url}
@@ -170,7 +170,7 @@ const Line = (props) => {
           displayDeleteDialog={displayDeleteDialog}
           setDisplayDeleteDialog={setDisplayDeleteDialog}
           setLoading={setLoading}
-          line_id={line_id}
+          lineId={lineId}
           setDeleted={setDeleted}
         />
       </div>

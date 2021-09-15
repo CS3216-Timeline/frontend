@@ -1,5 +1,5 @@
 export const mockLinesData = [{
-    "line_id": 1,
+    "lineId": 1,
     "title": "Me and my imaginary gf",
     "color": "#FF7092",
     "createdDate": new Date(),
@@ -26,7 +26,7 @@ export const mockLinesData = [{
     ]
   },
   {
-    "line_id": 2,
+    "lineId": 2,
     "title": "Me and my imaginary gf",
     "color": "#FF7092",
     "createdDate": new Date(),
@@ -53,7 +53,7 @@ export const mockLinesData = [{
     ]
   },
   {
-    "line_id": 3,
+    "lineId": 3,
     "title": "Me and my imaginary gf",
     "color": "#FF7092",
     "createdDate": new Date(),
@@ -80,7 +80,7 @@ export const mockLinesData = [{
     ]
   },
   {
-    "line_id": 4,
+    "lineId": 4,
     "title": "Me and my imaginary gf",
     "color": "#FF7092",
     "createdDate": new Date(),
@@ -108,7 +108,7 @@ export const mockLinesData = [{
   },
 
   {
-    "line_id": 5,
+    "lineId": 5,
     "title": "Me and my imaginary gf",
     "color": "#FF7092",
     "createdDate": new Date(),
@@ -135,7 +135,7 @@ export const mockLinesData = [{
     ]
   },
   {
-    "line_id": 6,
+    "lineId": 6,
     "title": "Me and my imaginary gf",
     "color": "#FF7092",
     "createdDate": new Date(),
@@ -162,7 +162,7 @@ export const mockLinesData = [{
     ]
   },
   {
-    "line_id": 7,
+    "lineId": 7,
     "title": "Me and my imaginary gf",
     "color": "#FF7092",
     "createdDate": new Date(),
@@ -189,7 +189,7 @@ export const mockLinesData = [{
     ]
   },
   {
-    "line_id": 8,
+    "lineId": 8,
     "title": "Me and my imaginary gf",
     "color": "#FF7092",
     "createdDate": new Date(),

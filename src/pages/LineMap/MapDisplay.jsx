@@ -38,7 +38,7 @@ const MapDisplay = ({ memoriesData, viewport, setViewport }) => {
         <Source id="my-data" type="geojson" data={geojson}>
           <Layer {...layerStyle} />
           {memoriesData.map((memory) => (
-            <MapMarker memory={memory} key={memory.memory_id} />
+            <MapMarker memory={memory} key={memory.memoryId} />
           ))}
         </Source>
       </ReactMapGL>

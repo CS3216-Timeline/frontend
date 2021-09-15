@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 export const memoriesData = [{
-    memory_id: 1,
+    memoryId: 1,
     title: 'Fishing',
     description: 'Fishing with the lads',
     creation_date: moment('2019-01-05'),
@@ -9,7 +9,7 @@ export const memoriesData = [{
     longitude: 103.860842,
   },
   {
-    memory_id: 2,
+    memoryId: 2,
     title: 'Hangout at Jewel',
     description: 'lalalallaa',
     creation_date: moment('2018-12-05'),
@@ -17,7 +17,7 @@ export const memoriesData = [{
     longitude: 103.990041,
   },
   {
-    memory_id: 3,
+    memoryId: 3,
     title: 'First day of schhhhh',
     description: 'First day of School with the lads',
     creation_date: moment('2018-08-05'),

@@ -30,8 +30,8 @@ const DeleteMemoryDialog = ({
   setLoading,
   displayDeleteDialog,
   setDisplayDeleteDialog,
-  memory_id,
-  line_id,
+  memoryId,
+  lineId,
   setDeleted,
 }) => {
   const classes = useStyles();
@@ -40,7 +40,7 @@ const DeleteMemoryDialog = ({
   const deleteMemory = async () => {
     try {
       setLoading(true);
-      await deleteMemoryById(memory_id);
+      await deleteMemoryById(memoryId);
       setDisplayDeleteDialog(false);
       dispatch(setAlert("Successfully deleted memory", "success"));
       setDeleted(true);
