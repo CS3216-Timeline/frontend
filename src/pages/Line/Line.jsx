@@ -154,11 +154,9 @@ const Line = (props) => {
               <LineCard
                 isFirst={isFirstMemory(idx)}
                 isLast={isLastMemory(idx)}
-                alternate={isAlt}
                 memoryId={memory.memory_id}
                 key={memory.memory_id}
                 title={memory.title}
-                description={memory.description}
                 mediaUrl={memory.media.source.url}
                 date={memory.date}
                 color={color}
