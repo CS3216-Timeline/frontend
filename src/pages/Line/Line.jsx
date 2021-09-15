@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Timeline from "@material-ui/lab/Timeline";
 import { IconButton, makeStyles } from "@material-ui/core";
 import { getLineById } from "../../services/lines";
@@ -44,6 +44,14 @@ const Line = (props) => {
   const { title, color, memoryIds } = getLineInfo(line_id);
   const [displayDeleteDialog, setDisplayDeleteDialog] = useState(false);
   const [loading, setLoading] = useState(false);
+  // https://stackoverflow.com/questions/56608065/fix-cant-perform-a-react-state-update-on-an-unmounted-component-error
+  const [deleted, setDeleted] = useState(false);
+
+  useEffect(() => {
+    if (deleted) {
+      histroy.push("/home");
+    }
+  }, [deleted, histroy]);
 
   const memories = getMemories(memoryIds);
 
@@ -104,6 +112,7 @@ const Line = (props) => {
           setDisplayDeleteDialog={setDisplayDeleteDialog}
           setLoading={setLoading}
           line_id={line_id}
+          setDeleted={setDeleted}
         />
       </div>
     </>

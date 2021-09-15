@@ -7,9 +7,9 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { Button, makeStyles } from "@material-ui/core";
 import { COLORS } from "../../utils/colors";
-import { deleteLineById } from "../../services/lines";
 import { useDispatch } from "react-redux";
 import { setAlert } from "../../actions/alert";
+import { deleteMemoryById } from "../../services/memories";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -26,22 +26,23 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const DeleteLineDialog = ({
+const DeleteMemoryDialog = ({
+  setLoading,
   displayDeleteDialog,
   setDisplayDeleteDialog,
-  setLoading,
+  memory_id,
   line_id,
   setDeleted,
 }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const deleteLine = async () => {
+  const deleteMemory = async () => {
     try {
       setLoading(true);
-      await deleteLineById(line_id);
+      await deleteMemoryById(memory_id);
       setDisplayDeleteDialog(false);
-      dispatch(setAlert("Successfully deleted line", "success"));
+      dispatch(setAlert("Successfully deleted memory", "success"));
       setDeleted(true);
     } catch (err) {
       dispatch(setAlert(err.message, "error"));
@@ -65,8 +66,7 @@ const DeleteLineDialog = ({
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            You will not be able to retrieve the line and the memories that
-            belong to it back after deleting it.
+            You will not be able to retrieve the memory back after deleting it.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -78,7 +78,7 @@ const DeleteLineDialog = ({
             No
           </Button>
           <Button
-            onClick={deleteLine}
+            onClick={deleteMemory}
             color="primary"
             className={classes.deleteButton}
           >
@@ -90,4 +90,4 @@ const DeleteLineDialog = ({
   );
 };
 
-export default DeleteLineDialog;
+export default DeleteMemoryDialog;

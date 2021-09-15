@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   authHeader: {
     fontSize: "25pt",
     textTransform: "uppercase",
-    letterSpacing: "3px",
+    letterSpacing: "1.5px",
     color: COLORS.PRIMARY_PURPLE,
     fontWeight: 600,
     textAlign: "center",

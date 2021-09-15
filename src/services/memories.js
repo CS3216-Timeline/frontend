@@ -1,3 +1,5 @@
+// import server from "../utils/server"
+
 const mockMemoryData = {
   memory_id: 4,
   date: "19 May 2021",
@@ -19,4 +21,11 @@ export const getMemoryById = (id) => {
     ...mockMemoryData,
     memory_id: id
   }
+}
+
+// TODO: connect with backend
+export const deleteMemoryById = async (id) => {
+  console.log('deleted');
+  // const res = await server.delete(`${id}`);
+  // return res.data
 }
