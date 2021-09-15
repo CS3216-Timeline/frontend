@@ -100,9 +100,7 @@ const EditLine = () => {
               value={lineTitle}
               autoFocus
               onChange={(e) => setLineTitle(e.target.value)}
-            >
-              {lineTitle}
-            </TextField>
+            />
             <Grid item xs={12} className={classes.selectColorContainer}>
               <Typography variant="h4">Choose your new line color</Typography>
               <hr
