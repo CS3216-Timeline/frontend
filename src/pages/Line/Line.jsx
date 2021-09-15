@@ -120,19 +120,6 @@ const Line = (props) => {
               </Box>
             </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <Box margin={3}>
-              <Button
-                fullWidth
-                color="primary"
-                variant="contained"
-                onClick={() => history.push(`/line/${line_id}`)}
-                startIcon={<ArrowBackIcon />}
-              >
-                Back to line page
-              </Button>
-            </Box>
-          </Grid>
         </Box>
         {/* TODO: send memories as a prop to LineMap */}
         {showMap ? (
