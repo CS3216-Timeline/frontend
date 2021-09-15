@@ -18,11 +18,11 @@ const imageContainerStyle = () => ({
 const MemoryMedia = props => {
   // TODO: How to handle invalid photo URLS?
   // TODO: Allow BOTH videos and images 
-  const { url, recropHandler } = props;
+  const { url } = props;
 
   return (
     <div style={imageContainerStyle()}>
-      { url && <img onClick={recropHandler} style={imageStyle()} src={url} alt="memory preview"/> }
+      { url && <img style={imageStyle()} src={url} alt="memory preview"/> }
       { !url && <p>No Media Uploaded</p> }
     </div>
   )
