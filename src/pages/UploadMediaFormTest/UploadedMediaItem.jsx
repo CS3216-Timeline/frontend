@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   editButtonContainer: {
     position: "absolute",
     top: "-20px",
-    right: "-10px",
+    right: "-2px",
     "@media (max-width: 480px)": {
       right: "-15px",
     },
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   deleteButtonContainer: {
     position: "absolute",
     bottom: "-20px",
-    right: "-10px",
+    right: "-2px",
     "@media (max-width: 480px)": {
       right: "-15px",
     },
