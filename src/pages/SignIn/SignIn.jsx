@@ -12,9 +12,11 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../actions/auth";
+import { login, loginWithGoogle, loginWithFacebook } from "../../actions/auth";
 import AppLogo from "../../components/layout/AppLogo";
 import AuthHeader from "../../components/layout/AuthHeader";
+import GoogleLogin from "react-google-login"
+import FacebookLogin from 'react-facebook-login';
 
 function Copyright() {
   return (
@@ -74,6 +76,14 @@ const SignIn = () => {
     dispatch(login(email, password));
   };
 
+  const loginUserWithGoogle = async googleData => {
+    dispatch(loginWithGoogle(googleData))
+  }
+
+  const loginUserWithFacebook = async facebookData => {
+    dispatch(loginWithFacebook(facebookData))
+  }
+
   if (auth.isAuthenticated) {
     return <Redirect to="/" />;
   }
@@ -129,6 +139,21 @@ const SignIn = () => {
             >
               Sign In
             </Button>
+            <GoogleLogin
+              clientId="866388603635-ag2j3hkrh7glsd0rigj411l0igo53cks.apps.googleusercontent.com" // TODO: To store somewhere
+              buttonText="Log in with Google"
+              onSuccess={loginUserWithGoogle}
+              onFailure={loginUserWithGoogle} // TODO: change so that it just stays at the login page with some message
+              cookiePolicy={'single_host_origin'}
+              className="" // TODO: Style
+            />
+            <FacebookLogin
+              appId="3083491758550050" //TODO: Store somewhere
+              autoLoad={false}
+              fields="name,email,picture"
+              redirectUri={"http://localhost:3000/signin"}
+              callback={loginUserWithFacebook}
+            />
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
