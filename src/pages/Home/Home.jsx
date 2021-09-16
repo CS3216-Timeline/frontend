@@ -52,7 +52,10 @@ const Home = () => {
         setSearchedLines(linesByUser);
       } catch (err) {
         dispatch(
-          setAlert("Oops, Failed to get the lines, please try again!", "error")
+          setAlert(
+            "Oops, failed to get the lines, please try refreshing!",
+            "error"
+          )
         );
       }
     };

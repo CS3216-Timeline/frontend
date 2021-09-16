@@ -13,8 +13,8 @@ const url = "https://api.mapbox.com/geocoding/v5/mapbox.places/";
  */
 export const getLocationSuggestions = async (newSearchValue, currentLocation) => {
   try {
-    const searchTextInQuery = newSearchValue ? newSearchValue : "singapore";
-    let searchQuery = `${url}${searchTextInQuery}.json?worldview=cn&access_token=${MAPBOX_API_TOKEN}`;
+    const searchTextInQuery = newSearchValue ? newSearchValue : "singapore"; // query needs to include a search text
+    let searchQuery = `${url}${searchTextInQuery}.json?worldview=cn&limit=10&access_token=${MAPBOX_API_TOKEN}`;
     if (!_.isEmpty(currentLocation)) {
       searchQuery += `&proximity=${currentLocation.longitude},${currentLocation.latitude}`;
     }
