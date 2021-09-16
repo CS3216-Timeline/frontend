@@ -1,11 +1,11 @@
 /* eslint-disable no-use-before-define */
-import React, { useCallback } from "react";
+import React, { useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useState } from "react";
-import _ from "lodash";
 import { CircularProgress, Typography } from "@material-ui/core";
 import { getLocationSuggestions } from "../../services/locationService";
+import useDebounce from "../../hooks/useDebounce";
 
 export const ComboBox = ({
   currentLocation,
@@ -15,8 +15,44 @@ export const ComboBox = ({
   setViewport,
 }) => {
   const [predictions, setPredictions] = useState([]);
-  // eslint-disable-next-line no-unused-vars
-  const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+
+  useEffect(
+    () => {
+      const getSearchResults = async (newSearchValue) => {
+        try {
+          const res = await getLocationSuggestions(
+            newSearchValue,
+            currentLocation
+          );
+          const predictionsFromSearch = res.data.features.map((location) => {
+            return {
+              place_name: location.place_name,
+              geometry: location.geometry,
+            };
+          });
+          return predictionsFromSearch;
+        } catch (err) {
+          console.log(err.message);
+        } finally {
+        }
+      };
+
+      if (debouncedSearchTerm) {
+        setIsSearching(true);
+        getSearchResults(debouncedSearchTerm).then((predictions) => {
+          setIsSearching(false);
+          setPredictions(predictions);
+        });
+      } else {
+        setPredictions([]);
+        setIsSearching(false);
+      }
+    },
+    [currentLocation, debouncedSearchTerm] // Only call effect if debounced search term changes
+  );
 
   const handleChangeLocation = (event, value) => {
     setSelectedLocation(value); // selected location object
@@ -27,38 +63,13 @@ export const ComboBox = ({
         longitude: value.geometry.coordinates[0],
         zoom: 13,
       });
+      setSearchTerm("");
     }
   };
 
-  const getSearchResults = async (newSearchValue) => {
-    setLoading(true);
-    try {
-      const res = await getLocationSuggestions(newSearchValue, currentLocation);
-      const predictionsFromSearch = res.data.features.map((location) => {
-        return {
-          place_name: location.place_name,
-          geometry: location.geometry,
-        };
-      });
-      setPredictions(predictionsFromSearch);
-    } catch (err) {
-      console.log(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const delayedSearch = useCallback(
-    _.debounce((newSearchValue) => {
-      getSearchResults(newSearchValue);
-    }, 200),
-    []
-  );
-
-  // Need a default 'search' parameter.
-  const handleInputChange = async (event, newSearchValue) => {
-    await delayedSearch(newSearchValue ? newSearchValue : "Singapore");
+  // Need a default 'search' parameter as it is required by the mapbox apo
+  const handleInputChange = async (e, newSearchValue) => {
+    setSearchTerm(newSearchValue ? newSearchValue : "Singapore");
   };
 
   return (
@@ -81,7 +92,7 @@ export const ComboBox = ({
               ...params.InputProps,
               endAdornment: (
                 <React.Fragment>
-                  {loading ? <CircularProgress size={20} /> : null}
+                  {isSearching ? <CircularProgress size={20} /> : null}
                   {params.InputProps.endAdornment}
                 </React.Fragment>
               ),
