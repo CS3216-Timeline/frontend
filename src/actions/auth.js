@@ -79,7 +79,7 @@ export const loginWithGoogle = googleData => async (dispatch) => {
     token: googleData.tokenId
   };
   try {
-    const res = await server.post("api/auth/login/google", body);
+    const res = await server.post("auth/login/google", body);
     console.log(res.data)
     dispatch({
       type: LOGIN_SUCCESS,
@@ -103,7 +103,7 @@ export const loginWithFacebook = facebookData => async (dispatch) => {
     access_token: facebookData.accessToken
   };
   try {
-    const res = await server.post("api/auth/login/facebook", body);
+    const res = await server.post("auth/login/facebook", body);
     dispatch({
       type: LOGIN_SUCCESS,
       payload: res.data,
