@@ -31,6 +31,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// Use this function to convert blobURL to file
+const blobToFile = (blob, fileName="default-name") => {
+  const file = new File([blob], fileName, { type: "image/png" });
+  return file
+}
+
 // https://docs.mapbox.com/help/tutorials/use-mapbox-gl-js-with-react/
 // TODO: pass line as a prop
 
@@ -50,7 +56,7 @@ const MemoryEditor = (props) => {
   const [memoryTitle, setMemoryTitle] = useState("");
   const [memoryDescription, setMemoryDescription] = useState("");
   const [selectedLocation, setSelectedLocation] = useState(null);
-  const [mediaUrl, setMediaUrl] = useState(null); // base64 encoded URL
+  const [mediaUrl, setMediaUrl] = useState(null); // blob URL
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [viewport, setViewport] = useState(getDefaultViewport());
 
@@ -128,6 +134,9 @@ const MemoryEditor = (props) => {
       alertError("Please upload a media.");
       return;
     }
+    // TODO: convert media to FILE (not sure where yet)
+    console.log("Blob To File Test", blobToFile(mediaUrl));
+
     // TODO: maybe both can have same way of handling
     // (if backend decides to use POST for editing as well)
     if (isEdit) {
