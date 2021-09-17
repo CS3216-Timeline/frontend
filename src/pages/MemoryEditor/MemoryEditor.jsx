@@ -65,16 +65,16 @@ const MemoryEditor = (props) => {
 
   const getLocationFromCoordinates = async (latitude, longitude) => {
     try {
-      const res = await getGeographicFeature(latitude, longitude);
-      const processedRes = res.data.features.map((location) => {
+      const features = await getGeographicFeature(latitude, longitude);
+      if (!features || features.length === 0) {
+        return;
+      }
+      const processedRes = features.map((location) => {
         return {
           place_name: location.place_name,
           geometry: location.geometry,
         };
       });
-      if (!processedRes) {
-        return;
-      }
       setSelectedLocation(processedRes[0]);
     } catch (err) {
       console.log(err.message);

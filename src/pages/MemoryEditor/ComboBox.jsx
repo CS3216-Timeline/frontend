@@ -25,15 +25,16 @@ export const ComboBox = ({
         try {
           const res = await getLocationSuggestions(
             newSearchValue,
-            currentLocation
+            currentLocation.longitude,
+            currentLocation.latitude
           );
-          const predictionsFromSearch = res.data.features.map((location) => {
+          const suggestions = res.suggestions.map((location) => {
             return {
               place_name: location.place_name,
               geometry: location.geometry,
             };
           });
-          return predictionsFromSearch;
+          return suggestions;
         } catch (err) {
           console.log(err.message);
         } finally {
@@ -42,9 +43,9 @@ export const ComboBox = ({
 
       if (debouncedSearchTerm) {
         setIsSearching(true);
-        getSearchResults(debouncedSearchTerm).then((predictions) => {
+        getSearchResults(debouncedSearchTerm).then((suggestions) => {
           setIsSearching(false);
-          setPredictions(predictions);
+          setPredictions(suggestions);
         });
       } else {
         setPredictions([]);
