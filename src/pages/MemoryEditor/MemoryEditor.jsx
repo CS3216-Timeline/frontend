@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import ComboBox from "./ComboBox";
-import { Button, Grid, TextField } from "@material-ui/core";
+import { Box, Button, Grid, TextField } from "@material-ui/core";
 import MapDisplay from "./MapDisplay";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
@@ -22,9 +22,6 @@ const useStyles = makeStyles((theme) => ({
   addLineButtonContainer: {
     justifyContent: "center",
     width: "100%",
-  },
-  textFieldContainer: {
-    padding: theme.spacing(1, 0, 1, 0),
   },
   linesContainer: {
     padding: theme.spacing(2, 2, 15, 2),
@@ -74,16 +71,16 @@ const MemoryEditor = (props) => {
 
   const getLocationFromCoordinates = async (latitude, longitude) => {
     try {
-      const res = await getGeographicFeature(latitude, longitude);
-      const processedRes = res.data.features.map((location) => {
+      const features = await getGeographicFeature(latitude, longitude);
+      if (!features || features.length === 0) {
+        return;
+      }
+      const processedRes = features.map((location) => {
         return {
           place_name: location.place_name,
           geometry: location.geometry,
         };
       });
-      if (!processedRes) {
-        return;
-      }
       setSelectedLocation(processedRes[0]);
     } catch (err) {
       console.log(err.message);
@@ -192,7 +189,7 @@ const MemoryEditor = (props) => {
                 />
               }
             />
-            <div className={classes.textFieldContainer}>
+            <Box paddingY={1}>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -204,8 +201,8 @@ const MemoryEditor = (props) => {
                 value={memoryTitle}
                 onChange={(e) => setMemoryTitle(e.target.value)}
               />
-            </div>
-            <div className={classes.textFieldContainer}>
+            </Box>
+            <Box paddingY={1}>
               <TextField
                 id="filled-multiline-static"
                 label="Memory Description"
@@ -218,8 +215,8 @@ const MemoryEditor = (props) => {
                 value={memoryDescription}
                 onChange={(e) => setMemoryDescription(e.target.value)}
               />
-            </div>
-            <div className={classes.textFieldContainer}>
+            </Box>
+            <Box paddingY={1}>
               <ComboBox
                 currentLocation={currentLocation}
                 selectedLocation={selectedLocation}
@@ -227,17 +224,17 @@ const MemoryEditor = (props) => {
                 viewport={viewport}
                 setViewport={setViewport}
               />
-            </div>
-            <div className={classes.textFieldContainer}>
+            </Box>
+            <Box paddingY={1}>
               <MapDisplay
                 selectedLocation={selectedLocation}
                 viewport={viewport}
                 setViewport={setViewport}
               />
-            </div>
-            <div className={classes.textFieldContainer}>
+            </Box>
+            <Box paddingY={1}>
               <UploadMediaForm doneHandler={setMediaUrl} />
-            </div>
+            </Box>
             <p>
               [TEST] Media Link:{" "}
               {mediaUrl && (
@@ -246,7 +243,7 @@ const MemoryEditor = (props) => {
                 </a>
               )}
             </p>
-            <div className={classes.textFieldContainer}>
+            <Box paddingY={1}>
               <Button
                 fullWidth
                 color="primary"
@@ -255,8 +252,8 @@ const MemoryEditor = (props) => {
               >
                 Save Memory
               </Button>
-            </div>
-            <div className={classes.textFieldContainer}>
+            </Box>
+            <Box paddingY={1}>
               <Button
                 fullWidth
                 color="primary"
@@ -265,7 +262,7 @@ const MemoryEditor = (props) => {
               >
                 Cancel
               </Button>
-            </div>
+            </Box>
           </Grid>
         </Grid>
       </div>

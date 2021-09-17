@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 // import { mockLinesData } from "./data";
 import LineCard from "./LineCard";
-import { Button, TextField } from "@material-ui/core";
+import { Box, Button, TextField } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import HomeIcon from "@material-ui/icons/Home";
 import { useHistory } from "react-router-dom";
@@ -52,7 +52,10 @@ const Home = () => {
         setSearchedLines(linesByUser);
       } catch (err) {
         dispatch(
-          setAlert("Oops, Failed to get the lines, please try again!", "error")
+          setAlert(
+            "Oops, failed to get the lines, please try refreshing!",
+            "error"
+          )
         );
       }
     };
@@ -93,7 +96,7 @@ const Home = () => {
             >
               Add Line
             </Button>
-            <div className={classes.textFieldContainer}>
+            <Box paddingY={1}>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -107,7 +110,7 @@ const Home = () => {
               >
                 {searchText}
               </TextField>
-            </div>
+            </Box>
           </Grid>
           {searchText === "" ? (
             lines.map((line) => (

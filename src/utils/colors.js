@@ -20,4 +20,5 @@ export const COLORS = {
   PRIMARY_PURPLE: '#756DFF',
   CANCEL_BUTTON: '#c70000',
   SUCCESS_BUTTON: '#42ba96',
+  BLACK: '#000'
 }
