@@ -10,10 +10,7 @@ const useStyles = makeStyles((theme) => ({
 
 const UploadedMediaList = ({
   mediaUrls,
-  setCropView,
-  setEditFileUrl,
   setMediaPreview,
-  setIsCroppingOldMedia,
   deleteMediaByPosition,
   selectedMediaUrl,
   hide,
@@ -34,11 +31,8 @@ const UploadedMediaList = ({
           <UploadedMediaItem
             key={media.position}
             media={media}
-            setEditFileUrl={setEditFileUrl}
-            setCropView={setCropView}
             setMediaPreview={setMediaPreview}
             isSelected={media.url === selectedMediaUrl}
-            setIsCroppingOldMedia={setIsCroppingOldMedia}
             deleteMediaByPosition={deleteMediaByPosition}
           />
         ))}

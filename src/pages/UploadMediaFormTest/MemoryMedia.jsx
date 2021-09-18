@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
 const MemoryMedia = (props) => {
   const classes = useStyles();
   // TODO: How to handle invalid photo URLS?
-  // TODO: Allow BOTH videos and images
   const { url, hasMedia } = props;
 
   return (

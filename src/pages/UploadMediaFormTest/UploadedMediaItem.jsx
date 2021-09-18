@@ -16,14 +16,6 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "50%",
     border: `3px solid ${COLORS.LIGHT_GREY}`,
   },
-  // editButtonContainer: {
-  //   position: "absolute",
-  //   top: "-20px",
-  //   right: "-2px",
-  //   "@media (max-width: 480px)": {
-  //     right: "-15px",
-  //   },
-  // },
   deleteButtonContainer: {
     position: "absolute",
     bottom: "-20px",
@@ -48,10 +40,6 @@ const useStyles = makeStyles((theme) => ({
 
 const UploadedMediaItem = ({
   media,
-  // setCropView,
-  // setEditFileUrl,
-  // setPosition,
-  // setIsCroppingOldMedia,
   setMediaPreview,
   deleteMediaByPosition,
   isSelected,
@@ -67,11 +55,6 @@ const UploadedMediaItem = ({
       ) : (
         <Grid item xs={4} className={classes.root}>
           <Box position="relative">
-            {/* <Box className={classes.editButtonContainer}>
-              <IconButton onClick={onEditButtonClicked}>
-                <EditIcon className={classes.iconStyle} />
-              </IconButton>
-            </Box> */}
             <Box className={classes.deleteButtonContainer}>
               <IconButton onClick={() => setDisplayDeleteDialog(true)}>
                 <DeleteIcon className={classes.iconStyle} />
