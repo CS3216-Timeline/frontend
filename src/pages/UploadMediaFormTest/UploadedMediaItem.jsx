@@ -53,7 +53,7 @@ const UploadedMediaItem = ({
       {loading ? (
         <Loading />
       ) : (
-        <Grid item xs={4} className={classes.root}>
+        <Grid item xs={3} className={classes.root}>
           <Box position="relative">
             <Box className={classes.deleteButtonContainer}>
               <IconButton onClick={() => setDisplayDeleteDialog(true)}>

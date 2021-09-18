@@ -7,7 +7,7 @@ import { COLORS } from "../../utils/colors";
 import UploadedMediaList from "./UploadedMediaList";
 import DeleteMediaDialog from "./DeleteMediaDialog";
 
-const MEDIA_LIMIT = 3; // can tweak
+const MEDIA_LIMIT = 4; // can tweak
 
 const TestUploadMediaForm = (props) => {
   const [mediaUrls, setMediaUrls] = useState([]); // FINAL URLs
