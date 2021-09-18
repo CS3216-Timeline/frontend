@@ -108,10 +108,8 @@ const LineCard = ({ line }) => {
       </CardContent>
       <CardActions className={classes.cardActionsContainer}>
         <Button
-          // TODO: CHANGE COLOR
           color="primary"
           variant="contained"
-          // TODO: Update onClick function
           onClick={() => {
             history.push(`/line/${line.lineId}`);
           }}

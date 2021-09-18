@@ -25,13 +25,6 @@ import LineMap from "./LineMap/LineMap";
 import NoneAvailable from "../../components/NoneAvailable";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: theme.spacing(3, 0, 6, 0),
-  },
-  header: {
-    display: "flex",
-    justifyContent: "center",
-  },
   mapButton: {
     color: COLORS.WHITE,
     backgroundColor: COLORS.BLUE,
@@ -94,10 +87,10 @@ const Line = (props) => {
 
   return (
     <>
-      <div className={classes.root}>
-        <div className={classes.header}>
+      <Box paddingTop={3} paddingBottom={6}>
+        <Box display="flex" justifyContent="center">
           <PrivatePageHeader text={title} />
-        </div>
+        </Box>
         <Box paddingTop={2}>
           <Grid container>
             <Grid item xs={6}>
@@ -208,7 +201,7 @@ const Line = (props) => {
           lineId={lineId}
           setDeleted={setDeleted}
         />
-      </div>
+      </Box>
     </>
   );
 };
