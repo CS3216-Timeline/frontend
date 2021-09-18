@@ -234,7 +234,7 @@ const MemoryEditor = (props) => {
             {!isEdit && 
               <Box paddingY={1}>
                 <UploadMediaForm 
-                  existingMediaUrls={mediaUrls} 
+                  existingMediaUrls={mediaUrls} // will be empty
                   onComplete={setMediaUrls}
                 />
               </Box>

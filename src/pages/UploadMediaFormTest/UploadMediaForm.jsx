@@ -1,5 +1,5 @@
 import { Box, Button } from "@material-ui/core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import HiddenFileInput from "./HiddenFileInput";
 import Cropper from "./Cropper";
 import MemoryMedia from "./MemoryMedia";
@@ -58,6 +58,12 @@ const TestUploadMediaForm = ({
     setMediaUrls(clonedMediaUrls);
   };
 
+  useEffect(() => {
+    if (onComplete) {
+      onComplete([...mediaUrls]);
+    }
+  }, [mediaUrls, onComplete]);
+
   const handleCropDone = (url) => {
     setEditFileUrl(null);
     const clonedMediaUrls = [...mediaUrls];
@@ -70,9 +76,6 @@ const TestUploadMediaForm = ({
     ]);
     setCropView(false);
     setPreviewUrl(url);
-    if (onComplete) {
-      onComplete(clonedMediaUrls);
-    }
   };
 
   const handleCancelCrop = (e) => {
@@ -87,7 +90,7 @@ const TestUploadMediaForm = ({
         display="flex"
         flexDirection="column"
         style={{ textAlign: "center" }}
-        marginBottom={12}
+        // marginBottom={12}
       >
         <h3 style={{ color: COLORS.PRIMARY_PURPLE }}>Upload Media</h3>
         <p>Add up to {MEDIA_LIMIT} photos!</p>

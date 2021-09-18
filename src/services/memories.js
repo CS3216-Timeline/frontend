@@ -5,12 +5,14 @@ const mockMemoryData = {
   date: "19 May 2021",
   title: "Mock Memory Title",
   description: "This is a mock card description. This is a mock card description. This is a mock card description. This is a mock card description. This is a mock card description.",
-  media: {
-    type: "IMAGE",
-    source: {
-      url: "https://images.megapixl.com/2485/24853666.jpg"
+  media: [
+    {
+      type: "IMAGE",
+      source: {
+        url: "https://images.megapixl.com/2485/24853666.jpg"
+      },
     }
-  },
+  ],
   latitude: 1.359237,
   longitude: 103.98934,
 }
@@ -19,7 +21,8 @@ const mockMemoryData = {
 export const getMemoryById = (id) => {
   return {
     ...mockMemoryData,
-    memoryId: id
+    memoryId: id,
+    mediaUrls: mockMemoryData.media.map((m, idx) => ({ url: m.source.url, position: idx }))
   }
 }
 

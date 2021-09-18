@@ -28,7 +28,7 @@ const MemoryMedia = (props) => {
         <img className={classes.imageStyle} src={url} alt="memory preview" />
       )}
       {!url && !hasMedia && <p>No Media Selected</p>}
-      {!url && hasMedia && <p>Choose a photo to edit</p>}
+      {!url && hasMedia && <p>No Media Selected</p>}
     </div>
   );
 };
