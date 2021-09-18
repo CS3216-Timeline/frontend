@@ -13,16 +13,11 @@ const UploadedMediaList = ({
   setMediaPreview,
   deleteMediaByPosition,
   selectedMediaUrl,
-  hide,
 }) => {
   const classes = useStyles();
   const sortedMediaUrls = mediaUrls.sort((a, b) => {
     return a.position - b.position;
   });
-
-  if (hide) {
-    return null;
-  }
 
   return (
     <>

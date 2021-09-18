@@ -100,15 +100,16 @@ const TestUploadMediaForm = ({
           />
         )}
         <br />
-        <UploadedMediaList
-          mediaUrls={mediaUrls}
-          setCropView={setCropView}
-          setEditFileUrl={setEditFileUrl}
-          setMediaPreview={setMediaPreview}
-          deleteMediaByPosition={deleteMediaByPosition}
-          selectedMediaUrl={previewUrl}
-          hide={isCropView}
-        />
+        {!isCropView && 
+          <UploadedMediaList
+            mediaUrls={mediaUrls}
+            setCropView={setCropView}
+            setEditFileUrl={setEditFileUrl}
+            setMediaPreview={setMediaPreview}
+            deleteMediaByPosition={deleteMediaByPosition}
+            selectedMediaUrl={previewUrl}
+          />
+        }
         {isCropView ? (
           <Button variant="outlined" onClick={handleCancelCrop}>
             Cancel
