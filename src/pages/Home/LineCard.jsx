@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Box,
   Button,
   Card,
   CardActions,
@@ -8,6 +9,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router";
+import { convertUTCtoYYYYMMDDHHMM } from "../../utils/datetime";
 // import HorizontalTimeline from "react-horizontal-timeline";
 // https://www.npmjs.com/package/react-vertical-timeline-component
 // https://www.npmjs.com/package/react-horizontal-timeline
@@ -17,9 +19,6 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "20px",
     textAlign: "center",
     margin: theme.spacing(1, 0),
-  },
-  titleContainer: {
-    padding: theme.spacing(1),
   },
   // lineContainer: {},
   // descriptionContainer: {},
@@ -56,12 +55,20 @@ const LineCard = ({ line }) => {
   return (
     <Card className={classes.card} variant="outlined">
       <CardContent>
-        <div className={classes.titleContainer}>
-          <Typography variant="h3">{line.name}</Typography>
-        </div>
+        <Box component="div" paddingTop={1}>
+          <Typography variant="h3" align="left">
+            {line.name}
+          </Typography>
+        </Box>
+        <Box component="div" paddingY={1}>
+          <Typography variant="body1" align="left">
+            Last Updated At: &nbsp;
+            {convertUTCtoYYYYMMDDHHMM(line.lastUpdatedDate)}
+          </Typography>
+        </Box>
         <hr
           style={{
-            border: `5px solid ${line["colour_hex"]}`,
+            border: `5px solid ${line.colorHex}`,
           }}
         />
         {/* <div className={classes.lineContainer}>
@@ -102,7 +109,7 @@ const LineCard = ({ line }) => {
           }}
           style={{ textTransform: "none" }}
         >
-          <Typography variant="body1">View Memories</Typography>
+          <Typography variant="body1">View/ Add Memories</Typography>
         </Button>
       </CardActions>
     </Card>

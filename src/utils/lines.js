@@ -3,6 +3,6 @@ export const filterLines = (searchText, lines) => {
     return lines;
   }
   let clonedLines = [...lines];
-  clonedLines = clonedLines.filter(line => line.name.includes(searchText));
+  clonedLines = clonedLines.filter(line => line.name.toLowerCase().includes(searchText.toLowerCase()));
   return clonedLines;
 }

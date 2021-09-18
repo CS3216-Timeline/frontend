@@ -10,11 +10,11 @@ import React, { useState, useEffect } from "react";
 import CloseIcon from "@material-ui/icons/Close";
 import LinearScaleIcon from "@material-ui/icons/LinearScale";
 import { GithubPicker } from "react-color";
-import { COLORS } from "../../utils/colors";
+import { colorPickerArray, COLORS } from "../../utils/colors";
 import EditIcon from "@material-ui/icons/Edit";
 import { useDispatch } from "react-redux";
 import { setAlert } from "../../actions/alert";
-import { editLineById, getLineById } from "../../services/lines";
+import { editLineById, getLineDataById } from "../../services/lines";
 import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
 import Loading from "../../components/Loading";
 import { useHistory, useParams } from "react-router-dom";
@@ -44,13 +44,13 @@ const EditLine = () => {
   const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [lineTitle, setLineTitle] = useState("");
-  const [selectedColor, setSelectedColor] = useState(COLORS.RED);
+  const [selectedColor, setSelectedColor] = useState(COLORS.MAROON);
 
   useEffect(() => {
-    const getLineInfo = (lineId) => {
-      const line = getLineById(lineId);
-      setLineTitle(line.title);
-      setSelectedColor(line.color);
+    const getLineInfo = async (lineId) => {
+      const line = await getLineDataById(lineId);
+      setLineTitle(line.name);
+      setSelectedColor(line.colorHex);
     };
     getLineInfo(lineId);
   }, [lineId]);
@@ -62,8 +62,7 @@ const EditLine = () => {
     }
     try {
       setLoading(true);
-      const editedLine = await editLineById(lineId, lineTitle, selectedColor);
-      console.log("editedLine", editedLine);
+      await editLineById(lineId, lineTitle, selectedColor);
       dispatch(setAlert("Line Successfully edited", "success"));
       history.push(`/line/${lineId}`);
     } catch (err) {
@@ -111,24 +110,7 @@ const EditLine = () => {
               {/* https://casesandberg.github.io/react-color/ */}
               <GithubPicker
                 color={selectedColor}
-                colors={[
-                  COLORS.RED,
-                  COLORS.ORANGE,
-                  COLORS.YELLOW,
-                  COLORS.GREEN,
-                  COLORS.CYAN,
-                  COLORS.BLUE,
-                  COLORS.DARK_BLUE,
-                  COLORS.PURPLE,
-                  COLORS.LIGHT_RED,
-                  COLORS.LIGHT_ORANGE,
-                  COLORS.LIGHT_YELLOW,
-                  COLORS.LIGHT_GREEN,
-                  COLORS.LIGHT_CYAN,
-                  COLORS.LIGHT_BLUE,
-                  COLORS.LIGHT_DARK_BLUE,
-                  COLORS.LIGHT_PURPLE,
-                ]}
+                colors={[...colorPickerArray]}
                 onChange={(newColor) => {
                   setSelectedColor(newColor.hex);
                 }}
