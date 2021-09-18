@@ -12,14 +12,20 @@ const UploadedMediaList = ({
   mediaUrls,
   setCropView,
   setEditFileUrl,
-  setPosition,
+  setMediaPreview,
   setIsCroppingOldMedia,
   deleteMediaByPosition,
+  selectedMediaUrl,
+  hide,
 }) => {
   const classes = useStyles();
   const sortedMediaUrls = mediaUrls.sort((a, b) => {
     return a.position - b.position;
   });
+
+  if (hide) {
+    return null;
+  }
 
   return (
     <>
@@ -30,7 +36,8 @@ const UploadedMediaList = ({
             media={media}
             setEditFileUrl={setEditFileUrl}
             setCropView={setCropView}
-            setPosition={setPosition}
+            setMediaPreview={setMediaPreview}
+            isSelected={media.cropUrl === selectedMediaUrl}
             setIsCroppingOldMedia={setIsCroppingOldMedia}
             deleteMediaByPosition={deleteMediaByPosition}
           />

@@ -32,10 +32,16 @@ const useStyles = makeStyles((theme) => ({
       right: "-15px",
     },
   },
-  image: {
+  selectedImage: {
     width: "80%",
     height: "auto",
     border: `3px solid ${COLORS.PRIMARY_PURPLE}`,
+    borderRadius: "10%",
+  },
+  image: {
+    width: "80%",
+    height: "auto",
+    border: `3px solid ${COLORS.TRANSPARENT}`,
     borderRadius: "10%",
   },
 }));
@@ -46,18 +52,13 @@ const UploadedMediaItem = ({
   // setEditFileUrl,
   // setPosition,
   // setIsCroppingOldMedia,
+  setMediaPreview,
   deleteMediaByPosition,
+  isSelected,
 }) => {
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
   const [displayDeleteDialog, setDisplayDeleteDialog] = useState(false);
-
-  // const onEditButtonClicked = () => {
-  //   setIsCroppingOldMedia(true);
-  //   setCropView(true);
-  //   setEditFileUrl(media.editFileUrl);
-  //   setPosition(media.position);
-  // };
 
   return (
     <>
@@ -76,7 +77,12 @@ const UploadedMediaItem = ({
                 <DeleteIcon className={classes.iconStyle} />
               </IconButton>
             </Box>
-            <img className={classes.image} src={media.cropUrl} alt={"test"} />
+            <img 
+              onClick={() => setMediaPreview(media.position)} 
+              className={isSelected ? classes.selectedImage : classes.image} 
+              src={media.cropUrl} 
+              alt={"uploaded media"} 
+            />
           </Box>
         </Grid>
       )}
