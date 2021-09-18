@@ -37,7 +37,7 @@ const UploadedMediaList = ({
             setEditFileUrl={setEditFileUrl}
             setCropView={setCropView}
             setMediaPreview={setMediaPreview}
-            isSelected={media.cropUrl === selectedMediaUrl}
+            isSelected={media.url === selectedMediaUrl}
             setIsCroppingOldMedia={setIsCroppingOldMedia}
             deleteMediaByPosition={deleteMediaByPosition}
           />

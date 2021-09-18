@@ -80,7 +80,7 @@ const UploadedMediaItem = ({
             <img 
               onClick={() => setMediaPreview(media.position)} 
               className={isSelected ? classes.selectedImage : classes.image} 
-              src={media.cropUrl} 
+              src={media.url} 
               alt={"uploaded media"} 
             />
           </Box>
