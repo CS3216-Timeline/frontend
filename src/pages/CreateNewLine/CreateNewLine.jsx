@@ -3,13 +3,14 @@ import {
   Grid,
   makeStyles,
   TextField,
+  Tooltip,
   Typography,
 } from "@material-ui/core";
 import React, { Fragment, useState } from "react";
 import AddIcon from "@material-ui/icons/Add";
 import LinearScaleIcon from "@material-ui/icons/LinearScale";
 import { GithubPicker } from "react-color";
-import { COLORS } from "../../utils/colors";
+import { colorPickerArray, COLORS } from "../../utils/colors";
 import { useDispatch } from "react-redux";
 import { setAlert } from "../../actions/alert";
 import { createNewLine } from "../../services/lines";
@@ -37,7 +38,7 @@ const CreateNewLine = () => {
   const history = useHistory();
   const [lineTitle, setLineTitle] = useState("");
   const [loading, setLoading] = useState(false);
-  const [selectedColor, setSelectedColor] = useState(COLORS.RED);
+  const [selectedColor, setSelectedColor] = useState(COLORS.MAROON);
 
   const createLine = async () => {
     if (!lineTitle) {
@@ -48,8 +49,7 @@ const CreateNewLine = () => {
       setLoading(true);
       const line = await createNewLine(lineTitle, selectedColor);
       console.log(line);
-      dispatch(setAlert("Line Successfully created", "success"));
-      // TODO: If want, can redirect to line page instead
+      dispatch(setAlert(`Line ${line.name} successfully created`, "success"));
       history.push("/");
     } catch (err) {
       dispatch(setAlert(err.message, "error"));
@@ -70,9 +70,11 @@ const CreateNewLine = () => {
             <PrivatePageHeader
               text={"Create a new line"}
               icon={
-                <LinearScaleIcon
-                  style={{ fontSize: "30pt", color: COLORS.PRIMARY_PURPLE }}
-                />
+                <Tooltip title="Create a line to add memories to it!">
+                  <LinearScaleIcon
+                    style={{ fontSize: "30pt", color: COLORS.PRIMARY_PURPLE }}
+                  />
+                </Tooltip>
               }
             />
             <TextField
@@ -88,7 +90,9 @@ const CreateNewLine = () => {
               {lineTitle}
             </TextField>
             <Grid item xs={12} className={classes.selectColorContainer}>
-              <Typography variant="h4">Choose your line color</Typography>
+              <Typography variant="h4" style={{ color: COLORS.BLACK }}>
+                Choose your line color
+              </Typography>
               <hr
                 style={{
                   border: `5px solid ${selectedColor}`,
@@ -97,24 +101,7 @@ const CreateNewLine = () => {
               {/* https://casesandberg.github.io/react-color/ */}
               <GithubPicker
                 color={selectedColor}
-                colors={[
-                  COLORS.RED,
-                  COLORS.ORANGE,
-                  COLORS.YELLOW,
-                  COLORS.GREEN,
-                  COLORS.CYAN,
-                  COLORS.BLUE,
-                  COLORS.DARK_BLUE,
-                  COLORS.PURPLE,
-                  COLORS.LIGHT_RED,
-                  COLORS.LIGHT_ORANGE,
-                  COLORS.LIGHT_YELLOW,
-                  COLORS.LIGHT_GREEN,
-                  COLORS.LIGHT_CYAN,
-                  COLORS.LIGHT_BLUE,
-                  COLORS.LIGHT_DARK_BLUE,
-                  COLORS.LIGHT_PURPLE,
-                ]}
+                colors={[...colorPickerArray]}
                 onChange={(newColor) => {
                   setSelectedColor(newColor.hex);
                 }}

@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import NoDataImage from "../../assets/no_data.png";
+import NoDataImage from "../assets/no_data.png";
 
 const useStyles = makeStyles((theme) => ({
   imageContainer: {
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NoLinesAvailable = ({ text }) => {
+const NoneAvailable = ({ text }) => {
   const classes = useStyles();
   return (
     <>
@@ -32,4 +32,4 @@ const NoLinesAvailable = ({ text }) => {
   );
 };
 
-export default NoLinesAvailable;
+export default NoneAvailable;
