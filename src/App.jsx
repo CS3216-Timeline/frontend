@@ -20,9 +20,7 @@ import Landing from "./pages/Landing/Landing";
 import Loading from "./components/Loading";
 import EditLine from "./pages/EditLine/EditLine";
 import "mapbox-gl/dist/mapbox-gl.css";
-import UploadMediaForm from "./pages/UploadMediaForm/UploadMediaForm";
 import Profile from "./pages/Profile/Profile";
-import MediaDisplay from "./pages/Memory/MediaDisplay";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
