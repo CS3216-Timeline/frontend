@@ -20,7 +20,7 @@ import Landing from "./pages/Landing/Landing";
 import Loading from "./components/Loading";
 import EditLine from "./pages/EditLine/EditLine";
 import "mapbox-gl/dist/mapbox-gl.css";
-import TestUploadMediaForm from "./pages/UploadMediaFormTest/UploadMediaForm";
+import UploadMediaForm from "./pages/UploadMediaForm/UploadMediaForm";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -72,7 +72,7 @@ const App = () => {
               <Route
                 exact
                 path="/test"
-                component={TestUploadMediaForm}
+                component={UploadMediaForm}
               />
               <Route component={NotFound} />
             </Switch>
