@@ -31,7 +31,7 @@ const TestUploadMediaForm = (props) => {
     if (positionOfMedia >= mediaUrls.length) {
       return;
     }
-    setPreviewUrl(mediaUrls[positionOfMedia].cropUrl);
+    setPreviewUrl(mediaUrls[positionOfMedia].url);
   }
 
   const isMediaLimitReached = () => {
@@ -40,7 +40,7 @@ const TestUploadMediaForm = (props) => {
 
   const deleteMediaByPosition = (positionOfMedia) => {
     let clonedMediaUrls = [...mediaUrls];
-    if (previewUrl === clonedMediaUrls[positionOfMedia].cropUrl) {
+    if (previewUrl === clonedMediaUrls[positionOfMedia].url) {
       setPreviewUrl(null);
     }
     clonedMediaUrls.splice(positionOfMedia, 1);
@@ -54,18 +54,18 @@ const TestUploadMediaForm = (props) => {
     setMediaUrls(clonedMediaUrls);
   };
 
-  const handleCropDone = (cropUrl) => {
+  const handleCropDone = (url) => {
     setEditFileUrl(null);
     const clonedMediaUrls = [...mediaUrls];
     setMediaUrls([
       ...clonedMediaUrls,
       {
         position: mediaUrls.length,
-        cropUrl: cropUrl,
+        url: url,
       },
     ]);
     setCropView(false);
-    setPreviewUrl(cropUrl);
+    setPreviewUrl(url);
   };
 
   const handleCancelCrop = (e) => {
@@ -83,7 +83,7 @@ const TestUploadMediaForm = (props) => {
         marginBottom={12}
       >
         <h3 style={{ color: COLORS.PRIMARY_PURPLE }}>Upload Media</h3>
-        <p>You may add up to 3 photos!</p>
+        <p>Add up to {MEDIA_LIMIT} photos!</p>
         {isCropView ? (
           <Cropper fileUrl={editFileUrl} cropHandler={handleCropDone} />
         ) : (
