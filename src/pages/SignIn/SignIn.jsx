@@ -18,6 +18,7 @@ import AuthHeader from "../../components/layout/AuthHeader";
 import GoogleLogin from "react-google-login"
 import FacebookLogin from 'react-facebook-login';
 import FacebookIcon from "@material-ui/icons/Facebook";
+import server from "../../utils/server"
 
 function Copyright() {
   return (
@@ -182,7 +183,7 @@ const SignIn = () => {
                 appId="3083491758550050" //TODO: Store somewhere
                 autoLoad={false}
                 fields="name,email,picture"
-                redirectUri={"http://localhost:3000/signin"}
+                redirectUri={server.defaults.baseURL + "/signin"}
                 callback={loginUserWithFacebook}
                 size="small"
                 textButton="SIGN IN WITH FACEBOOK"
