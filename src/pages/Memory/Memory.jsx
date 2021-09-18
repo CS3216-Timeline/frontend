@@ -124,7 +124,6 @@ const Memory = (props) => {
             selectedMediaUrl={previewUrl} 
             isEditable={false}
           />
-          <br /><br />
           <Grid container>
             <Grid item xs={12}>
               <Box paddingX={3}>
