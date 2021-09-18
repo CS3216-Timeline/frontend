@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
 const MemoryMedia = (props) => {
   const classes = useStyles();
   // TODO: How to handle invalid photo URLS?
-  // TODO: Allow BOTH videos and images
   const { url, hasMedia } = props;
 
   return (
@@ -28,7 +27,7 @@ const MemoryMedia = (props) => {
       {url && (
         <img className={classes.imageStyle} src={url} alt="memory preview" />
       )}
-      {!url && !hasMedia && <p>No Media Uploaded</p>}
+      {!url && !hasMedia && <p>No Media Selected</p>}
       {!url && hasMedia && <p>Choose a photo to edit</p>}
     </div>
   );

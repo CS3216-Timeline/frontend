@@ -9,6 +9,7 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import { useHistory } from "react-router-dom";
 import { Box, Button } from "@material-ui/core";
+import { COLORS } from "../../utils/colors";
 
 const getPaperStyle = () => ({
   padding: "6px 16px",
@@ -21,7 +22,7 @@ const getConnectorStyle = (color) => ({
 
 const CardConnector = (props) => {
   const { color, isFirst, isLast } = props;
-  const lineColor = isFirst || isLast ? "#ffffff00" : color;
+  const lineColor = isFirst || isLast ? COLORS.TRANSPARENT : color;
   const connectorStyle = getConnectorStyle(lineColor);
   return <TimelineConnector style={connectorStyle} />;
 };
