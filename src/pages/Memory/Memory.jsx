@@ -104,6 +104,7 @@ const Memory = (props) => {
             <PrivatePageHeader text={title} />
           </Box>
           <p><strong>Memory added on</strong> {date}</p>
+          {/* TODO: Implement multiple photo viewing */}
           <img alt={title} className={classes.imageStyle} src={mediaUrls[0].url} />
           <br /><br />
           <Grid container>

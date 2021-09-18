@@ -93,7 +93,7 @@ const TestUploadMediaForm = ({
         // marginBottom={12}
       >
         <h3 style={{ color: COLORS.PRIMARY_PURPLE }}>Upload Media</h3>
-        <p>Add up to {MEDIA_LIMIT} photos!</p>
+        <p>Please upload 1 - {MEDIA_LIMIT} photos.</p>
         {isCropView ? (
           <Cropper fileUrl={editFileUrl} cropHandler={handleCropDone} />
         ) : (
