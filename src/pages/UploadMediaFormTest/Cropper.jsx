@@ -50,7 +50,7 @@ const Cropper = (props) => {
   const showCroppedImage = useCallback(
     async (e) => {
       try {
-        const croppedImage = await getCroppedImg(fileUrl, croppedAreaPixels);
+        const croppedImage = await getCroppedImage(fileUrl, croppedAreaPixels);
         cropHandler(croppedImage);
       } catch (e) {
         console.error(e);
