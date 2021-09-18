@@ -147,7 +147,7 @@ const MediaDisplay = (props) => {
             if (!src) {
               return null;
             }
-            return (<img key={idx} src={src} width="100%" height="100%" />);
+            return (<img alt="memory media" key={idx} src={src} width="100%" height="100%" />);
           })}
         </div>
       </div>
