@@ -21,6 +21,7 @@ import Loading from "./components/Loading";
 import EditLine from "./pages/EditLine/EditLine";
 import "mapbox-gl/dist/mapbox-gl.css";
 import TestUploadMediaForm from "./pages/UploadMediaFormTest/UploadMediaForm";
+import Profile from "./pages/Profile/Profile";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -69,11 +70,8 @@ const App = () => {
                 path="/memory/:memoryId/edit"
                 component={MemoryEditor}
               />
-              <Route
-                exact
-                path="/test"
-                component={TestUploadMediaForm}
-              />
+              <PrivateRoute exact path="/profile" component={Profile} />
+              <Route exact path="/test" component={TestUploadMediaForm} />
               <Route component={NotFound} />
             </Switch>
           </Fragment>
