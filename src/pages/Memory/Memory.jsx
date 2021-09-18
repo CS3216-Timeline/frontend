@@ -52,7 +52,7 @@ const Memory = (props) => {
   const [displayDeleteDialog, setDisplayDeleteDialog] = useState(false);
   const [deleted, setDeleted] = useState(false);
   const [mediaUrls, setMediaUrls] = useState(existingMediaUrls);
-  const [isEditView, setIsEditView] = useState(false);
+  const [isMediaEditView, setIsMediaEditView] = useState(false);
 
   useEffect(() => {
     if (deleted) {
@@ -66,7 +66,7 @@ const Memory = (props) => {
     return <Loading />;
   }
 
-  if (isEditView) {
+  if (isMediaEditView) {
     // because states are essentially shared
     return (
       <>
@@ -84,7 +84,7 @@ const Memory = (props) => {
                   fullWidth
                   color="primary"
                   variant="contained"
-                  onClick={() => setIsEditView(!isEditView)}
+                  onClick={() => setIsMediaEditView(!isMediaEditView)}
                 >
                   Back to Memory
                 </Button>
@@ -112,7 +112,7 @@ const Memory = (props) => {
               <Box paddingX={3}>
                 <Button
                   onClick={() => {
-                    setIsEditView(!isEditView)
+                    setIsMediaEditView(!isMediaEditView)
                   }}
                   fullWidth
                   className={classes.editMediaButton}
