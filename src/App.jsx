@@ -51,20 +51,20 @@ const App = () => {
               <Route exact path="/signin" component={SignIn} />
               <Route exact path="/register" component={SignUp} />
               <Route exact path="/landing" component={Landing} />
-              <Route exact path="/line/:lineId" component={Line} />
-              <Route exact path="/memory/:memoryId" component={Memory} />
-              <Route exact path="/add-line" component={CreateNewLine} />
-              <Route
+              <PrivateRoute exact path="/line/:lineId" component={Line} />
+              <PrivateRoute exact path="/memory/:memoryId" component={Memory} />
+              <PrivateRoute exact path="/add-line" component={CreateNewLine} />
+              <PrivateRoute
                 exact
                 path="/edit-line/:lineId"
                 component={EditLine}
               />
-              <Route
+              <PrivateRoute
                 exact
                 path="/line/:lineId/add-memory"
                 component={MemoryEditor}
               />
-              <Route
+              <PrivateRoute
                 exact
                 path="/memory/:memoryId/edit"
                 component={MemoryEditor}
