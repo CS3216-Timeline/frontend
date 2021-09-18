@@ -8,7 +8,7 @@ import MapDisplay from "./MapDisplay";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
 import { COLORS } from "../../utils/colors";
-import UploadMediaForm from "../UploadMediaForm/UploadMediaForm";
+import UploadMediaForm from "../UploadMediaFormTest/UploadMediaForm";
 import { useHistory, useParams } from "react-router";
 import { getMemoryById } from "../../services/memories";
 import { useDispatch } from "react-redux";
@@ -127,7 +127,7 @@ const MemoryEditor = (props) => {
       alertError("Location cannot be empty.");
       return;
     }
-    if (isEmpty(mediaUrl)) {
+    if (isEdit && isEmpty(mediaUrl)) {
       alertError("Please upload a media.");
       return;
     }
@@ -232,9 +232,11 @@ const MemoryEditor = (props) => {
                 setViewport={setViewport}
               />
             </Box>
-            <Box paddingY={1}>
-              <UploadMediaForm doneHandler={setMediaUrl} />
-            </Box>
+            {!isEdit && 
+              <Box paddingY={1}>
+                <UploadMediaForm doneHandler={setMediaUrl} />
+              </Box>
+            }
             <p>
               [TEST] Media Link:{" "}
               {mediaUrl && (
