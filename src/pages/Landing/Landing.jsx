@@ -1,6 +1,7 @@
 import { Grid, makeStyles, Typography, Box, Button } from "@material-ui/core";
 import React from "react";
 import { useSelector } from "react-redux";
+import FadeIn from "react-fade-in";
 import { Redirect, useHistory } from "react-router-dom";
 import aroundTheWorldImage from "../../assets/around-the-world.png";
 import friendshipImage from "../../assets/friendship.png";
@@ -58,74 +59,79 @@ const Landing = () => {
 
   return (
     <>
-      <Box component="div" className={classes.heroContent}>
-        <img className={classes.logoImage} src={logoImage} alt={"logo"} />
-        {/* <h3 className={classes.header}>TIMELINE</h3> */}
-        <Box component="div" className={classes.subContent}>
-          <Typography variant="h6" align="center">
-            {/* TODO: Update this later */}
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam
-            totam recusandae illo eius fugit, dolorem nulla magnam ut facere
-            voluptatem perferendis officiis consectetur, fugiat tempora laborum
-            aliquam accusantium quos. Corrupti?
-          </Typography>
+      <FadeIn transitionDuration={1500}>
+        <Box className={classes.heroContent}>
+          <img className={classes.logoImage} src={logoImage} alt={"logo"} />
+          {/* <h3 className={classes.header}>TIMELINE</h3> */}
+          <Box className={classes.subContent}>
+            <Typography variant="h6" align="center">
+              {/* TODO: Update this later */}
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam
+              totam recusandae illo eius fugit, dolorem nulla magnam ut facere
+              voluptatem perferendis officiis consectetur, fugiat tempora
+              laborum aliquam accusantium quos. Corrupti?
+            </Typography>
+          </Box>
+          <Button
+            onClick={() => {
+              history.push("/signin");
+            }}
+            color="primary"
+            variant="contained"
+          >
+            USE IT NOW
+          </Button>
+          <div>
+            <Grid container spacing={4}>
+              <Grid item xs={12}>
+                <img
+                  className={classes.image}
+                  src={aroundTheWorldImage}
+                  alt={"around the world"}
+                />
+                <h2 className={classes.featureHeader}>Feature 1</h2>
+                <Typography variant="h6" align="center">
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                  Repudiandae iusto unde quibusdam, iste dolorem consequuntur
+                  enim
+                </Typography>
+              </Grid>
+
+              <Grid item xs={12}>
+                <div>
+                  <img
+                    className={classes.image}
+                    src={momentsImage}
+                    alt={"moments"}
+                  />
+                </div>
+                <h2 className={classes.featureHeader}>Feature 2</h2>
+                <Typography variant="h6" align="center">
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                  Repudiandae iusto unde quibusdam, iste dolorem consequuntur
+                  enim
+                </Typography>
+              </Grid>
+
+              <Grid item xs={12}>
+                <div>
+                  <img
+                    className={classes.image}
+                    src={friendshipImage}
+                    alt={"friendship"}
+                  />
+                </div>
+                <h2 className={classes.featureHeader}>Feature 3</h2>
+                <Typography variant="h6" align="center">
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                  Repudiandae iusto unde quibusdam, iste dolorem consequuntur
+                  enim
+                </Typography>
+              </Grid>
+            </Grid>
+          </div>
         </Box>
-        <Button
-          onClick={() => {
-            history.push("/signin");
-          }}
-          color="primary"
-          variant="contained"
-        >
-          USE IT NOW
-        </Button>
-        <div>
-          <Grid container spacing={4}>
-            <Grid item xs={12}>
-              <img
-                className={classes.image}
-                src={aroundTheWorldImage}
-                alt={"around the world"}
-              />
-              <h2 className={classes.featureHeader}>Feature 1</h2>
-              <Typography variant="h6" align="center">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Repudiandae iusto unde quibusdam, iste dolorem consequuntur enim
-              </Typography>
-            </Grid>
-
-            <Grid item xs={12}>
-              <div>
-                <img
-                  className={classes.image}
-                  src={momentsImage}
-                  alt={"moments"}
-                />
-              </div>
-              <h2 className={classes.featureHeader}>Feature 2</h2>
-              <Typography variant="h6" align="center">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Repudiandae iusto unde quibusdam, iste dolorem consequuntur enim
-              </Typography>
-            </Grid>
-
-            <Grid item xs={12}>
-              <div>
-                <img
-                  className={classes.image}
-                  src={friendshipImage}
-                  alt={"friendship"}
-                />
-              </div>
-              <h2 className={classes.featureHeader}>Feature 3</h2>
-              <Typography variant="h6" align="center">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Repudiandae iusto unde quibusdam, iste dolorem consequuntur enim
-              </Typography>
-            </Grid>
-          </Grid>
-        </div>
-      </Box>
+      </FadeIn>
     </>
   );
 };

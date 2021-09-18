@@ -27,7 +27,7 @@ const Profile = () => {
   const user = useSelector((state) => state.auth.user);
   return (
     <>
-      <Box component="div" className={classes.root}>
+      <Box className={classes.root}>
         <Grid container spacing={0} align="center" justify="center">
           <Grid item xs={12}>
             <Box paddingBottom={4}>

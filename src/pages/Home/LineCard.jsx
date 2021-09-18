@@ -63,12 +63,12 @@ const LineCard = ({ line }) => {
       variant="outlined"
     >
       <CardContent>
-        <Box component="div" paddingTop={1}>
+        <Box paddingTop={1}>
           <Typography variant="h3" align="left">
             {line.name}
           </Typography>
         </Box>
-        <Box component="div" paddingY={1}>
+        <Box paddingY={1}>
           <Typography variant="body1" align="left">
             Last Updated At: &nbsp;
             {convertUTCtoYYYYMMDDHHMM(line.lastUpdatedDate)}
