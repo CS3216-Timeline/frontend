@@ -53,7 +53,15 @@ const LineCard = ({ line }) => {
   //   "The event of 5 Jan 2021 : Happy New Year",
   // ];
   return (
-    <Card className={classes.card} variant="outlined">
+    <Box
+      component={Card}
+      boxShadow={3}
+      bgcolor="background.paper"
+      m={1}
+      p={1}
+      className={classes.card}
+      variant="outlined"
+    >
       <CardContent>
         <Box component="div" paddingTop={1}>
           <Typography variant="h3" align="left">
@@ -112,7 +120,8 @@ const LineCard = ({ line }) => {
           <Typography variant="body1">View/ Add Memories</Typography>
         </Button>
       </CardActions>
-    </Card>
+      {/* </Card> */}
+    </Box>
   );
 };
 
