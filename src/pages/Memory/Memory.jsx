@@ -63,6 +63,7 @@ const Memory = (props) => {
     <>
       <Box className={classes.alignCenter}>
         <h1>{title}</h1>
+        <p><strong>Memory added on</strong> {date}</p>
         <img alt={title} className={classes.imageStyle} src={mediaUrl} />
         <br /><br />
         <Grid container>
@@ -82,7 +83,6 @@ const Memory = (props) => {
             </Box>
           </Grid>
         </Grid>
-        <h4>{date}</h4>
         <div className={classes.descriptionStyle}>
           <p>{description}</p>
         </div>
