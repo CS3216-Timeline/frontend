@@ -2,7 +2,7 @@ import { Box, Button } from "@material-ui/core";
 import { useState, useCallback } from "react";
 import ReactCrop from "react-easy-crop";
 import { COLORS } from "../../utils/colors";
-import getCroppedImg from "../../utils/cropImage";
+import { getCroppedImage } from "../../utils/cropImage";
 
 const cropperContainerStyle = () => ({
   height: "90vw",
@@ -50,7 +50,7 @@ const Cropper = (props) => {
   const showCroppedImage = useCallback(
     async (e) => {
       try {
-        const croppedImage = await getCroppedImg(fileUrl, croppedAreaPixels);
+        const croppedImage = await getCroppedImage(fileUrl, croppedAreaPixels);
         cropHandler(croppedImage);
       } catch (e) {
         console.error(e);

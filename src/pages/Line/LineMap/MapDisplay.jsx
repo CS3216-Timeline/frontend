@@ -1,13 +1,13 @@
 import React from "react";
 import ReactMapGL, { Layer, Source } from "react-map-gl";
-import { MAPBOX_API_TOKEN } from "../../services/locationService";
-import { getLineConnectors } from "../../utils/map";
+import { MAPBOX_API_TOKEN } from "../../../services/locationService";
+import { getLineConnectors } from "../../../utils/map";
 import MapMarker from "./MapMarker";
 import { useEffect } from "react";
 
 // https://stackoverflow.com/questions/67842338/how-to-use-react-map-gl-to-draw-line-between-two-point
 // how to draw a line between the 2 points
-const MapDisplay = ({ memoriesData, viewport, setViewport }) => {
+const MapDisplay = ({ memoriesData, viewport, setViewport, lineColor }) => {
   const lineConnectors = getLineConnectors(memoriesData);
   useEffect(() => {
     setViewport(viewport);
@@ -22,8 +22,9 @@ const MapDisplay = ({ memoriesData, viewport, setViewport }) => {
     id: "route",
     type: "line",
     paint: {
-      "line-color": "#888", // TODO: Set this to the line colour
-      "line-width": 4,
+      // "line-color": COLORS.GREEN,
+      "line-color": `${lineColor}`,
+      "line-width": 2,
     },
   };
 

@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 // import { mockLinesData } from "./data";
 import LineCard from "./LineCard";
-import { Box, Button, TextField } from "@material-ui/core";
+import { Box, Button, TextField, Tooltip } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import HomeIcon from "@material-ui/icons/Home";
 import { useHistory } from "react-router-dom";
@@ -14,7 +14,7 @@ import { setAlert } from "../../actions/alert";
 import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
 import { COLORS } from "../../utils/colors";
 import { filterLines } from "../../utils/lines";
-import NoLinesAvailable from "./NoLinesAvailable";
+import NoneAvailable from "../../components/NoneAvailable";
 
 const useStyles = makeStyles((theme) => ({
   addLineButtonContainer: {
@@ -82,9 +82,11 @@ const Home = () => {
             <PrivatePageHeader
               text={"Home"}
               icon={
-                <HomeIcon
-                  style={{ fontSize: "30pt", color: COLORS.PRIMARY_PURPLE }}
-                />
+                <Tooltip title="Add/ find lines to create your memory!">
+                  <HomeIcon
+                    style={{ fontSize: "30pt", color: COLORS.PRIMARY_PURPLE }}
+                  />
+                </Tooltip>
               }
             />
             <Button
@@ -125,10 +127,10 @@ const Home = () => {
               </Grid>
             ))
           ) : (
-            <NoLinesAvailable text={"No lines that matched search"} />
+            <NoneAvailable text={"No lines that matched search"} />
           )}
           {lines.length === 0 && (
-            <NoLinesAvailable text={"No lines created yet, create one now!"} />
+            <NoneAvailable text={"No lines created yet, create one now!"} />
           )}
         </Grid>
       </div>

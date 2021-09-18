@@ -28,7 +28,7 @@ export const register =
     };
 
     try {
-      const res = await server.post("users/register", body);
+      const res = await server.post("auth/register", body);
       // res.data just contains the token, and now i need to set the token
       dispatch({
         type: REGISTER_SUCCESS,
