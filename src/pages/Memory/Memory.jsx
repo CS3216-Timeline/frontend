@@ -14,6 +14,7 @@ import { useEffect } from "react";
 import Photo from "@material-ui/icons/Photo";
 import UploadMediaForm from "../UploadMediaForm/UploadMediaForm";
 import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
+import MediaDisplay from "./MediaDisplay";
 
 const useStyles = makeStyles((theme) => ({
   alignCenter: {
@@ -105,7 +106,9 @@ const Memory = (props) => {
           </Box>
           <p><strong>Memory added on</strong> {date}</p>
           {/* TODO: Implement multiple photo viewing */}
-          <img alt={title} className={classes.imageStyle} src={mediaUrls[0].url} />
+          <Box display="flex" justifyContent="center">
+            <MediaDisplay mediaUrls={mediaUrls} />
+          </Box>
           <br /><br />
           <Grid container>
             <Grid item xs={12}>

@@ -22,6 +22,7 @@ import EditLine from "./pages/EditLine/EditLine";
 import "mapbox-gl/dist/mapbox-gl.css";
 import UploadMediaForm from "./pages/UploadMediaForm/UploadMediaForm";
 import Profile from "./pages/Profile/Profile";
+import MediaDisplay from "./pages/Memory/MediaDisplay";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -73,7 +74,7 @@ const App = () => {
               <Route
                 exact
                 path="/test"
-                component={UploadMediaForm}
+                component={Memory}
               />
               <PrivateRoute exact path="/profile" component={Profile} />
               <Route component={NotFound} />
