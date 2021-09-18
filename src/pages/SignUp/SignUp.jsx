@@ -11,7 +11,7 @@ import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../actions/auth";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { setAlert } from "../../actions/alert";
 import AppLogo from "../../components/layout/AppLogo";
 import AuthHeader from "../../components/layout/AuthHeader";
@@ -58,6 +58,7 @@ const SignUp = () => {
   const [confirmPassword, setConfirmPassowrd] = useState("");
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
+  const history = useHistory();
 
   const onRegisterClick = (e) => {
     e.preventDefault();
@@ -162,8 +163,12 @@ const SignUp = () => {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="/signin" variant="body2">
-                  {"Have an account? Log In"}
+                <Link
+                  component="button"
+                  variant="body2"
+                  onClick={() => history.push("/signin")}
+                >
+                  Have an account? Log In
                 </Link>
               </Grid>
             </Grid>

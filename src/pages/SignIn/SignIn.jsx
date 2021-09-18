@@ -9,7 +9,7 @@ import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login, loginWithGoogle, loginWithFacebook } from "../../actions/auth";
 import AppLogo from "../../components/layout/AppLogo";
@@ -86,6 +86,7 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
+  const history = useHistory();
 
   const loginUser = (e) => {
     e.preventDefault();
@@ -185,8 +186,12 @@ const SignIn = () => {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="/register" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                <Link
+                  component="button"
+                  variant="body2"
+                  onClick={() => history.push("/register")}
+                >
+                  Don't have an account? Sign Up
                 </Link>
               </Grid>
             </Grid>
