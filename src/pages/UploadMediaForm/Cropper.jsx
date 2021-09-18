@@ -61,6 +61,7 @@ const Cropper = (props) => {
 
   const saveCroppedImage = (e) => {
     e.preventDefault();
+    console.log("saving cropped image");
     showCroppedImage();
   };
 

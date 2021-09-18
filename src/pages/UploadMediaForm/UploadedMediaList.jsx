@@ -13,16 +13,13 @@ const UploadedMediaList = ({
   setMediaPreview,
   deleteMediaByPosition,
   selectedMediaUrl,
-  hide,
 }) => {
   const classes = useStyles();
   const sortedMediaUrls = mediaUrls.sort((a, b) => {
     return a.position - b.position;
   });
 
-  if (hide) {
-    return null;
-  }
+  const allowDeletion = sortedMediaUrls.length > 1;
 
   return (
     <>
@@ -34,6 +31,7 @@ const UploadedMediaList = ({
             setMediaPreview={setMediaPreview}
             isSelected={media.url === selectedMediaUrl}
             deleteMediaByPosition={deleteMediaByPosition}
+            isDeletable={allowDeletion}
           />
         ))}
       </Grid>

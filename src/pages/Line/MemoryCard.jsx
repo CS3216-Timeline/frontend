@@ -50,16 +50,17 @@ const MemoryCard = (props) => {
   return (
     <TimelineItem>
       <LineSeparator color={color} isFirst={isFirst} isLast={isLast} />
-      <Box>
+      <Box width="100%">
         <TimelineContent>
           <Paper elevation={3} style={getPaperStyle()}>
             <Box display="flex" flexDirection="column">
-              <img alt={title} src={mediaUrl} style={{ width: "100%" }} />
+              {mediaUrl && <img alt={title} src={mediaUrl} style={{ width: "100%", height: "100%" }} />}
               <br />
               <Box
                 display="flex"
                 flexDirection="row"
                 justifyContent="space-between"
+                width="100%"
               >
                 <Box display="flex" flexDirection="column">
                   <Typography variant="h6" component="h1">
