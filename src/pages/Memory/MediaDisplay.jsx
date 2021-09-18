@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core";
-import { Button } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
 
@@ -8,7 +8,7 @@ const vpWidth = Math.max(
   window.innerWidth || 0
 );
 
-const containerWidth = vpWidth; // * 0.9;
+const containerWidth = vpWidth * 0.9;
 const IMG_WIDTH = containerWidth;
 // const IMG_HEIGHT = containerWidth;
 
@@ -27,8 +27,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#000",
     overflow: "hidden",
     position: "relative",
-    // width: "90vw",
-    // height: "90vw",
+    width: "90vw",
+    height: "90vw",
   },
   move: {
     display: "flex",
@@ -151,20 +151,29 @@ const MediaDisplay = (props) => {
           })}
         </div>
       </div>
-      <Box display="flex" justifyContent="space-between" width="100%">
-        <Button
-          disabled={currIndex === 0}
-          onClick={() => transitionTo(currIndex - 1, 0.5)}
-        >
-          Previous
-        </Button>
-        <Button
-          disabled={currIndex === mediaUrls.length - 1}
-          onClick={() => transitionTo(currIndex + 1, 0.5)}
-        >
-          Next
-        </Button>
-      </Box>
+      <Grid container>
+        <Grid item xs={4}>
+          <Button
+            disabled={currIndex === 0}
+            onClick={() => transitionTo(currIndex - 1, 0.5)}
+          >
+            Previous
+          </Button>
+        </Grid>
+        <Grid item xs={4}>
+          <p>
+            {currIndex + 1} / {mediaUrls.length}
+          </p>
+        </Grid>
+        <Grid item xs={4}>
+          <Button
+            disabled={currIndex === mediaUrls.length - 1}
+            onClick={() => transitionTo(currIndex + 1, 0.5)}
+          >
+            Next
+          </Button>
+        </Grid>
+      </Grid>
     </Box>
   )
 }
