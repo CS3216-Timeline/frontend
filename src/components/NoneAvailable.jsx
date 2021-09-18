@@ -1,12 +1,9 @@
 import React from "react";
-import { Grid, Typography } from "@material-ui/core";
+import { Box, Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import NoDataImage from "../assets/no_data.png";
 
 const useStyles = makeStyles((theme) => ({
-  imageContainer: {
-    padding: theme.spacing(2, 0),
-  },
   image: {
     width: "60%",
     height: "auto",
@@ -21,9 +18,9 @@ const NoneAvailable = ({ text }) => {
   return (
     <>
       <Grid item xs={12}>
-        <div className={classes.imageContainer}>
+        <Box padding={3}>
           <img className={classes.image} src={NoDataImage} alt={text} />
-        </div>
+        </Box>
         <Typography variant="h4" align="center">
           {text}
         </Typography>
