@@ -236,6 +236,7 @@ const MemoryEditor = (props) => {
                 <UploadMediaForm 
                   existingMediaUrls={mediaUrls} // will be empty
                   onComplete={setMediaUrls}
+                  isEmptiable={true}
                 />
               </Box>
             }

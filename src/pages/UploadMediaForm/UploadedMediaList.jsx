@@ -13,13 +13,15 @@ const UploadedMediaList = ({
   setMediaPreview,
   deleteMediaByPosition,
   selectedMediaUrl,
+  isEditable,
+  isEmptiable,
 }) => {
   const classes = useStyles();
   const sortedMediaUrls = mediaUrls.sort((a, b) => {
     return a.position - b.position;
   });
 
-  const allowDeletion = sortedMediaUrls.length > 1;
+  const allowDeletion = isEditable && (sortedMediaUrls.length > 1 || isEmptiable);
 
   return (
     <>

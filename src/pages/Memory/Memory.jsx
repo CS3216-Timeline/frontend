@@ -13,6 +13,8 @@ import DeleteMemoryDialog from "./DeleteMemoryDialog";
 import { useEffect } from "react";
 import Photo from "@material-ui/icons/Photo";
 import UploadMediaForm from "../UploadMediaForm/UploadMediaForm";
+import MemoryMedia from "../UploadMediaForm/MemoryMedia";
+import UploadedMediaList from "../UploadMediaForm/UploadedMediaList";
 import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
 
 const useStyles = makeStyles((theme) => ({
@@ -51,8 +53,9 @@ const Memory = (props) => {
   const [loading, setLoading] = useState(false);
   const [displayDeleteDialog, setDisplayDeleteDialog] = useState(false);
   const [deleted, setDeleted] = useState(false);
-  const [mediaUrls, setMediaUrls] = useState(existingMediaUrls);
+  const [mediaUrls, setMediaUrls] = useState([...existingMediaUrls]);
   const [isMediaEditView, setIsMediaEditView] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState(mediaUrls[0].url);
 
   useEffect(() => {
     if (deleted) {
@@ -61,6 +64,7 @@ const Memory = (props) => {
   }, [deleted, history, lineId]);
 
   // do a useEffect to get the memory after endpoint to get a memory is done
+  // set previewUrl to 1
 
   if (loading) {
     return <Loading />;
@@ -77,6 +81,7 @@ const Memory = (props) => {
                 <UploadMediaForm 
                   existingMediaUrls={mediaUrls} 
                   onComplete={setMediaUrls} 
+                  isEmptiable={false}
                 />
               </Box>
               <Box paddingY={1}>
@@ -96,6 +101,12 @@ const Memory = (props) => {
     )
   }
 
+  const setMediaPreview = (idx) => {
+    if (idx < mediaUrls.length) {
+      setPreviewUrl(mediaUrls[idx].url);
+    }
+  }
+
   return (
     <>
       <Box paddingBottom={7}>
@@ -105,7 +116,14 @@ const Memory = (props) => {
           </Box>
           <p><strong>Memory added on</strong> {date}</p>
           {/* TODO: Implement multiple photo viewing */}
-          <img alt={title} className={classes.imageStyle} src={mediaUrls[0].url} />
+          {/* <img alt={title} className={classes.imageStyle} src={mediaUrls[0].url} /> */}
+          <MemoryMedia url={previewUrl} hasMedia={previewUrl != null} />
+          <UploadedMediaList 
+            mediaUrls={mediaUrls} 
+            setMediaPreview={setMediaPreview}
+            selectedMediaUrl={previewUrl} 
+            isEditable={false}
+          />
           <br /><br />
           <Grid container>
             <Grid item xs={12}>

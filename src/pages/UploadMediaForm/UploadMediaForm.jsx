@@ -9,17 +9,16 @@ import DeleteMediaDialog from "./DeleteMediaDialog";
 
 const MEDIA_LIMIT = 4; // can tweak
 
-const TestUploadMediaForm = ({
+const UploadMediaForm = ({
   existingMediaUrls,
   onComplete,
+  isEmptiable
 }) => {
   const initUrls = existingMediaUrls ? existingMediaUrls.map(media => ({...media})) : [];
   const [mediaUrls, setMediaUrls] = useState(initUrls); // FINAL URLs
   const [editFileUrl, setEditFileUrl] = useState(null); // DRAFT FILE URL
   const [isCropView, setCropView] = useState(false);
   const [previewUrl, setPreviewUrl] = useState(null);
-
-  console.log(mediaUrls);
 
   const addNewMedia = (e) => {
     const newFile = e.target.files[0];
@@ -31,7 +30,6 @@ const TestUploadMediaForm = ({
   };
 
   const setMediaPreview = (positionOfMedia) => {
-    console.log(positionOfMedia);
     if (positionOfMedia >= mediaUrls.length) {
       return;
     }
@@ -111,6 +109,8 @@ const TestUploadMediaForm = ({
             setMediaPreview={setMediaPreview}
             deleteMediaByPosition={deleteMediaByPosition}
             selectedMediaUrl={previewUrl}
+            isEditable={true}
+            isEmptiable={isEmptiable}
           />
         }
         {isCropView ? (
@@ -135,4 +135,4 @@ const TestUploadMediaForm = ({
   );
 };
 
-export default TestUploadMediaForm;
+export default UploadMediaForm;
