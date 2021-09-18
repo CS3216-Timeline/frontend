@@ -8,16 +8,29 @@ import Link from "@material-ui/core/Link";
 import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login, loginWithGoogle, loginWithFacebook } from "../../actions/auth";
 import AppLogo from "../../components/layout/AppLogo";
 import AuthHeader from "../../components/layout/AuthHeader";
-import GoogleLogin from "react-google-login";
-import FacebookLogin from "react-facebook-login";
+import GoogleLogin from "react-google-login"
+import FacebookLogin from 'react-facebook-login';
 import FacebookIcon from "@material-ui/icons/Facebook";
-import Copyright from "../../components/layout/CopyRight";
+
+function Copyright() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {"Copyright © "}
+      <Link color="inherit" href="https://material-ui.com/">
+        Your Website
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
+}
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,32 +65,32 @@ const useStyles = makeStyles((theme) => ({
   },
   facebookIcon: {
     margin: "5px 17px 10px 7px",
-    color: "#4267B2",
+    color: "#4267B2"
   },
   facebookButton: {
-    backgroundColor: theme === "dark" ? "rgb(66, 133, 244)" : "#fff",
-    display: "inline-flex",
-    alignItems: "center",
-    color: theme === "dark" ? "#fff" : "rgba(0, 0, 0, .54)",
-    boxShadow: "0 2px 2px 0 rgba(0, 0, 0, .24), 0 0 1px 0 rgba(0, 0, 0, .24)",
+    backgroundColor: theme === 'dark' ? 'rgb(66, 133, 244)' : '#fff',
+    display: 'inline-flex',
+    alignItems: 'center',
+    color: theme === 'dark' ? '#fff' : 'rgba(0, 0, 0, .54)',
+    boxShadow: '0 2px 2px 0 rgba(0, 0, 0, .24), 0 0 1px 0 rgba(0, 0, 0, .24)',
     padding: 0,
     borderRadius: 2,
     width: "100%",
-    border: "1px solid transparent",
+    border: '1px solid transparent',
     fontSize: 14,
-    fontWeight: "500",
-    fontFamily: "Roboto, sans-serif",
+    fontWeight: '500',
+    fontFamily: 'Roboto, sans-serif',
     "&:hover": {
-      cursor: "pointer",
-      opacity: 0.9,
+      cursor: 'pointer',
+      opacity: 0.9
     },
     "&:active": {
-      cursor: "pointer",
-      backgroundColor: theme === "dark" ? "#3367D6" : "#eee",
-      color: theme === "dark" ? "#fff" : "rgba(0, 0, 0, .54)",
-      opacity: 1,
+      cursor: 'pointer',
+      backgroundColor: theme === 'dark' ? '#3367D6' : '#eee',
+      color: theme === 'dark' ? '#fff' : 'rgba(0, 0, 0, .54)',
+      opacity: 1
     },
-  },
+  }
 }));
 
 const SignIn = () => {
@@ -92,13 +105,13 @@ const SignIn = () => {
     dispatch(login(email, password));
   };
 
-  const loginUserWithGoogle = async (googleData) => {
-    dispatch(loginWithGoogle(googleData));
-  };
+  const loginUserWithGoogle = async googleData => {
+    dispatch(loginWithGoogle(googleData))
+  }
 
-  const loginUserWithFacebook = async (facebookData) => {
-    dispatch(loginWithFacebook(facebookData));
-  };
+  const loginUserWithFacebook = async facebookData => {
+    dispatch(loginWithFacebook(facebookData))
+  }
 
   if (auth.isAuthenticated) {
     return <Redirect to="/" />;
@@ -161,7 +174,7 @@ const SignIn = () => {
                 buttonText="SIGN IN WITH GOOGLE"
                 onSuccess={loginUserWithGoogle}
                 onFailure={loginUserWithGoogle} // TODO: change so that it just stays at the login page with some message
-                cookiePolicy={"single_host_origin"}
+                cookiePolicy={'single_host_origin'}
                 className="" // TODO: Style
               />
               <br />
@@ -173,7 +186,7 @@ const SignIn = () => {
                 callback={loginUserWithFacebook}
                 size="small"
                 textButton="SIGN IN WITH FACEBOOK"
-                icon={<FacebookIcon className={classes.facebookIcon} />}
+                icon={<FacebookIcon className={classes.facebookIcon}/>}
                 cssClass={classes.facebookButton}
               />
               <br />
