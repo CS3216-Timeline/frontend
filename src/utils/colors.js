@@ -32,9 +32,7 @@ export const COLORS = {
   CANCEL_BUTTON: '#c70000',
   SUCCESS_BUTTON: '#42ba96',
   BLACK: '#000000'
-  TRANSPARENT: '#00000000',
 }
-
 export const colorPickerArray = [
   COLORS.MAROON,
   COLORS.RED,
