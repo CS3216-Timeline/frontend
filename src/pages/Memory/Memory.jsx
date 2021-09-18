@@ -12,7 +12,7 @@ import { useHistory } from "react-router-dom";
 import DeleteMemoryDialog from "./DeleteMemoryDialog";
 import { useEffect } from "react";
 import Photo from "@material-ui/icons/Photo";
-import UploadMediaForm from "../UploadMediaFormTest/UploadMediaForm";
+import UploadMediaForm from "../UploadMediaForm/UploadMediaForm";
 import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
 
 const useStyles = makeStyles((theme) => ({

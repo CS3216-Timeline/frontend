@@ -8,7 +8,7 @@ import MapDisplay from "./MapDisplay";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
 import { COLORS } from "../../utils/colors";
-import UploadMediaForm from "../UploadMediaFormTest/UploadMediaForm";
+import UploadMediaForm from "../UploadMediaForm/UploadMediaForm";
 import { useHistory, useParams } from "react-router";
 import { getMemoryById } from "../../services/memories";
 import { useDispatch } from "react-redux";
