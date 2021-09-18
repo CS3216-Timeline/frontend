@@ -11,6 +11,7 @@ import Loading from "../../components/Loading";
 import { useHistory } from "react-router-dom";
 import DeleteMemoryDialog from "./DeleteMemoryDialog";
 import { useEffect } from "react";
+import Photo from "@material-ui/icons/Photo";
 
 const useStyles = makeStyles(() => ({
   alignCenter: {
@@ -18,16 +19,20 @@ const useStyles = makeStyles(() => ({
   },
   descriptionStyle: {
     padding: "0% 5%",
-    textAlign: "center",
   },
   deleteButton: {
     color: COLORS.WHITE,
     backgroundColor: COLORS.CANCEL_BUTTON,
   },
   imageStyle: {
-    width: "90%",
+    width: "90vw",
+    height: "90vw",
     textAlign: "center",
   },
+  editMediaButton: {
+    color: COLORS.BLACK,
+    backgroundColor: COLORS.LIGHT_GREEN,
+  }
 }));
 
 const Memory = (props) => {
@@ -59,6 +64,24 @@ const Memory = (props) => {
       <Box className={classes.alignCenter}>
         <h1>{title}</h1>
         <img alt={title} className={classes.imageStyle} src={mediaUrl} />
+        <br /><br />
+        <Grid container>
+          <Grid item xs={12}>
+            <Box paddingX={3}>
+              <Button
+                onClick={() => {
+                  console.log("editing");
+                }}
+                fullWidth
+                className={classes.editMediaButton}
+                variant="contained"
+                startIcon={<Photo />}
+              >
+                Add / Remove Photos
+              </Button>
+            </Box>
+          </Grid>
+        </Grid>
         <h4>{date}</h4>
         <div className={classes.descriptionStyle}>
           <p>{description}</p>
@@ -77,7 +100,7 @@ const Memory = (props) => {
                 variant="contained"
                 startIcon={<EditIcon />}
               >
-                Edit
+                Edit Details
               </Button>
             </Box>
           </Grid>
