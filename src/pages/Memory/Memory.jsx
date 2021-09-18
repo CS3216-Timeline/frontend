@@ -12,6 +12,7 @@ import { useHistory } from "react-router-dom";
 import DeleteMemoryDialog from "./DeleteMemoryDialog";
 import { useEffect } from "react";
 import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
+import FadeIn from "react-fade-in/lib/FadeIn";
 
 const useStyles = makeStyles((theme) => ({
   alignCenter: {
@@ -57,73 +58,75 @@ const Memory = (props) => {
 
   return (
     <>
-      <Box paddingBottom={7}>
-        <Box className={classes.alignCenter}>
-          <Box display="flex" justifyContent="center" paddingY={2}>
-            <PrivatePageHeader text={title} />
-          </Box>
-          <img alt={title} className={classes.imageStyle} src={mediaUrl} />
-          <h4>{date}</h4>
-          <div className={classes.descriptionStyle}>
-            <p>{description}</p>
-          </div>
-        </Box>
-        <Box paddingTop={5}>
-          <Grid container>
-            <Grid item xs={6}>
-              <Box paddingX={3}>
-                <Button
-                  onClick={() => {
-                    console.log("editing");
-                  }}
-                  fullWidth
-                  className={classes.editButton}
-                  variant="contained"
-                  startIcon={<EditIcon />}
-                >
-                  Edit
-                </Button>
-              </Box>
-            </Grid>
-            <Grid item xs={6}>
-              <Box paddingX={3}>
-                <Button
-                  onClick={() => {
-                    setDisplayDeleteDialog(true);
-                  }}
-                  fullWidth
-                  className={classes.deleteButton}
-                  variant="contained"
-                  startIcon={<DeleteIcon />}
-                >
-                  Delete
-                </Button>
-              </Box>
-            </Grid>
-          </Grid>
-          <Grid item xs={12}>
-            <Box margin={3}>
-              <Button
-                fullWidth
-                color="primary"
-                variant="contained"
-                onClick={() => history.push(`/line/${lineId}`)}
-                startIcon={<ArrowBackIcon />}
-              >
-                Back to line page
-              </Button>
+      <FadeIn>
+        <Box paddingBottom={7}>
+          <Box className={classes.alignCenter}>
+            <Box display="flex" justifyContent="center" paddingY={2}>
+              <PrivatePageHeader text={title} />
             </Box>
-          </Grid>
+            <img alt={title} className={classes.imageStyle} src={mediaUrl} />
+            <h4>{date}</h4>
+            <div className={classes.descriptionStyle}>
+              <p>{description}</p>
+            </div>
+          </Box>
+          <Box paddingTop={5}>
+            <Grid container>
+              <Grid item xs={6}>
+                <Box paddingX={3}>
+                  <Button
+                    onClick={() => {
+                      console.log("editing");
+                    }}
+                    fullWidth
+                    className={classes.editButton}
+                    variant="contained"
+                    startIcon={<EditIcon />}
+                  >
+                    Edit
+                  </Button>
+                </Box>
+              </Grid>
+              <Grid item xs={6}>
+                <Box paddingX={3}>
+                  <Button
+                    onClick={() => {
+                      setDisplayDeleteDialog(true);
+                    }}
+                    fullWidth
+                    className={classes.deleteButton}
+                    variant="contained"
+                    startIcon={<DeleteIcon />}
+                  >
+                    Delete
+                  </Button>
+                </Box>
+              </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <Box margin={3}>
+                <Button
+                  fullWidth
+                  color="primary"
+                  variant="contained"
+                  onClick={() => history.push(`/line/${lineId}`)}
+                  startIcon={<ArrowBackIcon />}
+                >
+                  Back to line page
+                </Button>
+              </Box>
+            </Grid>
+          </Box>
+          <DeleteMemoryDialog
+            setLoading={setLoading}
+            displayDeleteDialog={displayDeleteDialog}
+            setDisplayDeleteDialog={setDisplayDeleteDialog}
+            memoryId={memoryId}
+            lineId={lineId}
+            setDeleted={setDeleted}
+          />
         </Box>
-        <DeleteMemoryDialog
-          setLoading={setLoading}
-          displayDeleteDialog={displayDeleteDialog}
-          setDisplayDeleteDialog={setDisplayDeleteDialog}
-          memoryId={memoryId}
-          lineId={lineId}
-          setDeleted={setDeleted}
-        />
-      </Box>
+      </FadeIn>
     </>
   );
 };

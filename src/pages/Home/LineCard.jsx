@@ -53,73 +53,73 @@ const LineCard = ({ line }) => {
   //   "The event of 5 Jan 2021 : Happy New Year",
   // ];
   return (
-    <Box
-      component={Card}
-      boxShadow={3}
-      bgcolor="background.paper"
-      m={1}
-      p={1}
-      className={classes.card}
-      variant="outlined"
-    >
-      <CardContent>
-        <Box paddingTop={1}>
-          <Typography variant="h3" align="left">
-            {line.name}
-          </Typography>
-        </Box>
-        <Box paddingY={1}>
-          <Typography variant="body1" align="left">
-            Last Updated At: &nbsp;
-            {convertUTCtoYYYYMMDDHHMM(line.lastUpdatedDate)}
-          </Typography>
-        </Box>
-        <hr
-          style={{
-            border: `5px solid ${line.colorHex}`,
-          }}
-        />
-        {/* <div className={classes.lineContainer}>
-          <div
+    <>
+      <Box
+        component={Card}
+        boxShadow={3}
+        bgcolor="background.paper"
+        p={1}
+        className={classes.card}
+        variant="outlined"
+      >
+        <CardContent>
+          <Box paddingTop={1}>
+            <Typography variant="h3" align="left">
+              {line.name}
+            </Typography>
+          </Box>
+          <Box paddingY={1}>
+            <Typography variant="body1" align="left">
+              Last Updated At: &nbsp;
+              {convertUTCtoYYYYMMDDHHMM(line.lastUpdatedDate)}
+            </Typography>
+          </Box>
+          <hr
             style={{
-              width: "100%",
-              height: "100px",
-              margin: "0 auto",
-              fontSize: "9pt",
+              border: `5px solid ${line.colorHex}`,
             }}
+          />
+          {/* <div className={classes.lineContainer}>
+          <div
+          style={{
+            width: "100%",
+            height: "100px",
+            margin: "0 auto",
+            fontSize: "9pt",
+          }}
           >
-            <HorizontalTimeline
-              styles={{
-                outline: "#DFA867",
-                foreground: "#19295C",
-              }}
-              index={value}
-              indexClick={(index) => {
-                setValue(index);
-                setPrevious(value);
-              }}
-              values={VALUES}
-            />
+          <HorizontalTimeline
+          styles={{
+            outline: "#DFA867",
+            foreground: "#19295C",
+          }}
+          index={value}
+          indexClick={(index) => {
+            setValue(index);
+            setPrevious(value);
+          }}
+          values={VALUES}
+          />
           </div>
           <div className={classes.descriptionContainer}>
-            <Typography variant="body1">{description[value]}</Typography>
+          <Typography variant="body1">{description[value]}</Typography>
           </div>
         </div> */}
-      </CardContent>
-      <CardActions className={classes.cardActionsContainer}>
-        <Button
-          color="primary"
-          variant="contained"
-          onClick={() => {
-            history.push(`/line/${line.lineId}`);
-          }}
-          style={{ textTransform: "none" }}
-        >
-          <Typography variant="body1">View/ Add Memories</Typography>
-        </Button>
-      </CardActions>
-      {/* </Card> */}
-    </Box>
+        </CardContent>
+        <CardActions className={classes.cardActionsContainer}>
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={() => {
+              history.push(`/line/${line.lineId}`);
+            }}
+            style={{ textTransform: "none" }}
+          >
+            <Typography variant="body1">View/ Add Memories</Typography>
+          </Button>
+        </CardActions>
+      </Box>
+    </>
   );
 };
 
