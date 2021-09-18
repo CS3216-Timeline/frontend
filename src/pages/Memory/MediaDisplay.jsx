@@ -1,4 +1,6 @@
 import { makeStyles } from "@material-ui/core";
+import { Button } from "@mui/material";
+import { Box } from "@mui/system";
 import { useState } from "react";
 
 const vpWidth = Math.max(
@@ -6,9 +8,9 @@ const vpWidth = Math.max(
   window.innerWidth || 0
 );
 
-const containerWidth = 0.9 * vpWidth;
+const containerWidth = vpWidth; // * 0.9;
 const IMG_WIDTH = containerWidth;
-const IMG_HEIGHT = containerWidth;
+// const IMG_HEIGHT = containerWidth;
 
 const useStyles = makeStyles((theme) => ({
   swiper: {
@@ -25,8 +27,28 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#000",
     overflow: "hidden",
     position: "relative",
-    width: "90vw",
-    height: "90vw",
+    // width: "90vw",
+    // height: "90vw",
+  },
+  move: {
+    display: "flex",
+    position: "absolute",
+    width: "40px",
+    height: "40px",
+    top: "50%",
+    transform: "translateY(-50%)",
+    borderRadius: "20px",
+    backgroundColor: "rgba(255, 255, 255, 0.5)",
+    alignItems: "center",
+    justifyContent: "center",
+    cursor: "pointer",
+    border: "0",
+  },
+  back: {
+    left: "5px",
+  },
+  next: {
+    right: "5px",
   }
 }));
 
@@ -105,29 +127,45 @@ const MediaDisplay = (props) => {
   };
 
   return (
-    <div
-      className={classes.main}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-      onWheel={handleWheel}
-    >
-      <div 
-        className={classes.swiper}
-        style={{
-          transform: `translateX(${movement * -1}px)`,
-          transitionDuration: transitionDuration,
-        }}
+    <Box display="flex" flexDirection="column">
+      <div
+        className={classes.main}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onWheel={handleWheel}
       >
-        {mediaUrls.map((media, idx) => {
-          const src = media.url;
-          if (!src) {
-            return null;
-          }
-          return (<img key={idx} src={src} width="100%" height="100%" />);
-        })}
+        <div 
+          className={classes.swiper}
+          style={{
+            transform: `translateX(${movement * -1}px)`,
+            transitionDuration: transitionDuration,
+          }}
+        >
+          {mediaUrls.map((media, idx) => {
+            const src = media.url;
+            if (!src) {
+              return null;
+            }
+            return (<img key={idx} src={src} width="100%" height="100%" />);
+          })}
+        </div>
       </div>
-    </div>
+      <Box display="flex" justifyContent="space-between" width="100%">
+        <Button
+          disabled={currIndex === 0}
+          onClick={() => transitionTo(currIndex - 1, 0.5)}
+        >
+          Previous
+        </Button>
+        <Button
+          disabled={currIndex === mediaUrls.length - 1}
+          onClick={() => transitionTo(currIndex + 1, 0.5)}
+        >
+          Next
+        </Button>
+      </Box>
+    </Box>
   )
 }
 
