@@ -7,15 +7,13 @@ import { COLORS } from "../../utils/colors";
 import UploadedMediaList from "./UploadedMediaList";
 import DeleteMediaDialog from "./DeleteMediaDialog";
 
-const MEDIA_LIMIT = 3; // can tweak
-
 const TestUploadMediaForm = (props) => {
-  const [mediaUrls, setMediaUrls] = useState([]); // FINAL URLs
+  const [mediaUrls, setMediaUrls] = useState([]);
+  const [cropUrl, setCropUrl] = useState(null); // FINAL URL (after crop)
   const [editFileUrl, setEditFileUrl] = useState(null); // DRAFT FILE URL
   const [isCropView, setCropView] = useState(false);
-  const [previewUrl, setPreviewUrl] = useState(null);
-
-  console.log(mediaUrls);
+  const [position, setPosition] = useState(0);
+  const [isCroppingOldMedia, setIsCroppingOldMedia] = useState(false);
 
   const addNewMedia = (e) => {
     const newFile = e.target.files[0];
@@ -26,23 +24,8 @@ const TestUploadMediaForm = (props) => {
     }
   };
 
-  const setMediaPreview = (positionOfMedia) => {
-    console.log(positionOfMedia);
-    if (positionOfMedia >= mediaUrls.length) {
-      return;
-    }
-    setPreviewUrl(mediaUrls[positionOfMedia].url);
-  }
-
-  const isMediaLimitReached = () => {
-    return mediaUrls.length === MEDIA_LIMIT;
-  }
-
   const deleteMediaByPosition = (positionOfMedia) => {
     let clonedMediaUrls = [...mediaUrls];
-    if (previewUrl === clonedMediaUrls[positionOfMedia].url) {
-      setPreviewUrl(null);
-    }
     clonedMediaUrls.splice(positionOfMedia, 1);
     // Push the position. (Damn troublesome cause this means if we delete one photo, we need to update all the photos position as well)
     clonedMediaUrls = clonedMediaUrls.map((media) => {
@@ -52,20 +35,32 @@ const TestUploadMediaForm = (props) => {
       };
     });
     setMediaUrls(clonedMediaUrls);
+    setCropUrl(null);
   };
 
-  const handleCropDone = (url) => {
+  const handleCropDone = (cropUrl) => {
+    setCropUrl(cropUrl);
     setEditFileUrl(null);
     const clonedMediaUrls = [...mediaUrls];
-    setMediaUrls([
-      ...clonedMediaUrls,
-      {
-        position: mediaUrls.length,
-        url: url,
-      },
-    ]);
+    if (!isCroppingOldMedia) {
+      setMediaUrls([
+        ...clonedMediaUrls,
+        {
+          position: mediaUrls.length,
+          cropUrl,
+          editFileUrl,
+        },
+      ]);
+    } else {
+      clonedMediaUrls[position] = {
+        position,
+        cropUrl,
+        editFileUrl,
+      };
+      setMediaUrls(clonedMediaUrls);
+    }
+    setIsCroppingOldMedia(false);
     setCropView(false);
-    setPreviewUrl(url);
   };
 
   const handleCancelCrop = (e) => {
@@ -83,12 +78,11 @@ const TestUploadMediaForm = (props) => {
         marginBottom={12}
       >
         <h3 style={{ color: COLORS.PRIMARY_PURPLE }}>Upload Media</h3>
-        <p>Add up to {MEDIA_LIMIT} photos!</p>
         {isCropView ? (
           <Cropper fileUrl={editFileUrl} cropHandler={handleCropDone} />
         ) : (
           <MemoryMedia
-            url={previewUrl}
+            url={cropUrl}
             hasMedia={mediaUrls.length === 0 ? false : true}
           />
         )}
@@ -97,23 +91,18 @@ const TestUploadMediaForm = (props) => {
           mediaUrls={mediaUrls}
           setCropView={setCropView}
           setEditFileUrl={setEditFileUrl}
-          setMediaPreview={setMediaPreview}
+          setPosition={setPosition}
+          setIsCroppingOldMedia={setIsCroppingOldMedia}
           deleteMediaByPosition={deleteMediaByPosition}
-          selectedMediaUrl={previewUrl}
-          hide={isCropView}
         />
         {isCropView ? (
           <Button variant="outlined" onClick={handleCancelCrop}>
             Cancel
           </Button>
         ) : (
-          <Button 
-            variant="outlined" 
-            color="primary"
-            disabled={isMediaLimitReached()}
-          >
+          <Button variant="outlined" color="primary">
             <label htmlFor="file-upload">
-              Add New Media
+              Add New Media (for multiple )
               <HiddenFileInput handleChange={addNewMedia} />
             </label>
           </Button>

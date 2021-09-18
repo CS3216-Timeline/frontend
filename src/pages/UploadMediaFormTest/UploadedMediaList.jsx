@@ -10,19 +10,16 @@ const useStyles = makeStyles((theme) => ({
 
 const UploadedMediaList = ({
   mediaUrls,
-  setMediaPreview,
+  setCropView,
+  setEditFileUrl,
+  setPosition,
+  setIsCroppingOldMedia,
   deleteMediaByPosition,
-  selectedMediaUrl,
-  hide,
 }) => {
   const classes = useStyles();
   const sortedMediaUrls = mediaUrls.sort((a, b) => {
     return a.position - b.position;
   });
-
-  if (hide) {
-    return null;
-  }
 
   return (
     <>
@@ -31,8 +28,10 @@ const UploadedMediaList = ({
           <UploadedMediaItem
             key={media.position}
             media={media}
-            setMediaPreview={setMediaPreview}
-            isSelected={media.url === selectedMediaUrl}
+            setEditFileUrl={setEditFileUrl}
+            setCropView={setCropView}
+            setPosition={setPosition}
+            setIsCroppingOldMedia={setIsCroppingOldMedia}
             deleteMediaByPosition={deleteMediaByPosition}
           />
         ))}
