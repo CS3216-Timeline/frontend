@@ -12,7 +12,6 @@ const HiddenFileInput = (props) => {
 
   return (
     <input
-      // ref={file}
       style={inputStyle()}
       type="file"
       accept="image/*"

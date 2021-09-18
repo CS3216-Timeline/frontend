@@ -69,7 +69,7 @@ const App = () => {
                 path="/memory/:memoryId/edit"
                 component={MemoryEditor}
               />
-              <PrivateRoute
+              <Route
                 exact
                 path="/test"
                 component={TestUploadMediaForm}
