@@ -1,27 +1,26 @@
 const inputStyle = () => ({
-  display:"none"
-})
+  display: "none",
+});
 
 // This is a hidden file input HTML element
-const HiddenFileInput = props => {
-  const { handleChange } = props
+const HiddenFileInput = (props) => {
+  const { handleChange } = props;
 
-  const resetHandler = e => {
+  const resetHandler = (e) => {
     e.target.value = null;
-  }
+  };
 
   return (
-    <input 
-      // ref={file}
-      style={inputStyle()} 
-      type="file" 
-      accept="image/*" 
+    <input
+      style={inputStyle()}
+      type="file"
+      accept="image/*"
       id="file-upload"
-      onChange={handleChange} 
+      onChange={handleChange}
       required
       onClick={resetHandler}
     />
-  )
-}
+  );
+};
 
 export default HiddenFileInput;
