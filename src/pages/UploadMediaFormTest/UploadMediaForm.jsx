@@ -9,8 +9,12 @@ import DeleteMediaDialog from "./DeleteMediaDialog";
 
 const MEDIA_LIMIT = 4; // can tweak
 
-const TestUploadMediaForm = (props) => {
-  const [mediaUrls, setMediaUrls] = useState([]); // FINAL URLs
+const TestUploadMediaForm = ({
+  existingMediaUrls,
+  onComplete,
+}) => {
+  const initUrls = existingMediaUrls ? existingMediaUrls.map(media => ({...media})) : [];
+  const [mediaUrls, setMediaUrls] = useState(initUrls); // FINAL URLs
   const [editFileUrl, setEditFileUrl] = useState(null); // DRAFT FILE URL
   const [isCropView, setCropView] = useState(false);
   const [previewUrl, setPreviewUrl] = useState(null);
@@ -66,6 +70,9 @@ const TestUploadMediaForm = (props) => {
     ]);
     setCropView(false);
     setPreviewUrl(url);
+    if (onComplete) {
+      onComplete(clonedMediaUrls);
+    }
   };
 
   const handleCancelCrop = (e) => {

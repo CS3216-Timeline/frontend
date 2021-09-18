@@ -45,7 +45,7 @@ const getDefaultViewport = () => ({
   zoom: 10,
 });
 
-const isEmpty = (val) => val === null || val === undefined || val === "";
+const isEmpty = (val) => val === null || val === undefined || val === "" || val.length === 0;
 
 const MemoryEditor = (props) => {
   const classes = useStyles();
@@ -53,7 +53,7 @@ const MemoryEditor = (props) => {
   const [memoryTitle, setMemoryTitle] = useState("");
   const [memoryDescription, setMemoryDescription] = useState("");
   const [selectedLocation, setSelectedLocation] = useState(null);
-  const [mediaUrl, setMediaUrl] = useState(null); // blob URL
+  const [mediaUrls, setMediaUrls] = useState([]); // blob URL
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [viewport, setViewport] = useState(getDefaultViewport());
 
@@ -104,7 +104,6 @@ const MemoryEditor = (props) => {
     setSelectedLocation(null);
     setMemoryTitle(memory.title);
     setMemoryDescription(memory.description);
-    setMediaUrl(memory.media.source.url);
     setViewport(existingViewport);
     // setCurrentLocation({})
 
@@ -127,12 +126,12 @@ const MemoryEditor = (props) => {
       alertError("Location cannot be empty.");
       return;
     }
-    if (isEdit && isEmpty(mediaUrl)) {
+    if (isEdit && isEmpty(mediaUrls)) {
       alertError("Please upload a media.");
       return;
     }
     // TODO: convert media to FILE (not sure where yet)
-    console.log("Blob To File Test", blobToFile(mediaUrl));
+    console.log("Blob To File Test", mediaUrls.map(obj => blobToFile(obj.url)));
 
     // TODO: maybe both can have same way of handling
     // (if backend decides to use POST for editing as well)
@@ -234,17 +233,22 @@ const MemoryEditor = (props) => {
             </Box>
             {!isEdit && 
               <Box paddingY={1}>
-                <UploadMediaForm doneHandler={setMediaUrl} />
+                <UploadMediaForm 
+                  existingMediaUrls={mediaUrls} 
+                  onComplete={setMediaUrls}
+                />
               </Box>
             }
-            <p>
-              [TEST] Media Link:{" "}
-              {mediaUrl && (
-                <a href={mediaUrl} rel="noreferrer" target="_blank">
-                  Copy This Link
-                </a>
-              )}
-            </p>
+            {!isEdit && // TODO: REMOVE THIS BLOCK
+              <p>
+                [TEST] Media:{" "}
+                {mediaUrls.length > 0 && (
+                  <a key={mediaUrls[0].position} href={mediaUrls[0].url} rel="noreferrer" target="_blank">
+                    {mediaUrls[0].url}
+                  </a>
+                )}
+              </p>
+            }
             <Box paddingY={1}>
               <Button
                 fullWidth
