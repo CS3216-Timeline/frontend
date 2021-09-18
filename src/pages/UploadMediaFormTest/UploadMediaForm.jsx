@@ -13,7 +13,7 @@ const TestUploadMediaForm = (props) => {
   const [editFileUrl, setEditFileUrl] = useState(null); // DRAFT FILE URL
   const [isCropView, setCropView] = useState(false);
   const [position, setPosition] = useState(0);
-  const [isCroppingOldMedia, setIsCroppingOldMedia] = useState(false);
+  // const [isCroppingOldMedia, setIsCroppingOldMedia] = useState(false);
 
   const addNewMedia = (e) => {
     const newFile = e.target.files[0];
@@ -42,24 +42,24 @@ const TestUploadMediaForm = (props) => {
     setCropUrl(cropUrl);
     setEditFileUrl(null);
     const clonedMediaUrls = [...mediaUrls];
-    if (!isCroppingOldMedia) {
-      setMediaUrls([
-        ...clonedMediaUrls,
-        {
-          position: mediaUrls.length,
-          cropUrl,
-          editFileUrl,
-        },
-      ]);
-    } else {
-      clonedMediaUrls[position] = {
-        position,
-        cropUrl,
-        editFileUrl,
-      };
-      setMediaUrls(clonedMediaUrls);
-    }
-    setIsCroppingOldMedia(false);
+    // if (!isCroppingOldMedia) {
+    //   setMediaUrls([
+    //     ...clonedMediaUrls,
+    //     {
+    //       position: mediaUrls.length,
+    //       cropUrl,
+    //       editFileUrl,
+    //     },
+    //   ]);
+    // } else {
+    clonedMediaUrls[position] = {
+      position,
+      cropUrl,
+      editFileUrl,
+    };
+    setMediaUrls(clonedMediaUrls);
+    // }
+    // setIsCroppingOldMedia(false);
     setCropView(false);
   };
 
@@ -92,7 +92,7 @@ const TestUploadMediaForm = (props) => {
           setCropView={setCropView}
           setEditFileUrl={setEditFileUrl}
           setPosition={setPosition}
-          setIsCroppingOldMedia={setIsCroppingOldMedia}
+          // setIsCroppingOldMedia={setIsCroppingOldMedia}
           deleteMediaByPosition={deleteMediaByPosition}
         />
         {isCropView ? (
