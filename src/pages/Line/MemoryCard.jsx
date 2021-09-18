@@ -32,26 +32,20 @@ const LineSeparator = (props) => {
   return (
     <TimelineSeparator color={color}>
       <CardConnector color={color} isFirst={isFirst} />
-      <TimelineDot color="inherit" style={{padding: 0}}>
-        <FiberManualRecordIcon style={{ color: color, width: "15px", height: "15px" }} />
+      <TimelineDot color="inherit" style={{ padding: 0 }}>
+        <FiberManualRecordIcon
+          style={{ color: color, width: "15px", height: "15px" }}
+        />
       </TimelineDot>
       <CardConnector color={color} isLast={isLast} />
     </TimelineSeparator>
   );
-}
+};
 
 const MemoryCard = (props) => {
-  const {
-    memoryId,
-    isFirst,
-    isLast,
-    color,
-    date,
-    mediaUrl,
-    title,
-  } = props;
+  const { memoryId, isFirst, isLast, color, date, mediaUrl, title } = props;
 
-  const history = useHistory()
+  const history = useHistory();
 
   return (
     <TimelineItem>
@@ -62,16 +56,22 @@ const MemoryCard = (props) => {
             <Box display="flex" flexDirection="column">
               <img alt={title} src={mediaUrl} style={{ width: "100%" }} />
               <br />
-              <Box display="flex" flexDirection="row" justifyContent="space-between">
+              <Box
+                display="flex"
+                flexDirection="row"
+                justifyContent="space-between"
+              >
                 <Box display="flex" flexDirection="column">
                   <Typography variant="h6" component="h1">
                     <strong>{title}</strong>
                   </Typography>
-                  <Typography variant="body1">
-                    {date}
-                  </Typography>
+                  <Typography variant="body1">{date}</Typography>
                 </Box>
-                <Box display="flex" flexDirection="column" justifyContent="space-around">
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  justifyContent="space-around"
+                >
                   <Button
                     onClick={() => history.push(`/memory/${memoryId}`)}
                     variant="outlined"

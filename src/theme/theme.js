@@ -36,6 +36,9 @@ const theme = createTheme({
       letterSpacing: '1px',
       fontWeight: '500'
     },
+    h5: {
+      fontSize: '12pt',
+    },
     h6: {
       fontSize: '10pt',
     },

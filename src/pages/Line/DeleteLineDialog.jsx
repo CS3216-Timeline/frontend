@@ -39,9 +39,11 @@ const DeleteLineDialog = ({
   const deleteLine = async () => {
     try {
       setLoading(true);
-      await deleteLineById(lineId);
+      const deletedLine = await deleteLineById(lineId);
       setDisplayDeleteDialog(false);
-      dispatch(setAlert("Successfully deleted line", "success"));
+      dispatch(
+        setAlert(`Successfully deleted line ${deletedLine.name}`, "success")
+      );
       setDeleted(true);
     } catch (err) {
       dispatch(setAlert(err.message, "error"));
