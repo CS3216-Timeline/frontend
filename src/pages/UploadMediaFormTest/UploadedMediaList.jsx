@@ -19,6 +19,8 @@ const UploadedMediaList = ({
     return a.position - b.position;
   });
 
+  const allowDeletion = sortedMediaUrls.length > 1;
+
   return (
     <>
       <Grid container className={classes.root}>
@@ -29,6 +31,7 @@ const UploadedMediaList = ({
             setMediaPreview={setMediaPreview}
             isSelected={media.url === selectedMediaUrl}
             deleteMediaByPosition={deleteMediaByPosition}
+            isDeletable={allowDeletion}
           />
         ))}
       </Grid>
