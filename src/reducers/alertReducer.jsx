@@ -1,15 +1,9 @@
-import {
-  SET_ALERT,
-  REMOVE_ALERT,
-} from "../action-types/alert";
+import { SET_ALERT, REMOVE_ALERT } from "../action-types/alert";
 
-const initialState = []
+const initialState = [];
 
 const alertReducer = (state = initialState, action) => {
-  const {
-    type,
-    payload
-  } = action;
+  const { type, payload } = action;
   switch (type) {
     case SET_ALERT:
       return [...state, payload];

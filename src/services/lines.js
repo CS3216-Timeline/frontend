@@ -16,7 +16,6 @@ const mockLineData = {
 
 export const getAllLinesByUserIdOrderByMostRecentMemory = async () => {
   const res = await server.get('/lines');
-  console.log(res.data);
   let lines = res.data.lines;
   if (lines.length !== 0) {
     lines = lines.map(line => {

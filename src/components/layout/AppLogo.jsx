@@ -1,10 +1,10 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import logoImage from "../../assets/timeline-logo.png";
+import secondaryLogo from "../../assets/logo.png";
 
 const useStyles = makeStyles(() => ({
   logoImage: {
-    width: "80%",
+    width: "50%",
     height: "auto",
     display: "block",
     marginLeft: "auto",
@@ -14,7 +14,7 @@ const useStyles = makeStyles(() => ({
 
 const AppLogo = () => {
   const classes = useStyles();
-  return <img className={classes.logoImage} src={logoImage} alt={"logo"} />;
+  return <img className={classes.logoImage} src={secondaryLogo} alt={"logo"} />;
 };
 
 export default AppLogo;

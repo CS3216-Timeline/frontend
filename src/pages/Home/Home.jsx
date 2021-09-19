@@ -7,14 +7,14 @@ import AddIcon from "@material-ui/icons/Add";
 import HomeIcon from "@material-ui/icons/Home";
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
-import { getAllLinesByUserIdOrderByMostRecentMemory } from "../../services/lines";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setAlert } from "../../actions/alert";
 import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
 import { COLORS } from "../../utils/colors";
 import { filterLines } from "../../utils/lines";
 import NoneAvailable from "../../components/NoneAvailable";
 import FadeIn from "react-fade-in/lib/FadeIn";
+import { getLines } from "../../actions/line";
 
 const useStyles = makeStyles((theme) => ({
   addLineButtonContainer: {
@@ -37,19 +37,17 @@ const useStyles = makeStyles((theme) => ({
 const Home = () => {
   const classes = useStyles();
   // eslint-disable-next-line no-unused-vars
-  const [lines, setLines] = useState([]);
+  // const [lines, setLines] = useState([]);
   const [searchText, setSearchtext] = useState("");
-  const [searchedLines, setSearchedLines] = useState([]);
   // const [lines, setLines] = useState(mockLinesData);
   const history = useHistory();
   const dispatch = useDispatch();
+  const lines = useSelector((state) => state.lines);
 
   useEffect(() => {
     const getLinesByUser = async () => {
       try {
-        const linesByUser = await getAllLinesByUserIdOrderByMostRecentMemory();
-        setLines(linesByUser);
-        setSearchedLines(linesByUser);
+        dispatch(getLines());
       } catch (err) {
         dispatch(
           setAlert(
@@ -66,11 +64,8 @@ const Home = () => {
     history.push("/add-line");
   };
 
-  const searchLines = (e) => {
-    e.preventDefault();
-    setSearchtext(e.target.value);
-    const filteredLines = filterLines(e.target.value, lines);
-    setSearchedLines(filteredLines);
+  const filteredLines = () => {
+    return filterLines(searchText, lines);
   };
 
   return (
@@ -106,9 +101,7 @@ const Home = () => {
                 fullWidth
                 label="Search Lines"
                 autoFocus
-                onChange={(e) => {
-                  searchLines(e);
-                }}
+                onChange={(e) => setSearchtext(e.target.value)}
               >
                 {searchText}
               </TextField>
@@ -122,8 +115,8 @@ const Home = () => {
                     <LineCard line={line} />
                   </Grid>
                 ))
-              ) : searchedLines.length > 0 ? (
-                searchedLines.map((line) => (
+              ) : filteredLines().length > 0 ? (
+                filteredLines().map((line) => (
                   <Grid item xs={12} key={line.lineId}>
                     <LineCard line={line} />
                   </Grid>

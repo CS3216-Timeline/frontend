@@ -1,6 +1,6 @@
 import React from "react";
 import { ClipLoader } from "react-spinners";
-import { makeStyles } from "@material-ui/core";
+import { Box, makeStyles } from "@material-ui/core";
 import { COLORS } from "../utils/colors";
 import AppLogo from "./layout/AppLogo";
 
@@ -19,7 +19,9 @@ const Loading = () => {
   return (
     <div className={classes.loaderContainer}>
       <AppLogo />
-      <ClipLoader color={COLORS.PRIMARY_PURPLE} loading={true} size={50} />
+      <Box paddingY={4}>
+        <ClipLoader color={COLORS.PRIMARY_PURPLE} loading={true} size={50} />
+      </Box>
     </div>
   );
 };
