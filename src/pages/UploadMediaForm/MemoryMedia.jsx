@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/core";
+import { ClipLoader } from "react-spinners";
 import { COLORS } from "../../utils/colors";
 
 const useStyles = makeStyles((theme) => ({
@@ -20,7 +21,15 @@ const useStyles = makeStyles((theme) => ({
 const MemoryMedia = (props) => {
   const classes = useStyles();
   // TODO: How to handle invalid photo URLS?
-  const { url, hasMedia } = props;
+  const { url, hasMedia, loading } = props;
+
+  if (loading) {
+    return (
+      <div className={classes.imageContainerStyle}>
+        <ClipLoader color={COLORS.PRIMARY_PURPLE} loading={true} size={50} />
+      </div>
+    )
+  }
 
   return (
     <div className={classes.imageContainerStyle}>

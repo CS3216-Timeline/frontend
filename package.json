@@ -16,6 +16,7 @@
     "deck.gl": "^8.5.7",
     "dotenv": "^10.0.0",
     "firebase": "^9.0.2",
+    "heic2any": "0.0.3",
     "lodash": "^4.17.21",
     "mapbox-gl": "^2.4.1",
     "moment": "^2.29.1",
