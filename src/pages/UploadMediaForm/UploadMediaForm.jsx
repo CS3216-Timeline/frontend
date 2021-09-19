@@ -6,10 +6,14 @@ import MemoryMedia from "./MemoryMedia";
 import { COLORS } from "../../utils/colors";
 import UploadedMediaList from "./UploadedMediaList";
 import DeleteMediaDialog from "./DeleteMediaDialog";
+import { useDispatch } from "react-redux";
+import { setAlert } from "../../actions/alert";
 
 const MEDIA_LIMIT = 4; // can tweak
+const MEGABYTE = 1048576;
+const MAX_FILE_SIZE = 10 * MEGABYTE;
 
-const TestUploadMediaForm = ({
+const UploadMediaForm = ({
   existingMediaUrls,
   onComplete,
 }) => {
@@ -20,9 +24,14 @@ const TestUploadMediaForm = ({
   const [previewUrl, setPreviewUrl] = useState(null);
 
   console.log(mediaUrls);
+  const dispatch = useDispatch();
 
   const addNewMedia = (e) => {
     const newFile = e.target.files[0];
+    if (newFile && newFile.size > MAX_FILE_SIZE) {
+      dispatch(setAlert("Image file should not exceed 10MB.", "error"));
+      return;
+    }
     if (newFile) {
       const newFileUrl = URL.createObjectURL(newFile);
       setEditFileUrl(newFileUrl);
@@ -135,4 +144,4 @@ const TestUploadMediaForm = ({
   );
 };
 
-export default TestUploadMediaForm;
+export default UploadMediaForm;

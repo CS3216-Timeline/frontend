@@ -21,7 +21,6 @@ import Landing from "./pages/Landing/Landing";
 import Loading from "./components/Loading";
 import EditLine from "./pages/EditLine/EditLine";
 import "mapbox-gl/dist/mapbox-gl.css";
-import UploadMediaForm from "./pages/UploadMediaForm/UploadMediaForm";
 import Profile from "./pages/Profile/Profile";
 import Info from "./pages/Info/Info";
 
@@ -72,8 +71,12 @@ const App = () => {
                 path="/memory/:memoryId/edit"
                 component={MemoryEditor}
               />
+              <Route
+                exact
+                path="/test"
+                component={Memory}
+              />
               <PrivateRoute exact path="/info" component={Info} />
-              <Route exact path="/test" component={UploadMediaForm} />
               <PrivateRoute exact path="/profile" component={Profile} />
               <Route component={NotFound} />
             </Switch>
