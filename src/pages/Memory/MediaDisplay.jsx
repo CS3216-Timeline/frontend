@@ -1,5 +1,4 @@
 import { makeStyles } from "@material-ui/core";
-import { Button, Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
 import { COLORS } from "../../utils/colors";

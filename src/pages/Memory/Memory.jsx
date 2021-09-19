@@ -16,6 +16,7 @@ import UploadMediaForm from "../UploadMediaForm/UploadMediaForm";
 import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
 import MediaDisplay from "./MediaDisplay";
 import FadeIn from "react-fade-in/lib/FadeIn";
+import { Typography } from "@mui/material";
 
 const useStyles = makeStyles((theme) => ({
   alignCenter: {
@@ -102,92 +103,90 @@ const Memory = (props) => {
     <>
       <FadeIn>
         <Box paddingBottom={7}>
-          <Box className={classes.alignCenter}>
+          <Box >
             <Box display="flex" justifyContent="center" paddingTop={2}>
               <PrivatePageHeader text={title} />
             </Box>
-            <p><strong>Memory added on</strong> {date}</p>
-            {/* TODO: Implement multiple photo viewing */}
-            <Box display="flex" justifyContent="center">
+            <Box display="flex" justifyContent="center" marginBottom={3}>
               <MediaDisplay mediaUrls={mediaUrls} />
             </Box>
-            <br /><br />
-            <Grid container>
-              <Grid item xs={12}>
-                <Box paddingX={3}>
-                  <Button
-                    onClick={() => {
-                      setIsEditView(!isEditView)
-                    }}
-                    fullWidth
-                    className={classes.editMediaButton}
-                    variant="contained"
-                    startIcon={<Photo />}
-                  >
-                    Add / Remove Photos
-                  </Button>
-                </Box>
-              </Grid>
-            </Grid>
-            <div className={classes.descriptionStyle}>
-              <p>{description}</p>
-            </div>
+            <Box className={classes.descriptionStyle} marginBottom={3}>
+              <Typography variant="body2">Memory Added on <strong>{date}</strong></Typography>
+            </Box>
+            <Box className={classes.descriptionStyle}>
+              <Typography variant="body2">{description}</Typography>
+            </Box>
           </Box>
-          <Box paddingTop={5}>
-            <Grid container>
-              <Grid item xs={6}>
-                <Box paddingX={3}>
-                  <Button
-                    onClick={() => {
-                      history.push(`/memory/${memoryId}/edit`);
-                    }}
-                    fullWidth
-                    className={classes.editButton}
-                    variant="contained"
-                    startIcon={<EditIcon />}
-                  >
-                    Edit
-                  </Button>
-                </Box>
-              </Grid>
-              <Grid item xs={6}>
-                <Box paddingX={3}>
-                  <Button
-                    onClick={() => {
-                      setDisplayDeleteDialog(true);
-                    }}
-                    fullWidth
-                    className={classes.deleteButton}
-                    variant="contained"
-                    startIcon={<DeleteIcon />}
-                  >
-                    Delete
-                  </Button>
-                </Box>
-              </Grid>
-              <Grid item xs={12}>
-                <Box margin={3}>
-                  <Button
-                    fullWidth
-                    color="primary"
-                    variant="contained"
-                    onClick={() => history.push(`/line/${lineId}`)}
-                    startIcon={<ArrowBackIcon />}
-                  >
-                    Back to line page
-                  </Button>
-                </Box>
-              </Grid>
+        </Box>
+        <Box paddingTop={3} paddingX={3}>
+          <Grid container>
+            <Grid item xs={4}>
+              <Box paddingX={1}>
+                <Button
+                  onClick={() => {
+                    history.push(`/memory/${memoryId}/edit`);
+                  }}
+                  fullWidth
+                  className={classes.editButton}
+                  variant="contained"
+                  startIcon={<EditIcon />}
+                >
+                  Edit
+                </Button>
+              </Box>
             </Grid>
-            <DeleteMemoryDialog
-              setLoading={setLoading}
-              displayDeleteDialog={displayDeleteDialog}
-              setDisplayDeleteDialog={setDisplayDeleteDialog}
-              memoryId={memoryId}
-              lineId={lineId}
-              setDeleted={setDeleted}
-            />
-          </Box>
+            <Grid item xs={4}>
+              <Box paddingX={1}>
+                <Button
+                  onClick={() => {
+                    setIsEditView(!isEditView)
+                  }}
+                  fullWidth
+                  className={classes.editMediaButton}
+                  variant="contained"
+                  startIcon={<Photo />}
+                >
+                  Photos
+                </Button>
+              </Box>
+            </Grid>
+            <Grid item xs={4}>
+              <Box paddingX={1}>
+                <Button
+                  onClick={() => {
+                    setDisplayDeleteDialog(true);
+                  }}
+                  fullWidth
+                  className={classes.deleteButton}
+                  variant="contained"
+                  startIcon={<DeleteIcon />}
+                >
+                  Delete
+                </Button>
+              </Box>
+            </Grid>
+            <Grid item xs={12}>
+              <Box paddingX={1} paddingTop={2}>
+                <Button
+                  fullWidth
+                  color="primary"
+                  variant="contained"
+                  onClick={() => history.push(`/line/${lineId}`)}
+                  startIcon={<ArrowBackIcon />}
+                >
+                  Back to line page
+                </Button>
+              </Box>
+            </Grid>
+          </Grid>
+          <DeleteMemoryDialog
+            setLoading={setLoading}
+            displayDeleteDialog={displayDeleteDialog}
+            setDisplayDeleteDialog={setDisplayDeleteDialog}
+            memoryId={memoryId}
+            lineId={lineId}
+            setDeleted={setDeleted}
+          />
         </Box>
       </FadeIn>
     </>
