@@ -1,83 +1,138 @@
 import { Box, Button } from "@material-ui/core";
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 import HiddenFileInput from "./HiddenFileInput";
 import Cropper from "./Cropper";
 import MemoryMedia from "./MemoryMedia";
 import { COLORS } from "../../utils/colors";
+import UploadedMediaList from "./UploadedMediaList";
+import DeleteMediaDialog from "./DeleteMediaDialog";
 
-const UploadMediaForm = props => {
-  const { doneHandler } = props;
-  const [fileUrl, setFileUrl] = useState(null); // FINAL URL (before crop)
-  const [cropUrl, setCropUrl] = useState(null); // FINAL URL (after crop)
+const MEDIA_LIMIT = 4; // can tweak
+
+const TestUploadMediaForm = ({
+  existingMediaUrls,
+  onComplete,
+}) => {
+  const initUrls = existingMediaUrls ? existingMediaUrls.map(media => ({...media})) : [];
+  const [mediaUrls, setMediaUrls] = useState(initUrls); // FINAL URLs
   const [editFileUrl, setEditFileUrl] = useState(null); // DRAFT FILE URL
   const [isCropView, setCropView] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState(null);
 
-  useEffect(() => {
-    if (cropUrl) {
-      doneHandler(cropUrl)
-    }
-  }, [doneHandler, cropUrl]);
+  console.log(mediaUrls);
 
-  const handleChange = e => {
+  const addNewMedia = (e) => {
     const newFile = e.target.files[0];
     if (newFile) {
-      console.log(newFile) // TODO: Remove
-      const newFileUrl = URL.createObjectURL(newFile)
+      const newFileUrl = URL.createObjectURL(newFile);
       setEditFileUrl(newFileUrl);
       setCropView(true);
     }
+  };
+
+  const setMediaPreview = (positionOfMedia) => {
+    console.log(positionOfMedia);
+    if (positionOfMedia >= mediaUrls.length) {
+      return;
+    }
+    setPreviewUrl(mediaUrls[positionOfMedia].url);
   }
 
-  const handleCropDone = cropUrl => {
-    setCropUrl(cropUrl);
-    setFileUrl(editFileUrl);
+  const isMediaLimitReached = () => {
+    return mediaUrls.length === MEDIA_LIMIT;
+  }
+
+  const deleteMediaByPosition = (positionOfMedia) => {
+    let clonedMediaUrls = [...mediaUrls];
+    if (previewUrl === clonedMediaUrls[positionOfMedia].url) {
+      setPreviewUrl(null);
+    }
+    clonedMediaUrls.splice(positionOfMedia, 1);
+    // Push the position. (Damn troublesome cause this means if we delete one photo, we need to update all the photos position as well)
+    clonedMediaUrls = clonedMediaUrls.map((media) => {
+      return {
+        ...media,
+        position: clonedMediaUrls.indexOf(media),
+      };
+    });
+    setMediaUrls(clonedMediaUrls);
+  };
+
+  useEffect(() => {
+    if (onComplete) {
+      onComplete([...mediaUrls]);
+    }
+  }, [mediaUrls, onComplete]);
+
+  const handleCropDone = (url) => {
     setEditFileUrl(null);
+    const clonedMediaUrls = [...mediaUrls];
+    setMediaUrls([
+      ...clonedMediaUrls,
+      {
+        position: mediaUrls.length,
+        url: url,
+      },
+    ]);
     setCropView(false);
-  }
-
-  const handleRepeatCrop = (e) => {
-    e.preventDefault()
-    setEditFileUrl(fileUrl);
-    setCropView(true);
-  }
-
-  const hasValidMedia = cropUrl !== null
+    setPreviewUrl(url);
+  };
 
   const handleCancelCrop = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     setEditFileUrl(null);
     setCropView(false);
-  }
-
-  if (isCropView) {
-    return (
-      <Box display="flex" flexDirection="column" style={{textAlign: "center"}}>
-        <h3 style={{color: COLORS.PRIMARY_PURPLE}}>Upload Media</h3>
-        <Cropper fileUrl={editFileUrl} cropHandler={handleCropDone} />
-        <br />
-        <Button variant="outlined" onClick={handleCancelCrop}>Cancel</Button>
-      </Box>
-    )
-  }
+  };
 
   return (
-    <Box display="flex" flexDirection="column" style={{textAlign: "center"}}>
-      <h3 style={{color: COLORS.PRIMARY_PURPLE}}>Upload Media</h3>
-      <MemoryMedia url={cropUrl} />
-      <br />
-      {fileUrl && <Button variant="outlined" onClick={handleRepeatCrop}>Crop</Button>}
-      <br />
-      <Button
-        variant="outlined"
-        color="primary"
+    <>
+      <Box
+        display="flex"
+        flexDirection="column"
+        style={{ textAlign: "center" }}
+        // marginBottom={12}
       >
-      <label htmlFor="file-upload">
-        {hasValidMedia ? "Change" : "Add New"} Media
-        <HiddenFileInput handleChange={handleChange} />
-      </label>
-      </Button>
-    </Box>
-  )
-}
+        <h3 style={{ color: COLORS.PRIMARY_PURPLE }}>Upload Media</h3>
+        <p>Please upload 1 - {MEDIA_LIMIT} photos.</p>
+        {isCropView ? (
+          <Cropper fileUrl={editFileUrl} cropHandler={handleCropDone} />
+        ) : (
+          <MemoryMedia
+            url={previewUrl}
+            hasMedia={mediaUrls.length === 0 ? false : true}
+          />
+        )}
+        <br />
+        {!isCropView && 
+          <UploadedMediaList
+            mediaUrls={mediaUrls}
+            setCropView={setCropView}
+            setEditFileUrl={setEditFileUrl}
+            setMediaPreview={setMediaPreview}
+            deleteMediaByPosition={deleteMediaByPosition}
+            selectedMediaUrl={previewUrl}
+          />
+        }
+        {isCropView ? (
+          <Button variant="outlined" onClick={handleCancelCrop}>
+            Cancel
+          </Button>
+        ) : (
+          <Button 
+            variant="outlined" 
+            color="primary"
+            disabled={isMediaLimitReached()}
+          >
+            <label htmlFor="file-upload">
+              Add New Media
+              <HiddenFileInput handleChange={addNewMedia} />
+            </label>
+          </Button>
+        )}
+      </Box>
+      <DeleteMediaDialog />
+    </>
+  );
+};
 
-export default UploadMediaForm;
+export default TestUploadMediaForm;

@@ -43,6 +43,7 @@ const UploadedMediaItem = ({
   setMediaPreview,
   deleteMediaByPosition,
   isSelected,
+  isDeletable,
 }) => {
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
@@ -53,13 +54,15 @@ const UploadedMediaItem = ({
       {loading ? (
         <Loading />
       ) : (
-        <Grid item xs={4} className={classes.root}>
+        <Grid item xs={3} className={classes.root}>
           <Box position="relative">
-            <Box className={classes.deleteButtonContainer}>
-              <IconButton onClick={() => setDisplayDeleteDialog(true)}>
-                <DeleteIcon className={classes.iconStyle} />
-              </IconButton>
-            </Box>
+            { isDeletable &&
+              <Box className={classes.deleteButtonContainer}>
+                <IconButton onClick={() => setDisplayDeleteDialog(true)}>
+                  <DeleteIcon className={classes.iconStyle} />
+                </IconButton>
+              </Box>
+            }
             <img 
               onClick={() => setMediaPreview(media.position)} 
               className={isSelected ? classes.selectedImage : classes.image} 

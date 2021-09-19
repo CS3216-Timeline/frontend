@@ -1,7 +1,6 @@
 import { Box, Button, Grid, makeStyles } from "@material-ui/core";
 import React from "react";
 import EditIcon from "@material-ui/icons/Edit";
-import DeleteIcon from "@material-ui/icons/Delete";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { useParams } from "react-router";
 import { getMemoryById } from "../../services/memories";
@@ -11,6 +10,8 @@ import Loading from "../../components/Loading";
 import { useHistory } from "react-router-dom";
 import DeleteMemoryDialog from "./DeleteMemoryDialog";
 import { useEffect } from "react";
+import Photo from "@material-ui/icons/Photo";
+import UploadMediaForm from "../UploadMediaForm/UploadMediaForm";
 import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
 import FadeIn from "react-fade-in/lib/FadeIn";
 
@@ -20,15 +21,25 @@ const useStyles = makeStyles((theme) => ({
   },
   descriptionStyle: {
     padding: "0% 5%",
-    textAlign: "center",
   },
   deleteButton: {
     color: COLORS.WHITE,
     backgroundColor: COLORS.CANCEL_BUTTON,
   },
   imageStyle: {
-    width: "90%",
+    width: "90vw",
+    height: "90vw",
     textAlign: "center",
+  },
+  editMediaButton: {
+    color: COLORS.BLACK,
+    backgroundColor: COLORS.LIGHT_GREEN,
+  },
+  root: {
+    backgroundColor: theme.palette.background.default,
+  },
+  memoryContainer: {
+    padding: theme.spacing(2, 2, 15, 2),
   },
 }));
 
@@ -36,13 +47,12 @@ const Memory = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const { memoryId } = useParams();
-  const { title, description, media, date, lineId } = getMemoryById(memoryId);
+  const { title, description, mediaUrls: existingMediaUrls, date, lineId } = getMemoryById(memoryId);
   const [loading, setLoading] = useState(false);
   const [displayDeleteDialog, setDisplayDeleteDialog] = useState(false);
   const [deleted, setDeleted] = useState(false);
-  // eslint-disable-next-line no-unused-vars
-  const mediaUrl = media.source.url;
-  // const { title, description, mediaUrl, date } = props.location.state;
+  const [mediaUrls, setMediaUrls] = useState(existingMediaUrls);
+  const [isEditView, setIsEditView] = useState(false);
 
   useEffect(() => {
     if (deleted) {
@@ -56,6 +66,36 @@ const Memory = (props) => {
     return <Loading />;
   }
 
+  if (isEditView) {
+    // because states are essentially shared
+    return (
+      <>
+        <div className={classes.root}>
+          <Grid container className={classes.memoryContainer}>
+            <Grid item xs={12}>
+              <Box paddingY={1}>
+                <UploadMediaForm 
+                  existingMediaUrls={mediaUrls} 
+                  onComplete={setMediaUrls} 
+                />
+              </Box>
+              <Box paddingY={1}>
+                <Button
+                  fullWidth
+                  color="primary"
+                  variant="contained"
+                  onClick={() => setIsEditView(!isEditView)}
+                >
+                  Back to Memory
+                </Button>
+              </Box>
+            </Grid>
+          </Grid>
+        </div>
+      </>
+    )
+  }
+
   return (
     <>
       <FadeIn>
@@ -64,44 +104,53 @@ const Memory = (props) => {
             <Box display="flex" justifyContent="center" paddingY={2}>
               <PrivatePageHeader text={title} />
             </Box>
-            <img alt={title} className={classes.imageStyle} src={mediaUrl} />
+            <img alt={title} className={classes.imageStyle} src={mediaUrls[0].url} />
             <h4>{date}</h4>
             <div className={classes.descriptionStyle}>
               <p>{description}</p>
             </div>
           </Box>
-          <Box paddingTop={5}>
-            <Grid container>
-              <Grid item xs={6}>
-                <Box paddingX={3}>
-                  <Button
-                    onClick={() => {
-                      console.log("editing");
-                    }}
-                    fullWidth
-                    className={classes.editButton}
-                    variant="contained"
-                    startIcon={<EditIcon />}
-                  >
-                    Edit
-                  </Button>
-                </Box>
-              </Grid>
-              <Grid item xs={6}>
-                <Box paddingX={3}>
-                  <Button
-                    onClick={() => {
-                      setDisplayDeleteDialog(true);
-                    }}
-                    fullWidth
-                    className={classes.deleteButton}
-                    variant="contained"
-                    startIcon={<DeleteIcon />}
-                  >
-                    Delete
-                  </Button>
-                </Box>
-              </Grid>
+          <p><strong>Memory added on</strong> {date}</p>
+          {/* TODO: Implement multiple photo viewing */}
+          <img alt={title} className={classes.imageStyle} src={mediaUrls[0].url} />
+          <br /><br />
+          <Grid container>
+            <Grid item xs={12}>
+              <Box paddingX={3}>
+                <Button
+                  onClick={() => {
+                    setIsEditView(!isEditView)
+                  }}
+                  fullWidth
+                  className={classes.editMediaButton}
+                  variant="contained"
+                  startIcon={<Photo />}
+                >
+                  Add / Remove Photos
+                </Button>
+              </Box>
+            </Grid>
+          </Grid>
+          <div className={classes.descriptionStyle}>
+            <p>{description}</p>
+          </div>
+        </Box>
+        <Box paddingTop={5}>
+          <Grid container>
+            <Grid item xs={6}>
+              <Box paddingX={3}>
+                <Button
+                  onClick={() => {
+                    history.push(`/memory/${memoryId}/edit`);
+                  }}
+                  fullWidth
+                  className={classes.editButton}
+                  variant="contained"
+                  startIcon={<EditIcon />}
+                >
+                  Edit Details
+                </Button>
+              </Box>
             </Grid>
             <Grid item xs={12}>
               <Box margin={3}>
@@ -116,7 +165,7 @@ const Memory = (props) => {
                 </Button>
               </Box>
             </Grid>
-          </Box>
+          </Grid>
           <DeleteMemoryDialog
             setLoading={setLoading}
             displayDeleteDialog={displayDeleteDialog}
