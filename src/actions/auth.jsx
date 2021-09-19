@@ -1,4 +1,4 @@
-import server from "../utils/server"
+import server from "../utils/server";
 
 import {
   REGISTER_FAIL,
@@ -9,48 +9,40 @@ import {
   LOGIN_SUCCESS,
   LOGOUT,
 } from "../action-types/auth";
-import {
-  setAlert
-} from "./alert";
+import { setAlert } from "./alert";
 import setAuthToken from "../utils/setAuthToken";
 
-export const register =
-  (
+export const register = (name, email, password) => async (dispatch) => {
+  const body = {
     name,
     email,
-    password
-  ) =>
-  async (dispatch) => {
-    const body = {
-      name,
-      email,
-      password
-    };
-
-    try {
-      const res = await server.post("auth/register", body);
-      // res.data just contains the token, and now i need to set the token
-      dispatch({
-        type: REGISTER_SUCCESS,
-        payload: res.data,
-      });
-      dispatch(loadUser());
-    } catch (err) {
-      const error = err.response.data.error;
-      if (error) {
-        dispatch(setAlert(error, "error"));
-      }
-      dispatch({
-        type: REGISTER_FAIL,
-      });
-    }
+    password,
   };
+
+  try {
+    const res = await server.post("auth/register", body);
+    // res.data just contains the token, and now i need to set the token
+    dispatch({
+      type: REGISTER_SUCCESS,
+      payload: res.data,
+    });
+    dispatch(loadUser());
+  } catch (err) {
+    const error = err.response.data.error;
+    if (error) {
+      dispatch(setAlert(error, "error"));
+    }
+    dispatch({
+      type: REGISTER_FAIL,
+    });
+  }
+};
 
 // LOGIN USER
 export const login = (email, password) => async (dispatch) => {
   const body = {
     email,
-    password
+    password,
   };
 
   try {
@@ -63,10 +55,10 @@ export const login = (email, password) => async (dispatch) => {
     });
     dispatch(loadUser());
   } catch (err) {
-    console.log(err.response)
-    const error = err.response.data.error;
-    if (error) {
-      dispatch(setAlert(error, "error"));
+    if (err.response) {
+      dispatch(setAlert(err.response.data.error, "error"));
+    } else {
+      dispatch(setAlert(err.message, "error"));
     }
     dispatch({
       type: LOGIN_FAIL,
@@ -74,33 +66,33 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
-export const loginWithGoogle = googleData => async (dispatch) => {
+export const loginWithGoogle = (googleData) => async (dispatch) => {
   const body = {
-    token: googleData.tokenId
+    token: googleData.tokenId,
   };
   try {
     const res = await server.post("auth/login/google", body);
-    console.log(res.data)
+    console.log(res.data);
     dispatch({
       type: LOGIN_SUCCESS,
       payload: res.data,
     });
     dispatch(loadUser());
   } catch (err) {
-    console.log(err.response)
-    const error = err.response.data.error;
-    if (error) {
-      dispatch(setAlert(error, "error"));
+    if (err.response) {
+      dispatch(setAlert(err.response.data.error, "error"));
+    } else {
+      dispatch(setAlert(err.message, "error"));
     }
     dispatch({
       type: LOGIN_FAIL,
     });
   }
-}
+};
 
-export const loginWithFacebook = facebookData => async (dispatch) => {
+export const loginWithFacebook = (facebookData) => async (dispatch) => {
   const body = {
-    access_token: facebookData.accessToken
+    access_token: facebookData.accessToken,
   };
   try {
     const res = await server.post("auth/login/facebook", body);
@@ -110,16 +102,16 @@ export const loginWithFacebook = facebookData => async (dispatch) => {
     });
     dispatch(loadUser());
   } catch (err) {
-    console.log(err.response)
-    const error = err.response.data.error;
-    if (error) {
-      dispatch(setAlert(error, "error"));
+    if (err.response) {
+      dispatch(setAlert(err.response.data.error, "error"));
+    } else {
+      dispatch(setAlert(err.message, "error"));
     }
     dispatch({
       type: LOGIN_FAIL,
     });
   }
-}
+};
 
 export const loadUser = () => async (dispatch) => {
   // check local storage
@@ -158,4 +150,4 @@ export const deleteAccount = () => async (dispatch) => {
   } catch (err) {
     throw err;
   }
-}
+};

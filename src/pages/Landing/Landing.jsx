@@ -63,12 +63,8 @@ const Landing = () => {
         <Box className={classes.heroContent}>
           <AppLogo />
           <Box className={classes.subContent}>
-            <Typography variant="h6" align="center">
-              {/* TODO: Update this later */}
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam
-              totam recusandae illo eius fugit, dolorem nulla magnam ut facere
-              voluptatem perferendis officiis consectetur, fugiat tempora
-              laborum aliquam accusantium quos. Corrupti?
+            <Typography variant="h5" align="center">
+              An app to save your memories with your closed ones.
             </Typography>
           </Box>
           <Button
@@ -86,7 +82,7 @@ const Landing = () => {
                 <img
                   className={classes.image}
                   src={aroundTheWorldImage}
-                  alt={"around the world"}
+                  alt="around the world"
                 />
                 <h2 className={classes.featureHeader}>Feature 1</h2>
                 <Typography variant="h6" align="center">
@@ -101,7 +97,7 @@ const Landing = () => {
                   <img
                     className={classes.image}
                     src={momentsImage}
-                    alt={"moments"}
+                    alt="moments"
                   />
                 </div>
                 <h2 className={classes.featureHeader}>Feature 2</h2>
@@ -117,7 +113,7 @@ const Landing = () => {
                   <img
                     className={classes.image}
                     src={friendshipImage}
-                    alt={"friendship"}
+                    alt="friendship"
                   />
                 </div>
                 <h2 className={classes.featureHeader}>Feature 3</h2>
