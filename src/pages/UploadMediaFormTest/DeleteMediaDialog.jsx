@@ -35,11 +35,11 @@ const DeleteMediaDialog = ({
       setLoading(true);
       // TODO: Delete the memory, this one is just on frontend
       deleteMediaByPosition(mediaPosition);
-      setDisplayDeleteDialog(false);
       dispatch(setAlert("Successfully deleted photo", "success"));
     } catch (err) {
       dispatch(setAlert(err.message, "error"));
     } finally {
+      setDisplayDeleteDialog(false);
       setLoading(false);
     }
   };

@@ -35,7 +35,6 @@ const DeleteLineDialog = ({
     try {
       setLoading(true);
       const deletedLine = await deleteLineById(lineId);
-      setDisplayDeleteDialog(false);
       dispatch(
         setAlert(`Successfully deleted line ${deletedLine.name}`, "success")
       );
@@ -43,6 +42,7 @@ const DeleteLineDialog = ({
     } catch (err) {
       dispatch(setAlert(err.message, "error"));
     } finally {
+      setDisplayDeleteDialog(false);
       setLoading(false);
     }
   };

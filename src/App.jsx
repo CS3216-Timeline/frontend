@@ -1,3 +1,4 @@
+import "mapbox-gl/dist/mapbox-gl.css";
 import React, { Fragment, useEffect, useState } from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -19,9 +20,9 @@ import CustomSnackbar from "./components/snackbar/CustomSnackbar";
 import Landing from "./pages/Landing/Landing";
 import Loading from "./components/Loading";
 import EditLine from "./pages/EditLine/EditLine";
-import "mapbox-gl/dist/mapbox-gl.css";
 import TestUploadMediaForm from "./pages/UploadMediaFormTest/UploadMediaForm";
 import Profile from "./pages/Profile/Profile";
+import Info from "./pages/Info/Info";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -70,6 +71,7 @@ const App = () => {
                 path="/memory/:memoryId/edit"
                 component={MemoryEditor}
               />
+              <PrivateRoute exact path="/info" component={Info} />
               <PrivateRoute exact path="/profile" component={Profile} />
               <Route exact path="/test" component={TestUploadMediaForm} />
               <Route component={NotFound} />
