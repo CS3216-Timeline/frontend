@@ -184,7 +184,7 @@ const Line = (props) => {
                     memoryId={memory.memoryId}
                     key={memory.memoryId}
                     title={memory.title}
-                    mediaUrl={memory.media.source.url}
+                    mediaUrl={memory.media[0].source.url}
                     date={memory.date}
                     color={color}
                   />
