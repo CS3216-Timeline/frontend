@@ -101,7 +101,7 @@ const Memory = (props) => {
     <>
       <Box paddingBottom={7}>
         <Box className={classes.alignCenter}>
-          <Box display="flex" justifyContent="center" paddingY={2}>
+          <Box display="flex" justifyContent="center" paddingTop={2}>
             <PrivatePageHeader text={title} />
           </Box>
           <p><strong>Memory added on</strong> {date}</p>
