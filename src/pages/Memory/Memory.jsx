@@ -118,10 +118,10 @@ const Memory = (props) => {
             </Box>
           </Box>
         </Box>
-        <Box paddingTop={3} paddingX={3}>
+        <Box paddingY={3} paddingX={1}>
           <Grid container>
             <Grid item xs={4}>
-              <Box paddingX={1}>
+              <Box paddingX={0.5}>
                 <Button
                   onClick={() => {
                     history.push(`/memory/${memoryId}/edit`);
@@ -136,7 +136,7 @@ const Memory = (props) => {
               </Box>
             </Grid>
             <Grid item xs={4}>
-              <Box paddingX={1}>
+              <Box paddingX={0.5}>
                 <Button
                   onClick={() => {
                     setIsEditView(!isEditView)
@@ -151,7 +151,7 @@ const Memory = (props) => {
               </Box>
             </Grid>
             <Grid item xs={4}>
-              <Box paddingX={1}>
+              <Box paddingX={0.5}>
                 <Button
                   onClick={() => {
                     setDisplayDeleteDialog(true);
@@ -165,8 +165,10 @@ const Memory = (props) => {
                 </Button>
               </Box>
             </Grid>
+          </Grid>
+          <Grid container>
             <Grid item xs={12}>
-              <Box paddingX={1} paddingTop={2}>
+              <Box paddingX={0.5} paddingY={5}>
                 <Button
                   fullWidth
                   color="primary"
