@@ -1,8 +1,8 @@
 import { makeStyles } from "@material-ui/core";
-import { Button, Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
 import { COLORS } from "../../utils/colors";
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 
 const vpWidth = Math.max(
   document.documentElement.clientWidth || 0,
@@ -50,10 +50,37 @@ const useStyles = makeStyles((theme) => ({
   },
   next: {
     right: "5px",
+  },
+  unselectedDot: {
+    width: "10px",
+    color: COLORS.DARK_GREY,
+  },
+  selectedDot: {
+    width: "10px",
+    color: COLORS.PRIMARY_PURPLE,
   }
 }));
 
 
+const HorizontalScrollDots = (props) => {
+  const classes = useStyles();
+  const { currIndex, numDots } = props;
+
+  const templateArray = [...Array(numDots)];
+
+  const getDotClassByIndex = (idx) => {
+    return idx === currIndex ? classes.selectedDot : classes.unselectedDot;
+  }
+
+  return (
+    <Box display="flex" flexDirection="row" width="100%" justifyContent="center">
+      {templateArray.map((_, idx) => (
+          <FiberManualRecordIcon className={getDotClassByIndex(idx)} />
+        )
+      )}
+    </Box>
+  )
+}
 
 const MediaDisplay = (props) => {
   const classes = useStyles();
@@ -152,29 +179,10 @@ const MediaDisplay = (props) => {
           })}
         </div>
       </div>
-      <Grid container>
-        <Grid item xs={4}>
-          <Button
-            disabled={currIndex === 0}
-            onClick={() => transitionTo(currIndex - 1, 0.5)}
-          >
-            Previous
-          </Button>
-        </Grid>
-        <Grid item xs={4}>
-          <p>
-            {currIndex + 1} / {mediaUrls.length}
-          </p>
-        </Grid>
-        <Grid item xs={4}>
-          <Button
-            disabled={currIndex === mediaUrls.length - 1}
-            onClick={() => transitionTo(currIndex + 1, 0.5)}
-          >
-            Next
-          </Button>
-        </Grid>
-      </Grid>
+      <HorizontalScrollDots 
+        currIndex={currIndex} 
+        numDots={mediaUrls.length} 
+      />
     </Box>
   )
 }
