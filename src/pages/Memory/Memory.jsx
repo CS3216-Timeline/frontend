@@ -144,7 +144,7 @@ const Memory = (props) => {
                   variant="contained"
                   startIcon={<EditIcon />}
                 >
-                  Edit Details
+                  Edit
                 </Button>
               </Box>
             </Grid>
