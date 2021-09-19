@@ -9,7 +9,7 @@ const vpWidth = Math.max(
   window.innerWidth || 0
 );
 
-const containerWidth = vpWidth * 0.9;
+const containerWidth = vpWidth;// * 0.9;
 const IMG_WIDTH = containerWidth;
 // const IMG_HEIGHT = containerWidth;
 
@@ -28,8 +28,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#000",
     overflow: "hidden",
     position: "relative",
-    width: "90vw",
-    height: "90vw",
+    width: `${IMG_WIDTH}px`,
+    height: `${IMG_WIDTH}px`,
   },
   move: {
     display: "flex",
