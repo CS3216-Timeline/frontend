@@ -11,6 +11,7 @@ import { useHistory } from "react-router-dom";
 import DeleteMemoryDialog from "./DeleteMemoryDialog";
 import { useEffect } from "react";
 import Photo from "@material-ui/icons/Photo";
+import DeleteIcon from "@material-ui/icons/Delete";
 import UploadMediaForm from "../UploadMediaForm/UploadMediaForm";
 import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
 import MediaDisplay from "./MediaDisplay";
@@ -146,6 +147,21 @@ const Memory = (props) => {
                     startIcon={<EditIcon />}
                   >
                     Edit
+                  </Button>
+                </Box>
+              </Grid>
+              <Grid item xs={6}>
+                <Box paddingX={3}>
+                  <Button
+                    onClick={() => {
+                      setDisplayDeleteDialog(true);
+                    }}
+                    fullWidth
+                    className={classes.deleteButton}
+                    variant="contained"
+                    startIcon={<DeleteIcon />}
+                  >
+                    Delete
                   </Button>
                 </Box>
               </Grid>
