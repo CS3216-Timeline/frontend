@@ -11,7 +11,7 @@ import { setAlert } from "../../actions/alert";
 
 const MEDIA_LIMIT = 4; // can tweak
 const MEGABYTE = 1048576;
-const MAX_FILE_SIZE = 2 * MEGABYTE;
+const MAX_FILE_SIZE = 10 * MEGABYTE;
 
 const UploadMediaForm = ({
   existingMediaUrls,
@@ -29,7 +29,7 @@ const UploadMediaForm = ({
   const addNewMedia = (e) => {
     const newFile = e.target.files[0];
     if (newFile && newFile.size > MAX_FILE_SIZE) {
-      dispatch(setAlert("Image file should not exceed 2MB.", "error"));
+      dispatch(setAlert("Image file should not exceed 10MB.", "error"));
       return;
     }
     if (newFile) {
