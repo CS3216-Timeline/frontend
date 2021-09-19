@@ -1,3 +1,4 @@
+import "mapbox-gl/dist/mapbox-gl.css";
 import React, { Fragment, useEffect, useState } from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -21,6 +22,7 @@ import Loading from "./components/Loading";
 import EditLine from "./pages/EditLine/EditLine";
 import "mapbox-gl/dist/mapbox-gl.css";
 import Profile from "./pages/Profile/Profile";
+import Info from "./pages/Info/Info";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -33,7 +35,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    setTimeout(() => setLoading(false), 500);
+    setTimeout(() => setLoading(false), 1000);
   }, []);
 
   if (loading) {
@@ -74,6 +76,7 @@ const App = () => {
                 path="/test"
                 component={Memory}
               />
+              <PrivateRoute exact path="/info" component={Info} />
               <PrivateRoute exact path="/profile" component={Profile} />
               <Route component={NotFound} />
             </Switch>

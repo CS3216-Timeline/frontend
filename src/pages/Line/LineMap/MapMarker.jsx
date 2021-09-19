@@ -27,7 +27,7 @@ const MapMarker = ({ memory }) => {
           longitude={memory.longitude}
           onClose={() => setShowPopup(false)}
         >
-          <Box component="div" padding={1}>
+          <Box padding={1}>
             <Typography variant="h6">{memory.title}</Typography>
             <Typography variant="body1">{memory.description}</Typography>
             <Typography variant="body1">

@@ -143,6 +143,19 @@ export const loadUser = () => async (dispatch) => {
 
 export const logout = () => (dispatch) => {
   dispatch({
-    type: LOGOUT
+    type: LOGOUT,
   });
 };
+
+export const deleteAccount = () => async (dispatch) => {
+  try {
+    // TODO: connect to backend
+    // const res = await server.delete('/auth/userId)
+    dispatch({
+      type: LOGOUT,
+    });
+    dispatch(setAlert("Account successfully deleted", "success"));
+  } catch (err) {
+    throw err;
+  }
+}

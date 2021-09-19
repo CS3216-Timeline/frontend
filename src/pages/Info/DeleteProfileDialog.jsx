@@ -8,7 +8,6 @@ import { Button, Fade, makeStyles } from "@material-ui/core";
 import { COLORS } from "../../utils/colors";
 import { useDispatch } from "react-redux";
 import { setAlert } from "../../actions/alert";
-import { deleteMemoryById } from "../../services/memories";
 
 const useStyles = makeStyles(() => ({
   cancelButton: {
@@ -21,24 +20,22 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const DeleteMemoryDialog = ({
-  setLoading,
-  displayDeleteDialog,
+const DeleteProfileDialog = ({
+  displayDeleteDialog = false,
   setDisplayDeleteDialog,
-  memoryId,
-  setDeleted,
+  setLoading,
 }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const deleteMemory = async () => {
+  const deleteAccount = () => {
     try {
       setLoading(true);
-      await deleteMemoryById(memoryId);
-      dispatch(setAlert("Successfully deleted memory", "success"));
-      setDeleted(true);
+      dispatch(deleteAccount());
     } catch (err) {
-      dispatch(setAlert(err.message, "error"));
+      dispatch(
+        setAlert("Failed to delete account, please try again later", "error")
+      );
     } finally {
       setDisplayDeleteDialog(false);
       setLoading(false);
@@ -56,12 +53,12 @@ const DeleteMemoryDialog = ({
           aria-describedby="alert-dialog-slide-description"
         >
           <DialogTitle id="alert-dialog-slide-title">
-            Are you sure you want to delete this line?
+            Are you sure you want to delete your account?
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-slide-description">
-              You will not be able to retrieve the memory back after deleting
-              it.
+              You will not be able to retrieve back your account after deleting
+              it!
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -73,7 +70,7 @@ const DeleteMemoryDialog = ({
               No
             </Button>
             <Button
-              onClick={deleteMemory}
+              onClick={deleteAccount}
               color="primary"
               className={classes.deleteButton}
             >
@@ -86,4 +83,4 @@ const DeleteMemoryDialog = ({
   );
 };
 
-export default DeleteMemoryDialog;
+export default DeleteProfileDialog;

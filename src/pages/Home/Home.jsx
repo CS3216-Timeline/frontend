@@ -1,7 +1,6 @@
 import React, { Fragment, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-// import { mockLinesData } from "./data";
 import LineCard from "./LineCard";
 import { Box, Button, TextField, Tooltip } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
@@ -15,6 +14,7 @@ import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
 import { COLORS } from "../../utils/colors";
 import { filterLines } from "../../utils/lines";
 import NoneAvailable from "../../components/NoneAvailable";
+import FadeIn from "react-fade-in/lib/FadeIn";
 
 const useStyles = makeStyles((theme) => ({
   addLineButtonContainer: {
@@ -114,24 +114,28 @@ const Home = () => {
               </TextField>
             </Box>
           </Grid>
-          {searchText === "" ? (
-            lines.map((line) => (
-              <Grid item xs={12} key={line.lineId}>
-                <LineCard line={line} />
-              </Grid>
-            ))
-          ) : searchedLines.length > 0 ? (
-            searchedLines.map((line) => (
-              <Grid item xs={12} key={line.lineId}>
-                <LineCard line={line} />
-              </Grid>
-            ))
-          ) : (
-            <NoneAvailable text={"No lines that matched search"} />
-          )}
-          {lines.length === 0 && (
-            <NoneAvailable text={"No lines created yet, create one now!"} />
-          )}
+          <Grid item xs={12}>
+            <FadeIn>
+              {searchText === "" ? (
+                lines.map((line) => (
+                  <Grid item xs={12} key={line.lineId}>
+                    <LineCard line={line} />
+                  </Grid>
+                ))
+              ) : searchedLines.length > 0 ? (
+                searchedLines.map((line) => (
+                  <Grid item xs={12} key={line.lineId}>
+                    <LineCard line={line} />
+                  </Grid>
+                ))
+              ) : (
+                <NoneAvailable text={"No lines that matched search"} />
+              )}
+              {lines.length === 0 && (
+                <NoneAvailable text={"No lines created yet, create one now!"} />
+              )}
+            </FadeIn>
+          </Grid>
         </Grid>
       </div>
     </Fragment>
