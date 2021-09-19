@@ -14,7 +14,7 @@ const HiddenFileInput = (props) => {
     <input
       style={inputStyle()}
       type="file"
-      accept="image/jpeg, image/png, image/heic"
+      accept="image/*" // "image/jpeg, image/jpg, image/png, .heic"
       id="file-upload"
       onChange={handleChange}
       required
