@@ -2,6 +2,7 @@ import { makeStyles } from "@material-ui/core";
 import { Button, Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
+import { COLORS } from "../../utils/colors";
 
 const vpWidth = Math.max(
   document.documentElement.clientWidth || 0,
@@ -38,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     top: "50%",
     transform: "translateY(-50%)",
     borderRadius: "20px",
-    backgroundColor: "rgba(255, 255, 255, 0.5)",
+    backgroundColor: COLORS.TRANSLUCENT,
     alignItems: "center",
     justifyContent: "center",
     cursor: "pointer",

@@ -33,6 +33,7 @@ export const COLORS = {
   SUCCESS_BUTTON: '#42ba96',
   BLACK: '#000000',
   TRANSPARENT: '#00000000',
+  TRANSLUCENT: "rgba(255, 255, 255, 0.5)", // is it same as "#ffffff80" ?
 }
 
 export const colorPickerArray = [
