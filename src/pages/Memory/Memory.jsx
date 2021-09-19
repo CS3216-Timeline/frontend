@@ -1,7 +1,6 @@
 import { Box, Button, Grid, makeStyles } from "@material-ui/core";
 import React from "react";
 import EditIcon from "@material-ui/icons/Edit";
-import DeleteIcon from "@material-ui/icons/Delete";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { useParams } from "react-router";
 import { getMemoryById } from "../../services/memories";
@@ -14,6 +13,7 @@ import { useEffect } from "react";
 import Photo from "@material-ui/icons/Photo";
 import UploadMediaForm from "../UploadMediaForm/UploadMediaForm";
 import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
+import FadeIn from "react-fade-in/lib/FadeIn";
 
 const useStyles = makeStyles((theme) => ({
   alignCenter: {
@@ -98,10 +98,17 @@ const Memory = (props) => {
 
   return (
     <>
-      <Box paddingBottom={7}>
-        <Box className={classes.alignCenter}>
-          <Box display="flex" justifyContent="center" paddingY={2}>
-            <PrivatePageHeader text={title} />
+      <FadeIn>
+        <Box paddingBottom={7}>
+          <Box className={classes.alignCenter}>
+            <Box display="flex" justifyContent="center" paddingY={2}>
+              <PrivatePageHeader text={title} />
+            </Box>
+            <img alt={title} className={classes.imageStyle} src={mediaUrls[0].url} />
+            <h4>{date}</h4>
+            <div className={classes.descriptionStyle}>
+              <p>{description}</p>
+            </div>
           </Box>
           <p><strong>Memory added on</strong> {date}</p>
           {/* TODO: Implement multiple photo viewing */}
@@ -145,45 +152,30 @@ const Memory = (props) => {
                 </Button>
               </Box>
             </Grid>
-            <Grid item xs={6}>
-              <Box paddingX={3}>
+            <Grid item xs={12}>
+              <Box margin={3}>
                 <Button
-                  onClick={() => {
-                    setDisplayDeleteDialog(true);
-                  }}
                   fullWidth
-                  className={classes.deleteButton}
+                  color="primary"
                   variant="contained"
-                  startIcon={<DeleteIcon />}
+                  onClick={() => history.push(`/line/${lineId}`)}
+                  startIcon={<ArrowBackIcon />}
                 >
-                  Delete
+                  Back to line page
                 </Button>
               </Box>
             </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <Box margin={3}>
-              <Button
-                fullWidth
-                color="primary"
-                variant="contained"
-                onClick={() => history.push(`/line/${lineId}`)}
-                startIcon={<ArrowBackIcon />}
-              >
-                Back to line page
-              </Button>
-            </Box>
-          </Grid>
+          <DeleteMemoryDialog
+            setLoading={setLoading}
+            displayDeleteDialog={displayDeleteDialog}
+            setDisplayDeleteDialog={setDisplayDeleteDialog}
+            memoryId={memoryId}
+            lineId={lineId}
+            setDeleted={setDeleted}
+          />
         </Box>
-        <DeleteMemoryDialog
-          setLoading={setLoading}
-          displayDeleteDialog={displayDeleteDialog}
-          setDisplayDeleteDialog={setDisplayDeleteDialog}
-          memoryId={memoryId}
-          lineId={lineId}
-          setDeleted={setDeleted}
-        />
-      </Box>
+      </FadeIn>
     </>
   );
 };

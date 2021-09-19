@@ -12,22 +12,22 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: theme.spacing(0.5),
     fontSize: "25px",
   },
-  changePasswordButton: {
+  editProfileButton: {
     color: COLORS.WHITE,
     backgroundColor: COLORS.BLUE,
   },
-  deleteAccountButton: {
-    color: COLORS.WHITE,
-    backgroundColor: COLORS.RED,
-  },
 }));
 
+// TODO: Create function to edit profile
+// - change password
+// - change name
+// - change profile pic
 const Profile = () => {
   const classes = useStyles();
   const user = useSelector((state) => state.auth.user);
   return (
     <>
-      <Box component="div" className={classes.root}>
+      <Box className={classes.root}>
         <Grid container spacing={0} align="center" justify="center">
           <Grid item xs={12}>
             <Box paddingBottom={4}>
@@ -44,22 +44,10 @@ const Profile = () => {
               <Button
                 onClick={() => {}}
                 fullWidth
-                className={classes.changePasswordButton}
+                className={classes.editProfileButton}
                 variant="contained"
               >
-                <Typography variant="body2">Change Password</Typography>
-              </Button>
-            </Box>
-          </Grid>
-          <Grid item xs={12}>
-            <Box padding={1} paddingTop={2}>
-              <Button
-                onClick={() => {}}
-                fullWidth
-                variant="contained"
-                className={classes.deleteAccountButton}
-              >
-                <Typography variant="body2">Delete Account</Typography>
+                <Typography variant="body2">Edit Profile</Typography>
               </Button>
             </Box>
           </Grid>

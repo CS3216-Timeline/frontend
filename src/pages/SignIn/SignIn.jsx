@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
@@ -18,6 +16,7 @@ import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import Copyright from "../../components/layout/CopyRight";
+import FadeIn from "react-fade-in/lib/FadeIn";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -106,97 +105,109 @@ const SignIn = () => {
   }
 
   return (
-    <Grid container component="main" className={classes.root}>
-      <CssBaseline />
-      <Grid item xs={false} sm={4} md={7} className={classes.image} />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <div className={classes.paper}>
-          <AuthHeader text={"Sign In"} />
-          <AppLogo />
-          <form className={classes.form} noValidate>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              onChange={(e) => setEmail(e.target.value)}
-            >
-              {email}
-            </TextField>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              onChange={(e) => setPassword(e.target.value)}
-            >
-              {password}
-            </TextField>
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              onClick={(e) => loginUser(e)}
-            >
-              Sign In
-            </Button>
-            <Box display="flex" justifyContent="center" flexDirection="column">
-              <GoogleLogin
-                clientId="866388603635-ag2j3hkrh7glsd0rigj411l0igo53cks.apps.googleusercontent.com" // TODO: To store somewhere
-                buttonText="SIGN IN WITH GOOGLE"
-                onSuccess={loginUserWithGoogle}
-                onFailure={loginUserWithGoogle} // TODO: change so that it just stays at the login page with some message
-                cookiePolicy={"single_host_origin"}
-                className="" // TODO: Style
-              />
-              <br />
-              <FacebookLogin
-                appId="3083491758550050" //TODO: Store somewhere
-                autoLoad={false}
-                fields="name,email,picture"
-                redirectUri={"http://localhost:3000/signin"}
-                callback={loginUserWithFacebook}
-                size="small"
-                textButton="SIGN IN WITH FACEBOOK"
-                icon={<FacebookIcon className={classes.facebookIcon} />}
-                cssClass={classes.facebookButton}
-              />
-              <br />
-            </Box>
-            <Grid container>
-              <Grid item>
-                <Link
-                  component="button"
-                  variant="body2"
-                  onClick={() => history.push("/register")}
+    <>
+      <FadeIn transitionDuration={1000}>
+        <Grid container component="main" className={classes.root}>
+          <CssBaseline />
+          <Grid item xs={false} sm={4} md={7} className={classes.image} />
+          <Grid
+            item
+            xs={12}
+            sm={8}
+            md={5}
+            component={Paper}
+            elevation={6}
+            square
+          >
+            <div className={classes.paper}>
+              <AuthHeader text={"Sign In"} />
+              <AppLogo />
+              <form className={classes.form} noValidate>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  onChange={(e) => setEmail(e.target.value)}
                 >
-                  Don't have an account? Sign Up
-                </Link>
-              </Grid>
-            </Grid>
-            <Box mt={5}>
-              <Copyright />
-            </Box>
-          </form>
-        </div>
-      </Grid>
-    </Grid>
+                  {email}
+                </TextField>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  onChange={(e) => setPassword(e.target.value)}
+                >
+                  {password}
+                </TextField>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                  onClick={(e) => loginUser(e)}
+                >
+                  Sign In
+                </Button>
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  flexDirection="column"
+                >
+                  <GoogleLogin
+                    clientId="866388603635-ag2j3hkrh7glsd0rigj411l0igo53cks.apps.googleusercontent.com" // TODO: To store somewhere
+                    buttonText="SIGN IN WITH GOOGLE"
+                    onSuccess={loginUserWithGoogle}
+                    onFailure={loginUserWithGoogle} // TODO: change so that it just stays at the login page with some message
+                    cookiePolicy={"single_host_origin"}
+                    className="" // TODO: Style
+                  />
+                  <br />
+                  <FacebookLogin
+                    appId="3083491758550050" //TODO: Store somewhere
+                    autoLoad={false}
+                    fields="name,email,picture"
+                    redirectUri={"http://localhost:3000/signin"}
+                    callback={loginUserWithFacebook}
+                    size="small"
+                    textButton="SIGN IN WITH FACEBOOK"
+                    icon={<FacebookIcon className={classes.facebookIcon} />}
+                    cssClass={classes.facebookButton}
+                  />
+                  <br />
+                </Box>
+                <Grid container>
+                  <Grid item>
+                    <Link
+                      component="button"
+                      variant="body2"
+                      onClick={() => history.push("/register")}
+                    >
+                      Don't have an account? Sign Up
+                    </Link>
+                  </Grid>
+                </Grid>
+                <Box mt={5}>
+                  <Copyright />
+                </Box>
+              </form>
+            </div>
+          </Grid>
+        </Grid>
+      </FadeIn>
+    </>
   );
 };
 

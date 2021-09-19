@@ -38,7 +38,7 @@ const BottomNavBar = () => {
       {/* TODO: create a how to use page */}
       <BottomNavigationAction
         component="button"
-        onClick={() => history.push("/")}
+        onClick={() => history.push("/info")}
         icon={<HelpOutlineIcon />}
       />
       <BottomNavigationAction

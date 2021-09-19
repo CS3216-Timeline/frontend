@@ -23,6 +23,7 @@ import DeleteLineDialog from "./DeleteLineDialog";
 import Loading from "../../components/Loading";
 import LineMap from "./LineMap/LineMap";
 import NoneAvailable from "../../components/NoneAvailable";
+import FadeIn from "react-fade-in/lib/FadeIn";
 
 const useStyles = makeStyles((theme) => ({
   mapButton: {
@@ -165,33 +166,37 @@ const Line = (props) => {
             </Grid>
           </Grid>
         </Box>
-        {showMap ? (
-          <LineMap
-            lineColor={useFakeData ? color : lineColor}
-            lineMemories={memoriesData}
-          />
-        ) : (
-          memoriesData.length > 0 ? (
-            <Timeline align="left">
-              {memoriesData.map((memory, idx) => (
-                <MemoryCard
-                  isFirst={isFirstMemory(idx)}
-                  isLast={isLastMemory(idx)}
-                  memoryId={memory.memoryId}
-                  key={memory.memoryId}
-                  title={memory.title}
-                  mediaUrl={memory.mediaUrls[0].url}
-                  date={memory.date}
-                  color={color}
-                />
-              ))}
-            </Timeline>
+        {/* TODO: send memories as a prop to LineMap */}
+        <FadeIn>
+          {showMap ? (
+            <LineMap
+              lineColor={useFakeData ? color : lineColor}
+              lineMemories={memoriesData}
+            />
           ) : (
-            <NoneAvailable
-              text={"No memories added yet, add your first memory now!"}
-            />   
-          )   
-        )}
+            <Timeline align="left">
+              {memoriesData.length > 0 ? (
+                memoriesData.map((memory, idx) => (
+                  // TODO: change mediaUrl params to get the first image
+                  <MemoryCard
+                    isFirst={isFirstMemory(idx)}
+                    isLast={isLastMemory(idx)}
+                    memoryId={memory.memoryId}
+                    key={memory.memoryId}
+                    title={memory.title}
+                    mediaUrl={memory.media[0].source.url}
+                    date={memory.date}
+                    color={color}
+                  />
+                ))
+              ) : (
+                <NoneAvailable
+                  text={"No memories added yet, add your first memory now!"}
+                />
+              )}
+            </Timeline>
+          )}
+        </FadeIn>
         <DeleteLineDialog
           displayDeleteDialog={displayDeleteDialog}
           setDisplayDeleteDialog={setDisplayDeleteDialog}
