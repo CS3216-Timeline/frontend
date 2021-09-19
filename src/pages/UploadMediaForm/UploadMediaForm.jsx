@@ -29,24 +29,30 @@ const UploadMediaForm = ({
   console.log(mediaUrls);
   const dispatch = useDispatch();
 
-  const convertHeicToPNG = (newFile) => {
-    console.log(newFile.name);
+  const loadImage = (file) => {
+    var fileUrl = URL.createObjectURL(file);
     setLoading(true);
-    fetch(URL.createObjectURL(newFile))
+    setCropView(false);
+    setEditFileUrl(null);
+    fetch(fileUrl)
       .then(res => res.blob())
       .then(blob => heic2any({blob}))
       .then(res => {
-        setEditFileUrl(URL.createObjectURL(res));
-        setCropView(true);
-        setLoading(false);
+        fileUrl = URL.createObjectURL(res);
       })
       .catch(e => {
-        dispatch(setAlert("Unable to read .heic image.", "error"));
-        setEditFileUrl(null);
-        setCropView(false);
+        // do nothing
+      })
+      .finally(() => {
         setLoading(false);
-      });
-    return;
+        if (fileUrl) {
+          setEditFileUrl(fileUrl);
+          setCropView(true);
+        } else {
+          dispatch(setAlert("Only PNG, JPEG, HEIC images are accepted!", "error"));
+          setCropView(false);
+        }
+      })
   }
 
   const addNewMedia = (e) => {
@@ -58,13 +64,7 @@ const UploadMediaForm = ({
       dispatch(setAlert("Image file should not exceed 10MB.", "error"));
       return;
     }
-    if (newFile.type === "image/heic") {
-      convertHeicToPNG(newFile);
-      return;
-    }
-    const newFileUrl = URL.createObjectURL(newFile);
-    setEditFileUrl(newFileUrl);
-    setCropView(true);
+    loadImage(newFile);
   };
 
   const setMediaPreview = (positionOfMedia) => {
@@ -161,7 +161,7 @@ const UploadMediaForm = ({
             color={loading ? "inherit" : "primary"}
             disabled={loading || isMediaLimitReached()}
           >
-            <label htmlFor="file-upload">
+            <label htmlFor="image-upload">
               Add New Media
               <HiddenFileInput handleChange={addNewMedia} />
             </label>
