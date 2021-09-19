@@ -6,7 +6,7 @@ import { Redirect, useHistory } from "react-router-dom";
 import aroundTheWorldImage from "../../assets/around-the-world.png";
 import friendshipImage from "../../assets/friendship.png";
 import momentsImage from "../../assets/moments.png";
-import logoImage from "../../assets/timeline-logo.png";
+import AppLogo from "../../components/layout/AppLogo";
 
 const useStyles = makeStyles((theme) => ({
   heroContent: {
@@ -61,8 +61,7 @@ const Landing = () => {
     <>
       <FadeIn transitionDuration={1500}>
         <Box className={classes.heroContent}>
-          <img className={classes.logoImage} src={logoImage} alt={"logo"} />
-          {/* <h3 className={classes.header}>TIMELINE</h3> */}
+          <AppLogo />
           <Box className={classes.subContent}>
             <Typography variant="h6" align="center">
               {/* TODO: Update this later */}
