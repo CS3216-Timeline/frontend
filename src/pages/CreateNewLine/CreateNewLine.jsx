@@ -11,12 +11,13 @@ import AddIcon from "@material-ui/icons/Add";
 import LinearScaleIcon from "@material-ui/icons/LinearScale";
 import { GithubPicker } from "react-color";
 import { colorPickerArray, COLORS } from "../../utils/colors";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setAlert } from "../../actions/alert";
 import { createNewLine } from "../../services/lines";
 import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
 import Loading from "../../components/Loading";
 import { useHistory } from "react-router-dom";
+import { createLineForUser } from "../../actions/line";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -36,9 +37,28 @@ const CreateNewLine = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
+  const auth = useSelector((state) => state.auth);
   const [lineTitle, setLineTitle] = useState("");
   const [loading, setLoading] = useState(false);
   const [selectedColor, setSelectedColor] = useState(COLORS.MAROON);
+
+  // const createLine = async () => {
+  //   if (!lineTitle) {
+  //     dispatch(setAlert("Line Title cannot be empty", "error"));
+  //     return;
+  //   }
+  //   try {
+  //     setLoading(true);
+  //     const line = await createNewLine(lineTitle, selectedColor);
+  //     console.log(line);
+  //     dispatch(setAlert(`Line ${line.name} successfully created`, "success"));
+  //     history.push("/");
+  //   } catch (err) {
+  //     dispatch(setAlert(err.message, "error"));
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const createLine = async () => {
     if (!lineTitle) {
@@ -46,10 +66,7 @@ const CreateNewLine = () => {
       return;
     }
     try {
-      setLoading(true);
-      const line = await createNewLine(lineTitle, selectedColor);
-      console.log(line);
-      dispatch(setAlert(`Line ${line.name} successfully created`, "success"));
+      dispatch(createLineForUser(lineTitle, selectedColor, auth.user.userId));
       history.push("/");
     } catch (err) {
       dispatch(setAlert(err.message, "error"));
