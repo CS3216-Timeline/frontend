@@ -28,6 +28,7 @@ export const getCroppedImage = async (imageSrc, pixelCrop, rotation = 0) => {
   // image to rotate in without being clipped by canvas context
   canvas.width = ctx.width
   canvas.height = safeArea
+  console.log(canvas)
 
   // translate canvas context to a central location on image to allow rotating around the center.
   ctx.translate(safeArea / 2, safeArea / 2)
