@@ -38,7 +38,6 @@ const UploadMediaForm = ({ existingMediaUrls, onComplete }) => {
       .then((res) => res.blob())
       .then((blob) => heic2any({ blob, toType: "image/jpeg", multiple: true }))
       .then((res) => {
-        console.log("typeof", `${typeof res}`);
         if (Array.isArray(res)) {
           fileUrl = URL.createObjectURL(res[0]);
         } else {
