@@ -24,6 +24,7 @@ const UploadMediaForm = ({ existingMediaUrls, onComplete }) => {
   const [isCropView, setCropView] = useState(false);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [testBlob, setTestBlob] = useState(null);
 
   // console.log(mediaUrls);
   const dispatch = useDispatch();
@@ -46,7 +47,11 @@ const UploadMediaForm = ({ existingMediaUrls, onComplete }) => {
       //   } else {
       //     fileUrl = URL.createObjectURL(res);
       //   }
-      .then((res) => res.blob())
+      .then((res) => {
+        const x = res.blob();
+        setTestBlob(x);
+        return x;
+      })
       .then((blob) => {
         if (
           file.type === "image/png" ||
@@ -201,9 +206,7 @@ const UploadMediaForm = ({ existingMediaUrls, onComplete }) => {
           Testing
         </Button>
         <div>mediaUrls: {JSON.stringify(mediaUrls)}</div>
-        <div>
-          blob url: {mediaUrls[1] && reader.readAsDataURL(mediaUrls[1].url)}
-        </div>
+        <div>blob url: {testBlob && reader.readAsDataURL(testBlob)}</div>
       </Box>
       <DeleteMediaDialog />
     </>
