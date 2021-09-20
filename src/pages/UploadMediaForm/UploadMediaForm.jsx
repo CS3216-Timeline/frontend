@@ -36,12 +36,14 @@ const UploadMediaForm = ({ existingMediaUrls, onComplete }) => {
     setEditFileUrl(null);
     fetch(fileUrl)
       .then((res) => res.blob())
-      .then((blob) => heic2any({ blob, toType: "image/jpeg" }))
+      .then((blob) => heic2any({ blob, toType: "image/jpeg", multiple: true }))
       .then((res) => {
+        dispatch(setAlert(`typeof ${typeof res}`));
         if (Array.isArray(res)) {
           dispatch(setAlert(`wth ${JSON.stringify(res)}`, "error"));
           fileUrl = URL.createObjectURL(res[0]);
         } else {
+          dispatch(setAlert(`wth ${JSON.stringify(res)}`, "error"));
           fileUrl = URL.createObjectURL(res);
         }
         console.log("fileUrl", fileUrl);
