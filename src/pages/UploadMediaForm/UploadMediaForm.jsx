@@ -34,6 +34,12 @@ const UploadMediaForm = ({ existingMediaUrls, onComplete }) => {
     setLoading(true);
     setCropView(false);
     setEditFileUrl(null);
+    if (file.type !== "image/heic") {
+      setLoading(false);
+      setEditFileUrl(fileUrl);
+      setCropView(true);
+      return;
+    }
     fetch(fileUrl)
       .then((res) => res.blob())
       .then((blob) => heic2any({ blob, toType: "image/jpeg", multiple: true }))
