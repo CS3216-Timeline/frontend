@@ -148,6 +148,7 @@ const UploadMediaForm = ({ existingMediaUrls, onComplete }) => {
     setCropView(false);
   };
 
+  var reader = new FileReader();
   return (
     <>
       <Box
@@ -200,6 +201,7 @@ const UploadMediaForm = ({ existingMediaUrls, onComplete }) => {
           Testing
         </Button>
         <div>mediaUrls: {JSON.stringify(mediaUrls)}</div>
+        <div>blob url: {reader.readAsDataURL(mediaUrls[1].url)}</div>
       </Box>
       <DeleteMediaDialog />
     </>
