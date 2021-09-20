@@ -5,7 +5,6 @@ import {
   GET_LINES_OFFLINE,
 } from "../action-types/line";
 
-// initialState will contain an object of lines
 const initialState = {
   onlineLines: [],
   draftLines: [],
@@ -17,7 +16,6 @@ const lineReducer = (state = initialState, action) => {
     case GET_LINES:
       return {
         ...state,
-        // draftLines: [],
         onlineLines: [...payload],
       };
     case GET_LINES_OFFLINE:
