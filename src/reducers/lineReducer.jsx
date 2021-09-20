@@ -1,13 +1,42 @@
-import { GET_LINES } from "../action-types/line";
+import {
+  CREATE_DRAFT_LINE,
+  DELETE_DRAFT_LINE,
+  GET_LINES,
+  GET_LINES_OFFLINE,
+} from "../action-types/line";
 
 // initialState will contain an object of lines
-const initialState = [];
+const initialState = {
+  onlineLines: [],
+  draftLines: [],
+};
 
 const lineReducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
     case GET_LINES:
-      return [...payload];
+      return {
+        ...state,
+        // draftLines: [],
+        onlineLines: [...payload],
+      };
+    case GET_LINES_OFFLINE:
+      return state;
+    case CREATE_DRAFT_LINE:
+      return {
+        ...state,
+        draftLines: [...state.draftLines, payload],
+      };
+    case DELETE_DRAFT_LINE: {
+      // payload is the id
+      const newDraftLines = [...state.draftLines].filter(
+        (line) => line.lineId !== payload
+      );
+      return {
+        ...state,
+        draftLines: newDraftLines,
+      };
+    }
     default:
       return state;
   }

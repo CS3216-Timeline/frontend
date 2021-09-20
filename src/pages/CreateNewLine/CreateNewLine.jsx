@@ -13,10 +13,10 @@ import { GithubPicker } from "react-color";
 import { colorPickerArray, COLORS } from "../../utils/colors";
 import { useDispatch } from "react-redux";
 import { setAlert } from "../../actions/alert";
-import { createNewLine } from "../../services/lines";
 import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
 import Loading from "../../components/Loading";
 import { useHistory } from "react-router-dom";
+import { createLineAction } from "../../actions/line";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -47,14 +47,12 @@ const CreateNewLine = () => {
     }
     try {
       setLoading(true);
-      const line = await createNewLine(lineTitle, selectedColor);
-      console.log(line);
-      dispatch(setAlert(`Line ${line.name} successfully created`, "success"));
-      history.push("/");
+      dispatch(createLineAction(lineTitle, selectedColor));
     } catch (err) {
-      dispatch(setAlert(err.message, "error"));
+      // dispatch(setAlert(err.message, "error"));
     } finally {
       setLoading(false);
+      history.push("/");
     }
   };
 

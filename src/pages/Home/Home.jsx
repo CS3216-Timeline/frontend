@@ -2,7 +2,7 @@ import React, { Fragment, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import LineCard from "./LineCard";
-import { Box, Button, TextField, Tooltip } from "@material-ui/core";
+import { Box, Button, TextField, Tooltip, Typography } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import HomeIcon from "@material-ui/icons/Home";
 import { useHistory } from "react-router-dom";
@@ -42,7 +42,8 @@ const Home = () => {
   // const [lines, setLines] = useState(mockLinesData);
   const history = useHistory();
   const dispatch = useDispatch();
-  const lines = useSelector((state) => state.lines);
+  const lines = useSelector((state) => state.lines.onlineLines);
+  const draftLines = useSelector((state) => state.lines.draftLines);
 
   useEffect(() => {
     const getLinesByUser = async () => {
@@ -108,7 +109,18 @@ const Home = () => {
             </Box>
           </Grid>
           <Grid item xs={12}>
+            {draftLines.length > 0 && (
+              <>
+                <Typography variant="h3">Drafts</Typography>
+                {draftLines.map((draftLine) => (
+                  <Grid item xs={12} key={draftLine.lineId}>
+                    <LineCard line={draftLine} draft={true} />
+                  </Grid>
+                ))}
+              </>
+            )}
             <FadeIn>
+              <Typography variant="h3">Lines</Typography>
               {searchText === "" ? (
                 lines.map((line) => (
                   <Grid item xs={12} key={line.lineId}>
