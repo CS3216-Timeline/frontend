@@ -29,11 +29,12 @@ export const getCroppedImage = async (imageSrc, pixelCrop, rotation = 0) => {
   ctx.translate(-safeArea / 2, -safeArea / 2)
 
   // draw rotated image and store data.
-  ctx.drawImage(
-    image,
-    safeArea / 2 - image.width * 0.5,
-    safeArea / 2 - image.height * 0.5
-  )
+  drawImageIOSFix(ctx, image, safeArea / 2 - image.width * 0.5, safeArea / 2 - image.height * 0.5);
+  // ctx.drawImage(
+  //   image,
+  //   safeArea / 2 - image.width * 0.5,
+  //   safeArea / 2 - image.height * 0.5
+  // )
   const data = ctx.getImageData(0, 0, safeArea, safeArea)
 
   // set canvas width to final desired crop size - this will clear existing context
@@ -56,4 +57,43 @@ export const getCroppedImage = async (imageSrc, pixelCrop, rotation = 0) => {
       resolve(URL.createObjectURL(file))
     }, 'image/png')
   })
+}
+
+
+function detectVerticalSquash(img) {
+  // var iw = img.naturalWidth
+  var ih = img.naturalHeight;
+  var canvas = document.createElement('canvas');
+  canvas.width = 1;
+  canvas.height = ih;
+  var ctx = canvas.getContext('2d');
+  ctx.drawImage(img, 0, 0);
+  var data = ctx.getImageData(0, 0, 1, ih).data;
+  // search image edge pixel position in case it is squashed vertically.
+  var sy = 0;
+  var ey = ih;
+  var py = ih;
+  while (py > sy) {
+    var alpha = data[(py - 1) * 4 + 3];
+    if (alpha === 0) {
+      ey = py;
+    } else {
+      sy = py;
+    }
+    py = (ey + sy) >> 1;
+  }
+  var ratio = (py / ih);
+  return (ratio === 0) ? 1 : ratio;
+}
+
+/**
+ * A replacement for context.drawImage
+ * (args are for source and destination).
+ */
+function drawImageIOSFix(ctx, img, sx, sy) {
+  var vertSquashRatio = detectVerticalSquash(img);
+  // Works only if whole image is displayed:
+  // ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh / vertSquashRatio);
+  // The following works correct also when only a part of the image is displayed:
+  ctx.drawImage(img, sx * vertSquashRatio, sy * vertSquashRatio)
 }
