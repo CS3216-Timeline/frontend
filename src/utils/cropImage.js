@@ -23,7 +23,8 @@ export const getCroppedImage = async (imageSrc, pixelCrop, rotation = 0) => {
     //I'll use window.innerWidth in production
   } else {
     // ctx.width = window.innerWidth;
-    ctx.width = Screen.width;
+    // eslint-disable-next-line no-restricted-globals
+    ctx.width = screen.width;
     // ctx.width = document.body.getBoundingClientRect().width
   }
   // set each dimensions to double largest dimension to allow for a safe area for the
