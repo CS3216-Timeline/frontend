@@ -26,9 +26,11 @@ export const getGeographicFeature = async (latitude, longitude) => {
   }
 }
 
+export const MAPBOX_API_TOKEN = process.env.REACT_APP_MAPBOX_KEY;
+
 // store these somewhere else in future
-export const MAPBOX_API_TOKEN =
-  "pk.eyJ1IjoiYWN5YW5nOTciLCJhIjoiY2t0ZThvNTcwMDRwNzJybncxaTJpeG93aSJ9.0dQconyG7nAag70nDvrpew";
+// export const MAPBOX_API_TOKEN =
+//   "pk.eyJ1IjoiYWN5YW5nOTciLCJhIjoiY2t0ZThvNTcwMDRwNzJybncxaTJpeG93aSJ9.0dQconyG7nAag70nDvrpew";
 
 const url = "https://api.mapbox.com/geocoding/v5/mapbox.places/";
 
