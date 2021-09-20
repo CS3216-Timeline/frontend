@@ -30,6 +30,7 @@ const UploadMediaForm = ({ existingMediaUrls, onComplete }) => {
 
   const loadImage = (file) => {
     console.log(file);
+    alert("file type", file.type);
     var fileUrl = URL.createObjectURL(file);
     setLoading(true);
     setCropView(false);
