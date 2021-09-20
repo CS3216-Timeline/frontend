@@ -40,7 +40,7 @@ const UploadMediaForm = ({ existingMediaUrls, onComplete }) => {
         fileUrl = URL.createObjectURL(res);
       })
       .catch((e) => {
-        dispatch(setAlert(`Conversion error ${fileUrl}`, "error"));
+        // dispatch(setAlert(`Conversion error ${fileUrl}`, "error"));
       })
       .finally(() => {
         setLoading(false);
