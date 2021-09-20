@@ -25,25 +25,26 @@ const UploadMediaForm = ({ existingMediaUrls, onComplete }) => {
   const [previewUrl, setPreviewUrl] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  console.log(mediaUrls);
+  // console.log(mediaUrls);
   const dispatch = useDispatch();
 
   const loadImage = (file) => {
+    console.log(file);
     var fileUrl = URL.createObjectURL(file);
-    dispatch(
-      setAlert(
-        `Conversion error \n fileUrl: ${fileUrl} \n file: ${file.name}`,
-        "error"
-      )
-    );
     setLoading(true);
     setCropView(false);
     setEditFileUrl(null);
     fetch(fileUrl)
       .then((res) => res.blob())
-      .then((blob) => heic2any({ blob }))
+      .then((blob) => heic2any({ blob, toType: "image/jpeg" }))
       .then((res) => {
-        fileUrl = URL.createObjectURL(res);
+        if (Array.isArray(res)) {
+          dispatch(setAlert(`wth ${JSON.stringify(res)}`, "error"));
+          fileUrl = URL.createObjectURL(res[0]);
+        } else {
+          fileUrl = URL.createObjectURL(res);
+        }
+        console.log("fileUrl", fileUrl);
       })
       .catch((e) => {
         // dispatch(setAlert(`Conversion error ${fileUrl}`, "error"));
