@@ -35,14 +35,18 @@ const UploadMediaForm = ({ existingMediaUrls, onComplete }) => {
     setCropView(false);
     setEditFileUrl(null);
     fetch(fileUrl)
+      // .then((res) => res.blob())
+      // .then((blob) => heic2any({ blob, toType: "image/jpeg", multiple: true }))
+      // .then((res) => {
+      //   if (Array.isArray(res)) {
+      //     fileUrl = URL.createObjectURL(res[0]);
+      //   } else {
+      //     fileUrl = URL.createObjectURL(res);
+      //   }
       .then((res) => res.blob())
-      .then((blob) => heic2any({ blob, toType: "image/jpeg", multiple: true }))
+      .then((blob) => heic2any({ blob }))
       .then((res) => {
-        if (Array.isArray(res)) {
-          fileUrl = URL.createObjectURL(res[0]);
-        } else {
-          fileUrl = URL.createObjectURL(res);
-        }
+        fileUrl = URL.createObjectURL(res);
       })
       .catch((e) => {
         // dispatch(

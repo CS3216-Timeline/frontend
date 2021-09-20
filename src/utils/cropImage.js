@@ -23,11 +23,12 @@ export const getCroppedImage = async (imageSrc, pixelCrop, rotation = 0) => {
     //I'll use window.innerWidth in production
   } else {
     // ctx.width = window.innerWidth;
-    ctx.width = Screen.width;
+    // eslint-disable-next-line no-restricted-globals
+    ctx.width = screen.width;
   }
   // set each dimensions to double largest dimension to allow for a safe area for the
   // image to rotate in without being clipped by canvas context
-  canvas.width = ctx.width
+  canvas.width = safeArea
   canvas.height = safeArea
   console.log(canvas)
 
