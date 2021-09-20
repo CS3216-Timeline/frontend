@@ -201,7 +201,9 @@ const UploadMediaForm = ({ existingMediaUrls, onComplete }) => {
           Testing
         </Button>
         <div>mediaUrls: {JSON.stringify(mediaUrls)}</div>
-        <div>blob url: {reader.readAsDataURL(mediaUrls[1].url)}</div>
+        <div>
+          blob url: {mediaUrls[1] && reader.readAsDataURL(mediaUrls[1].url)}
+        </div>
       </Box>
       <DeleteMediaDialog />
     </>
