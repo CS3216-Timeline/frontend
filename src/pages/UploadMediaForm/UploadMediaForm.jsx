@@ -47,7 +47,16 @@ const UploadMediaForm = ({ existingMediaUrls, onComplete }) => {
       //     fileUrl = URL.createObjectURL(res);
       //   }
       .then((res) => res.blob())
-      .then((blob) => heic2any({ blob }))
+      .then((blob) => {
+        if (
+          file.type === "image/png" ||
+          file.type === "image/jpg" ||
+          file.type === "image/jpeg"
+        ) {
+          return blob;
+        }
+        return heic2any({ blob });
+      })
       .then((res) => {
         fileUrl = URL.createObjectURL(res);
       })
