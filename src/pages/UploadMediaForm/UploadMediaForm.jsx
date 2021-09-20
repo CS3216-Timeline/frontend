@@ -31,7 +31,7 @@ const UploadMediaForm = ({ existingMediaUrls, onComplete }) => {
   const loadImage = (file) => {
     console.log(file);
     var fileUrl = URL.createObjectURL(file);
-    alert(`BEFORE fileUrl: ${fileUrl},   file: ${file}`);
+    alert(`BEFORE fileUrl: ${fileUrl},   file: ${JSON.stringify(file)}`);
     setLoading(true);
     setCropView(false);
     setEditFileUrl(null);
@@ -56,7 +56,7 @@ const UploadMediaForm = ({ existingMediaUrls, onComplete }) => {
       })
       .finally(() => {
         setLoading(false);
-        alert(`FINALLY fileUrl: ${fileUrl},   file: ${file}`);
+        alert(`FINALLY fileUrl: ${fileUrl},   file: ${JSON.stringify(file)}`);
         if (fileUrl) {
           setEditFileUrl(fileUrl);
           setCropView(true);
