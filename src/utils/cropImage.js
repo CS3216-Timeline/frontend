@@ -34,9 +34,9 @@ export const getCroppedImage = async (imageSrc, pixelCrop, rotation = 0) => {
   console.log(canvas)
 
   // translate canvas context to a central location on image to allow rotating around the center.
-  ctx.translate(safeArea / 2, safeArea / 2)
-  ctx.rotate(getRadianAngle(rotation))
-  ctx.translate(-safeArea / 2, -safeArea / 2)
+  // ctx.translate(safeArea / 2, safeArea / 2)
+  // ctx.rotate(getRadianAngle(rotation))
+  // ctx.translate(-safeArea / 2, -safeArea / 2)
 
   // draw rotated image and store data.
   ctx.drawImage(

@@ -194,6 +194,11 @@ const UploadMediaForm = ({ existingMediaUrls, onComplete }) => {
             </label>
           </Button>
         )}
+        <Button
+          onClick={() => alert(`mediaUrls: ${JSON.stringify(mediaUrls)}`)}
+        >
+          Testing
+        </Button>
       </Box>
       <DeleteMediaDialog />
     </>
