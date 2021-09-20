@@ -35,6 +35,8 @@ const UploadMediaForm = ({ existingMediaUrls, onComplete }) => {
     setCropView(false);
     setEditFileUrl(null);
     if (file.type !== "image/heic") {
+      console.log("notttt heic");
+      dispatch(setAlert("not heic", "error"));
       setLoading(false);
       setEditFileUrl(fileUrl);
       setCropView(true);
