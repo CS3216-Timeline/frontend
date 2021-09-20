@@ -6,9 +6,9 @@ const createImage = url =>
     image.src = url
   })
 
-const getRadianAngle = (degreeValue) => {
-  return (degreeValue * Math.PI) / 180
-}
+// const getRadianAngle = (degreeValue) => {
+//   return (degreeValue * Math.PI) / 180
+// }
 
 export const getCroppedImage = async (imageSrc, pixelCrop, rotation = 0) => {
   const image = await createImage(imageSrc)
