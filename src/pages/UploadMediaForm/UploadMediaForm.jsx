@@ -32,7 +32,7 @@ const UploadMediaForm = ({ existingMediaUrls, onComplete }) => {
     var fileUrl = URL.createObjectURL(file);
     dispatch(
       setAlert(
-        `Conversion error \n fileUrl: ${fileUrl} \n file: ${file}`,
+        `Conversion error \n fileUrl: ${fileUrl} \n file: ${file.name}`,
         "error"
       )
     );
