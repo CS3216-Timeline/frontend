@@ -23,8 +23,7 @@ export const getCroppedImage = async (imageSrc, pixelCrop, rotation = 0) => {
     //I'll use window.innerWidth in production
   } else {
     // ctx.width = window.innerWidth;
-    // eslint-disable-next-line no-restricted-globals
-    ctx.width = screen.width;
+    ctx.width = Screen.width;
     // ctx.width = document.body.getBoundingClientRect().width
   }
   // set each dimensions to double largest dimension to allow for a safe area for the
@@ -62,7 +61,8 @@ export const getCroppedImage = async (imageSrc, pixelCrop, rotation = 0) => {
   console.log('canvas', canvas.width)
   console.log('ctx', JSON.stringify(ctx))
   alert(`canvasWidth: ${canvas.width}, canvasHeight: ${canvas.height}, ctx: ${JSON.stringify(ctx)}`);
-  alert(`documentblahblah: ${document.body.getBoundingClientRect().width}, screen.width: ${Screen.width}, window.innerWidth: ${window.innerWidth}`);
+  // eslint-disable-next-line no-restricted-globals
+  alert(`documentblahblah: ${document.body.getBoundingClientRect().width}, screen.width: ${screen.width}, window.innerWidth: ${window.innerWidth}`);
   // As a blob
   return new Promise(resolve => {
     canvas.toBlob(file => {
