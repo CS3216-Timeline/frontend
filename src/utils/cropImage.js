@@ -24,8 +24,8 @@ export const getCroppedImage = async (imageSrc, pixelCrop, rotation = 0) => {
   } else {
     // ctx.width = window.innerWidth;
     // eslint-disable-next-line no-restricted-globals
-    // ctx.width = screen.width;
-    ctx.width = document.body.getBoundingClientRect().width
+    ctx.width = screen.width;
+    // ctx.width = document.body.getBoundingClientRect().width
   }
   // set each dimensions to double largest dimension to allow for a safe area for the
   // image to rotate in without being clipped by canvas context
@@ -59,7 +59,10 @@ export const getCroppedImage = async (imageSrc, pixelCrop, rotation = 0) => {
 
   // // As Base64 string
   // return canvas.toDataURL('image/jpeg');
-
+  console.log('canvas', canvas.width)
+  console.log('ctx', JSON.stringify(ctx))
+  alert(`canvasWidth: ${canvas.width}, canvasHeight: ${canvas.height}, ctx: ${JSON.stringify(ctx)}`);
+  alert(`documentblahblah: ${document.body.getBoundingClientRect().width}, screen.width: ${Screen.width}, window.innerWidth: ${window.innerWidth}`);
   // As a blob
   return new Promise(resolve => {
     canvas.toBlob(file => {
