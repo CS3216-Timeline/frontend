@@ -20,7 +20,7 @@ export const getLines = () => async (dispatch) => {
       payload: linesByUser,
     });
   } catch (err) {
-    // dispatch(setAlert("Error getting lines", "error"));
+    console.log(err.message);
   } finally {
     dispatch({
       type: GET_LINES_OFFLINE,
@@ -45,7 +45,7 @@ export const createLineAction =
         });
         dispatch(setAlert("Network Error, a draft has been created", "error"));
       } else {
-        dispatch(setAlert(err.message, "error"));
+        dispatch(setAlert(err.response.data.message, "error"));
       }
     }
   };
@@ -64,7 +64,7 @@ export const createDraftLineWhenOnline =
       if (!err.response) {
         dispatch(setAlert("Network Error, retry again later", "error"));
       } else {
-        dispatch(setAlert(err.message, "error"));
+        dispatch(setAlert(err.response.data.message, "error"));
       }
     }
   };
