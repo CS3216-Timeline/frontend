@@ -58,7 +58,7 @@ const UploadMediaForm = ({ existingMediaUrls, onComplete }) => {
 
   const addNewMedia = (e) => {
     var newFile = e.target.files[0];
-    dispatch(setAlert(`${newFile.name}`, "error"));
+    dispatch(setAlert(`addNewMedia ${newFile.name}`, "error"));
     if (!newFile) {
       return;
     }
