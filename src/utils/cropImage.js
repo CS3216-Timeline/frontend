@@ -22,7 +22,8 @@ export const getCroppedImage = async (imageSrc, pixelCrop, rotation = 0) => {
     ctx.width = window.outerWidth;
     //I'll use window.innerWidth in production
   } else {
-    ctx.width = window.innerWidth;
+    // ctx.width = window.innerWidth;
+    ctx.width = Screen.width;
   }
   // set each dimensions to double largest dimension to allow for a safe area for the
   // image to rotate in without being clipped by canvas context
