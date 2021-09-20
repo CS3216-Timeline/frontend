@@ -18,6 +18,13 @@ export const getCroppedImage = async (imageSrc, pixelCrop, rotation = 0) => {
   const maxSize = Math.max(image.width, image.height)
   const safeArea = 2 * ((maxSize / 2) * Math.sqrt(2))
 
+
+  if (navigator.platform !== "iPad" && navigator.platform !== "iPhone" && navigator.platform !== "iPod") {
+    ctx.width = window.outerWidth;
+    //I'll use window.innerWidth in production
+  } else {
+    ctx.width = window.innerWidth;
+  }
   // set each dimensions to double largest dimension to allow for a safe area for the
   // image to rotate in without being clipped by canvas context
   canvas.width = safeArea

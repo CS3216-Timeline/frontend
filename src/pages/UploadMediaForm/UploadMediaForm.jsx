@@ -34,14 +34,6 @@ const UploadMediaForm = ({ existingMediaUrls, onComplete }) => {
     setLoading(true);
     setCropView(false);
     setEditFileUrl(null);
-    if (file.type !== "image/heic") {
-      console.log("notttt heic");
-      dispatch(setAlert("not heic", "error"));
-      setLoading(false);
-      setEditFileUrl(fileUrl);
-      setCropView(true);
-      return;
-    }
     fetch(fileUrl)
       .then((res) => res.blob())
       .then((blob) => heic2any({ blob, toType: "image/jpeg", multiple: true }))
@@ -54,9 +46,9 @@ const UploadMediaForm = ({ existingMediaUrls, onComplete }) => {
         }
       })
       .catch((e) => {
-        dispatch(
-          setAlert(`Conversion error ${fileUrl}  \n  ${e.message} `, "error")
-        );
+        // dispatch(
+        //   setAlert(`Conversion error ${fileUrl}  \n  ${e.message} `, "error")
+        // );
       })
       .finally(() => {
         setLoading(false);
