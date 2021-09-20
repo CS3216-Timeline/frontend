@@ -38,18 +38,17 @@ const UploadMediaForm = ({ existingMediaUrls, onComplete }) => {
       .then((res) => res.blob())
       .then((blob) => heic2any({ blob, toType: "image/jpeg", multiple: true }))
       .then((res) => {
-        dispatch(setAlert(`typeof ${typeof res}`));
+        console.log("typeof", `${typeof res}`);
         if (Array.isArray(res)) {
-          dispatch(setAlert(`wth ${JSON.stringify(res)}`, "error"));
           fileUrl = URL.createObjectURL(res[0]);
         } else {
-          dispatch(setAlert(`wth ${JSON.stringify(res)}`, "error"));
           fileUrl = URL.createObjectURL(res);
         }
-        console.log("fileUrl", fileUrl);
       })
       .catch((e) => {
-        // dispatch(setAlert(`Conversion error ${fileUrl}`, "error"));
+        dispatch(
+          setAlert(`Conversion error ${fileUrl}  \n  ${e.message} `, "error")
+        );
       })
       .finally(() => {
         setLoading(false);
