@@ -147,7 +147,7 @@ export const logout = () => async (dispatch) => {
   });
 };
 
-export const deleteAccount = () => async (dispatch) => {
+export const deleteUserAccount = () => async (dispatch) => {
   try {
     // TODO: connect to backend
     // const res = await server.delete('/auth/userId)

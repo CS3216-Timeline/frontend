@@ -22,7 +22,6 @@ import Loading from "./components/Loading";
 import EditLine from "./pages/EditLine/EditLine";
 import "mapbox-gl/dist/mapbox-gl.css";
 import Profile from "./pages/Profile/Profile";
-import Info from "./pages/Info/Info";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -78,7 +77,6 @@ const App = () => {
                   component={MemoryEditor}
                 />
                 <Route exact path="/test" component={Memory} />
-                <PrivateRoute exact path="/info" component={Info} />
                 <PrivateRoute exact path="/profile" component={Profile} />
                 <Route component={NotFound} />
               </Switch>
