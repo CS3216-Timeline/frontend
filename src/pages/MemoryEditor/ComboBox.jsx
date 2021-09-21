@@ -58,6 +58,11 @@ export const ComboBox = ({
   const handleChangeLocation = (event, value) => {
     setSelectedLocation(value); // selected location object
     if (value !== null) {
+      setSelectedLocation({
+        ...value, 
+        latitude: value.geometry.coordinates[1], 
+        longitude: value.geometry.coordinates[0]
+      })
       setViewport({
         ...viewport,
         latitude: value.geometry.coordinates[1],
