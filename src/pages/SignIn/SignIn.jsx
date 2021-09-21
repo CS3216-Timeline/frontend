@@ -20,6 +20,9 @@ import FadeIn from "react-fade-in/lib/FadeIn";
 
 const GOOGLE_API_TOKEN = process.env.REACT_APP_GOOGLE_KEY;
 const FACEBOOK_API_TOKEN = process.env.REACT_APP_FACEBOOK_KEY;
+const SERVER_BASE_URL = process.env.REACT_APP_SERVER_BASE_URL;
+
+const FACEBOOK_REDIRECT_URI = `${SERVER_BASE_URL}/signin`;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -171,7 +174,6 @@ const SignIn = () => {
                 >
                   <GoogleLogin
                     clientId={GOOGLE_API_TOKEN}
-                    // clientId="866388603635-ag2j3hkrh7glsd0rigj411l0igo53cks.apps.googleusercontent.com" // TODO: To store somewhere
                     buttonText="SIGN IN WITH GOOGLE"
                     onSuccess={loginUserWithGoogle}
                     onFailure={loginUserWithGoogle} // TODO: change so that it just stays at the login page with some message
@@ -181,10 +183,9 @@ const SignIn = () => {
                   <br />
                   <FacebookLogin
                     appId={FACEBOOK_API_TOKEN}
-                    // appId="3083491758550050" //TODO: Store somewhere
                     autoLoad={false}
                     fields="name,email,picture"
-                    redirectUri={"http://localhost:3000/signin"}
+                    redirectUri={FACEBOOK_REDIRECT_URI}
                     callback={loginUserWithFacebook}
                     size="small"
                     textButton="SIGN IN WITH FACEBOOK"
