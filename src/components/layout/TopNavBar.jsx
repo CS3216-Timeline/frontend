@@ -25,9 +25,10 @@ const TopNavBar = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const logoutButtonClicked = (e) => {
+  const logoutButtonClicked = async (e) => {
     e.preventDefault();
     dispatch(logout());
+    // } catch (err) {}
   };
 
   return (
