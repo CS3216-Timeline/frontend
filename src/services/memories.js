@@ -1,34 +1,57 @@
-// import server from "../utils/server"
+import server from "../utils/server";
 
-const mockMemoryData = {
-  memoryId: 4,
-  date: "19 May 2021",
-  title: "Mock Memory Title",
-  description: "This is a mock card description. This is a mock card description. This is a mock card description. This is a mock card description. This is a mock card description.",
-  media: [
-    {
-      type: "IMAGE",
-      source: {
-        url: "https://images.megapixl.com/2485/24853666.jpg"
-      },
-    }
-  ],
-  latitude: 1.359237,
-  longitude: 103.98934,
+const getMockMediaUrls = () => 
+  [0,1,2,3].map(i => ({position: i, url: "https://images.megapixl.com/2485/24853666.jpg"}))
+
+// Use this function to convert blobURL to file
+const blobToFile = (blob, fileName="default-name") => {
+  const file = new File([blob], fileName, { type: "image/png" });
+  return file
 }
 
-// returns memory data
-export const getMemoryById = (id) => {
-  return {
-    ...mockMemoryData,
-    memoryId: id,
-    mediaUrls: mockMemoryData.media.map((m, idx) => ({ url: m.source.url, position: idx }))
+export const getMemoryById = async (memoryId) => {
+  console.log("retrieving memory with id", memoryId);
+  const res = await server.get(`memories/${memoryId}`);
+  console.log("received memory with id", memoryId);  
+
+  return { ...res.data.memories, mediaUrls: getMockMediaUrls() };
+}
+
+export const createNewMemory = async (title, lineId, description, latitude, longitude, mediaUrls) => {
+  console.log("Blob To File Test", mediaUrls.map(obj => blobToFile(obj.url)));
+  const body = new FormData();
+  body.append("title", title);
+  body.append("line", lineId);
+  body.append("description", description);
+  body.append("latitude", latitude);
+  body.append("longitude", longitude);
+
+  // mediaUrls.forEach(im => {
+  getMockMediaUrls().forEach(im => {
+    body.append("images", im);
+  });
+
+  // for(var pair of body.entries()) {
+  //   console.log(pair[0]+ ', '+ pair[1]);
+  // }
+  
+  const res = await server.post(`memories`, body);
+  return res.data.memory;
+}
+
+export const editMemoryDetailsById = async (memoryId, title, description, line, longitude, latitude, creationDate = null) => {
+  const body = {
+    title, description, line, longitude, latitude, creationDate
   }
+  console.log("sending edit memory details for memory id", memoryId);
+  console.log(body);
+  const res = await server.patch(`memories/${memoryId}`, body);
+  console.log("completed edit memory details for memory id", memoryId);
+  console.log(res);
+  return res.data.memory;
 }
 
-// TODO: connect with backend
-export const deleteMemoryById = async (id) => {
-  console.log('deleted');
-  // const res = await server.delete(`${id}`);
-  // return res.data
+export const deleteMemoryById = async (memoryId) => {
+  const res = await server.delete(`memories/${memoryId}`);
+  return res.data.memory;
 }
