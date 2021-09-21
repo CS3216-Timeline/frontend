@@ -9,7 +9,6 @@ import { COLORS } from "../../utils/colors";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
-  // https://stackoverflow.com/questions/64351827/material-ui-bottomnavigation-does-not-fill-the-width
   root: {
     width: "100%",
     position: "fixed",
@@ -38,7 +37,7 @@ const BottomNavBar = () => {
       {/* TODO: create a how to use page */}
       <BottomNavigationAction
         component="button"
-        onClick={() => history.push("/info")}
+        onClick={() => history.push("/")}
         icon={<HelpOutlineIcon />}
       />
       <BottomNavigationAction
