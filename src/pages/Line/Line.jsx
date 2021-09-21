@@ -43,6 +43,8 @@ const useStyles = makeStyles((theme) => ({
 const getLineInfo = (id) => getLineById(id);
 const getMemories = (memoryIds) => memoryIds.map((id) => getMemoryById(id));
 
+const USE_FAKE_DATA = false;
+
 const Line = (props) => {
   const classes = useStyles();
   const { lineId } = useParams();
@@ -56,7 +58,7 @@ const Line = (props) => {
   const [lineMemories, setLineMemories] = useState([]);
   const [lineColor, setLineColor] = useState("");
 
-  const useFakeData = true;
+  const useFakeData = USE_FAKE_DATA;
 
   useEffect(() => {
     const getLineMemories = async () => {
