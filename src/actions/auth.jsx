@@ -11,6 +11,7 @@ import {
 } from "../action-types/auth";
 import { setAlert } from "./alert";
 import setAuthToken from "../utils/setAuthToken";
+import { persistor } from "../store";
 
 export const register = (name, email, password) => async (dispatch) => {
   const body = {
@@ -134,7 +135,8 @@ export const loadUser = () => async (dispatch) => {
   }
 };
 
-export const logout = () => (dispatch) => {
+export const logout = () => async (dispatch) => {
+  setTimeout(() => persistor.purge(), 200);
   dispatch({
     type: LOGOUT,
   });
@@ -144,9 +146,7 @@ export const deleteAccount = () => async (dispatch) => {
   try {
     // TODO: connect to backend
     // const res = await server.delete('/auth/userId)
-    dispatch({
-      type: LOGOUT,
-    });
+    dispatch(logout());
     dispatch(setAlert("Account successfully deleted", "success"));
   } catch (err) {
     throw err;
