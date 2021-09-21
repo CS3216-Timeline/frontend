@@ -20,7 +20,16 @@ export const getGeographicFeature = async (latitude, longitude) => {
   try {
     const queryParams = `longitude=${longitude}&latitude=${latitude}`;
     const res = await server.get(`geolocation/features?${queryParams}`);
-    return res.data.features;
+    const features = res.data.features;
+    if (!features || features.length === 0) {
+      return null;
+    }
+    return {
+      place_name: features[0].place_name,
+      geometry: features[0].geometry,
+      latitude,
+      longitude,
+    };
   } catch (err) {
     throw err;
   }
