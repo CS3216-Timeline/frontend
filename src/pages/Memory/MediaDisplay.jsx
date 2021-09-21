@@ -75,7 +75,7 @@ const HorizontalScrollDots = (props) => {
   return (
     <Box display="flex" flexDirection="row" width="100%" justifyContent="center">
       {templateArray.map((_, idx) => (
-          <FiberManualRecordIcon className={getDotClassByIndex(idx)} />
+          <FiberManualRecordIcon key={idx} className={getDotClassByIndex(idx)} />
         )
       )}
     </Box>
