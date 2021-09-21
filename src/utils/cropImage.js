@@ -8,11 +8,7 @@ const createImage = url =>
     image.src = url
   })
 
-const getRadianAngle = (degreeValue) => {
-  return (degreeValue * Math.PI) / 180
-}
-
-export const getCroppedImage = async (imageSrc, pixelCrop, rotation = 0) => {
+export const getCroppedImage = async (imageSrc, pixelCrop) => {
   const image = await createImage(imageSrc)
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')
@@ -32,11 +28,6 @@ export const getCroppedImage = async (imageSrc, pixelCrop, rotation = 0) => {
   // image to rotate in without being clipped by canvas context
   canvas.width = safeArea
   canvas.height = safeArea
-
-  // translate canvas context to a central location on image to allow rotating around the center.
-  ctx.translate(safeArea / 2, safeArea / 2)
-  ctx.rotate(getRadianAngle(rotation))
-  ctx.translate(-safeArea / 2, -safeArea / 2)
 
   // draw rotated image and store data.
   ctx.drawImage(
