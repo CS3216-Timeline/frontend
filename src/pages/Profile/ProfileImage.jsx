@@ -1,4 +1,10 @@
-import { Avatar, Box, IconButton, makeStyles } from "@material-ui/core";
+import {
+  Avatar as MaterialUiAvatar,
+  Box,
+  IconButton,
+  makeStyles,
+} from "@material-ui/core";
+import Avatar from "react-avatar";
 import _ from "lodash";
 import React from "react";
 import { useSelector } from "react-redux";
@@ -6,8 +12,7 @@ import Badge from "@mui/material/Badge";
 import EditIcon from "@material-ui/icons/Edit";
 import { COLORS } from "../../utils/colors";
 
-const useStyles = makeStyles((theme) => ({
-  root: {},
+const useStyles = makeStyles(() => ({
   profileImageContainer: {
     display: "flex",
     justifyContent: "center",
@@ -43,7 +48,7 @@ const ProfileImage = () => {
                 </IconButton>
               }
             >
-              <Avatar
+              <MaterialUiAvatar
                 alt={user.name}
                 src={user.profileImage}
                 sx={{ width: 100, height: 100 }}
@@ -59,7 +64,8 @@ const ProfileImage = () => {
                 </IconButton>
               }
             >
-              <Avatar className={classes.sizeAvatar} />
+              {/* <Avatar className={classes.sizeAvatar} /> */}
+              <Avatar name={user.name} round={true} />
             </Badge>
           )}
         </Box>
