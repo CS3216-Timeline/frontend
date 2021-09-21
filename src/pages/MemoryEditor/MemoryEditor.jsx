@@ -10,10 +10,11 @@ import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
 import { COLORS } from "../../utils/colors";
 import UploadMediaForm from "../UploadMediaForm/UploadMediaForm";
 import { useHistory, useParams } from "react-router";
-import { getMemoryById } from "../../services/memories";
+import { createNewMemory, editMemoryDetailsById, getMemoryById } from "../../services/memories";
 import { useDispatch } from "react-redux";
 import { setAlert } from "../../actions/alert";
 import { getGeographicFeature } from "../../services/locationService";
+import Loading from "../../components/Loading";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,15 +29,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// Use this function to convert blobURL to file
-const blobToFile = (blob, fileName="default-name") => {
-  const file = new File([blob], fileName, { type: "image/png" });
-  return file
-}
-
-// https://docs.mapbox.com/help/tutorials/use-mapbox-gl-js-with-react/
-// TODO: pass line as a prop
-
 const getDefaultViewport = () => ({
   latitude: 1.3521,
   longitude: 103.8198,
@@ -47,14 +39,16 @@ const getDefaultViewport = () => ({
 
 const isEmpty = (val) => val === null || val === undefined || val === "" || val.length === 0;
 
-const MemoryEditor = (props) => {
+const MemoryEditor = () => {
   const classes = useStyles();
   const [currentLocation, setCurrentLocation] = useState({});
   const [memoryTitle, setMemoryTitle] = useState("");
   const [memoryDescription, setMemoryDescription] = useState("");
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [mediaUrls, setMediaUrls] = useState([]); // blob URL
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [lineId, setLineId] = useState(null);
+  const [creationDate, setCreationDate] = useState(""); // TODO: REMOVE
   const [viewport, setViewport] = useState(getDefaultViewport());
 
   const history = useHistory();
@@ -62,56 +56,71 @@ const MemoryEditor = (props) => {
 
   const alertError = (msg) => dispatch(setAlert(msg, "error"));
 
-  const urlParams = useParams(); // Read params from URL
-  // urlParams contain EITHER lineId (new) or memoryId (existing)
-  const { memoryId, lineId } = urlParams;
-
-  // if URL param contains memoryId, then there is existing memory
+  const { memoryId } = useParams();
   const isEdit = memoryId ? true : false;
 
-  const getLocationFromCoordinates = async (latitude, longitude) => {
-    try {
-      const features = await getGeographicFeature(latitude, longitude);
-      if (!features || features.length === 0) {
-        return;
-      }
-      const processedRes = features.map((location) => {
-        return {
-          place_name: location.place_name,
-          geometry: location.geometry,
-        };
-      });
-      setSelectedLocation(processedRes[0]);
-    } catch (err) {
-      console.log(err.message);
+  useEffect(() => {
+    if (!isEdit) {
+      const getCurrentLocation = async () => {
+        navigator.geolocation.getCurrentPosition((position) => {
+          if (position.coords) {
+            setCurrentLocation({
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+            });
+          }
+        });
+      };
+      getCurrentLocation();
+      return;
     }
-  };
-  if (isEdit && !isDataLoaded) {
-    console.log("isLineIdEmpty?", isEmpty(lineId));
-    // fetch memory from backend, need error handling!
-    const memory = getMemoryById(memoryId);
+    setLoading(false);
+    const loadExistingMemoryData = async () => {
+      const memoryData = await getMemoryById(memoryId);
+      const { title, description, creationDate, lineId,  latitude, longitude } = memoryData;
+      const feature = await getGeographicFeature(latitude, longitude);
+      if (feature) {
+        // guard clause
+        setSelectedLocation(feature);
+      }
+      setCreationDate(creationDate); //TODO: REMOVE
+      setLineId(lineId);
+      setMemoryTitle(title);
+      setMemoryDescription(description);
+      setLoading(true);
+    }
+    loadExistingMemoryData();
+  }, [isEdit, memoryId])
 
-    getLocationFromCoordinates(memory.latitude, memory.longitude);
-
-    const existingViewport = {
-      ...viewport,
-      latitude: memory.latitude,
-      longitude: memory.longitude,
-    };
-
-    // TODO: update component states to reflect existing memory data
-    // currently MOCK data
-    setSelectedLocation(null);
-    setMemoryTitle(memory.title);
-    setMemoryDescription(memory.description);
-    setViewport(existingViewport);
-    // setCurrentLocation({})
-
-    // set isDataLoaded to true
-    setIsDataLoaded(true);
+  const handleEditMemory = async () => {
+    console.log("Editing memory...");
+    const memoryChanges = await editMemoryDetailsById(
+      memoryId, 
+      memoryTitle, 
+      memoryDescription, 
+      lineId, 
+      selectedLocation.latitude, 
+      selectedLocation.longitude,
+      creationDate //TODO: REMOVE
+    )
+    console.log(memoryChanges);
+    history.push(`memory/${memoryId}`);
   }
 
-  //http://localhost:3000/line/1/add-memory
+  const handleNewMemoryCreation = async () => {
+    console.log("Creating memory...");
+    const memoryDetails = await createNewMemory(
+      memoryTitle, 
+      lineId, 
+      memoryDescription, 
+      selectedLocation.latitude, 
+      selectedLocation.longitude, 
+      mediaUrls
+    );
+    const newId = memoryDetails.memoryId;
+    history.push(`memory/${newId}`);
+  }
+
   const saveHandler = (e) => {
     e.preventDefault();
     if (isEmpty(memoryTitle)) {
@@ -126,54 +135,23 @@ const MemoryEditor = (props) => {
       alertError("Location cannot be empty.");
       return;
     }
-    if (isEdit && isEmpty(mediaUrls)) {
+    if (isEmpty(mediaUrls)) {
       alertError("Please upload a media.");
-      return;
+      return; // TODO: comment out if media endpoint not set
     }
-    // TODO: convert media to FILE (not sure where yet)
-    console.log("Blob To File Test", mediaUrls.map(obj => blobToFile(obj.url)));
 
-    // TODO: maybe both can have same way of handling
-    // (if backend decides to use POST for editing as well)
     if (isEdit) {
-      // TODO: backend PUT request
-      // save to existing memory
-      // redirect back to Memory  page
-      history.push(`memory/${memoryId}`);
+      handleEditMemory();
     } else {
-      // TODO: backend POST request
-      // add new memory to line
-      const newMemoryId = 99; // will be created by backend
-      // redirect to new memory page
-      history.push(`memory/${newMemoryId}`);
+      handleNewMemoryCreation();
     }
   };
 
-  useEffect(() => {
-    const getCurrentLocation = async () => {
-      navigator.geolocation.getCurrentPosition((position) => {
-        if (position.coords) {
-          setCurrentLocation({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          });
-          if (isEdit) {
-            // do not set to current in edit mode
-            return;
-          }
-          setViewport({
-            ...viewport,
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          });
-        }
-      });
-    };
-    getCurrentLocation();
-  }, [viewport, isEdit]);
+  const mapViewport = {...viewport, ...currentLocation}
 
-  // TODO: connect to backend
-  // const addMemoryToLine = () => {};
+  if (!loading) {
+    return <Loading />
+  }
 
   return (
     <>
@@ -220,14 +198,14 @@ const MemoryEditor = (props) => {
                 currentLocation={currentLocation}
                 selectedLocation={selectedLocation}
                 setSelectedLocation={setSelectedLocation}
-                viewport={viewport}
+                viewport={mapViewport}
                 setViewport={setViewport}
               />
             </Box>
             <Box paddingY={1}>
               <MapDisplay
                 selectedLocation={selectedLocation}
-                viewport={viewport}
+                viewport={mapViewport}
                 setViewport={setViewport}
               />
             </Box>
