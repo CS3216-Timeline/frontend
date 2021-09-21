@@ -26,7 +26,6 @@ const UploadMediaForm = ({
   const [previewUrl, setPreviewUrl] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  console.log(mediaUrls);
   const dispatch = useDispatch();
 
   const loadImage = (file) => {
@@ -68,7 +67,6 @@ const UploadMediaForm = ({
   };
 
   const setMediaPreview = (positionOfMedia) => {
-    console.log(positionOfMedia);
     if (positionOfMedia >= mediaUrls.length) {
       return;
     }
