@@ -65,7 +65,7 @@ export const getLineById = (id) => {
 
 // this one for now does not return the memories of the line yet
 export const getLineDataById = async (lineId) => {
-  const res = await server.get(`/lines/${lineId}`);
+  const res = await server.get(`/lines/${lineId}?includeMemories=true`);
   let line = res.data.line;
   line["colorHex"] = addHash(line["colorHex"]);
   return line;
