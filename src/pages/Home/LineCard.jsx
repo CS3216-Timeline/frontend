@@ -5,6 +5,7 @@ import {
   Card,
   CardActions,
   CardContent,
+  Grid,
   Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -29,6 +30,10 @@ const useStyles = makeStyles((theme) => ({
   cardActionsContainer: {
     justifyContent: "center",
     paddingBottom: theme.spacing(3),
+  },
+  latestMemoryImage: {
+    // maxWidth: "100px",
+    maxHeight: "100px",
   },
 }));
 
@@ -60,27 +65,6 @@ const LineCard = ({ line, draft = false }) => {
       <ClipLoader color={COLORS.PRIMARY_PURPLE} loading={true} size={30} />
     );
   }
-  // const [value, setValue] = useState(0);
-  // eslint-disable-next-line no-unused-vars
-  // const [previous, setPrevious] = useState(0);
-
-  // Values should be only date
-  // const VALUES = [
-  //   "2021-01-01",
-  //   "2021-01-02",
-  //   "2021-01-03",
-  //   "2021-01-04",
-  //   "2021-01-05",
-  // ];
-
-  // Description array corresponding to values
-  // const description = [
-  //   "The event of 1 Jan 2021 : Happy New Year",
-  //   "The event of 2 Jan 2021 : Happy New Year",
-  //   "The event of 3 Jan 2021 : Happy New Year",
-  //   "The event of 4 Jan 2021 : Happy New Year",
-  //   "The event of 5 Jan 2021 : Happy New Year",
-  // ];
   return (
     <>
       <Box
@@ -92,48 +76,38 @@ const LineCard = ({ line, draft = false }) => {
         variant="outlined"
       >
         <CardContent>
-          <Box paddingTop={1}>
-            <Typography variant="h3" align="left">
-              {line.name}
-            </Typography>
-          </Box>
-          <Box paddingY={1}>
-            <Typography variant="body1" align="left">
-              Last Updated At: &nbsp;
-              {convertUTCtoYYYYMMDDHHMM(line.lastUpdatedDate)}
-            </Typography>
-          </Box>
-          <hr
-            style={{
-              border: `5px solid ${line.colorHex}`,
-            }}
-          />
-          {/* <div className={classes.lineContainer}>
-          <div
-          style={{
-            width: "100%",
-            height: "100px",
-            margin: "0 auto",
-            fontSize: "9pt",
-          }}
-          >
-          <HorizontalTimeline
-          styles={{
-            outline: "#DFA867",
-            foreground: "#19295C",
-          }}
-          index={value}
-          indexClick={(index) => {
-            setValue(index);
-            setPrevious(value);
-          }}
-          values={VALUES}
-          />
-          </div>
-          <div className={classes.descriptionContainer}>
-          <Typography variant="body1">{description[value]}</Typography>
-          </div>
-        </div> */}
+          <Grid container>
+            {/* TODO: check if this is the right property */}
+            <Grid item xs={line.latestMemoryImage ? 8 : 12}>
+              <Box paddingTop={1}>
+                <Typography variant="h3" align="left">
+                  {line.name}
+                </Typography>
+              </Box>
+              <Box paddingY={1}>
+                <Typography variant="body1" align="left">
+                  Last Updated At: &nbsp;
+                  {convertUTCtoYYYYMMDDHHMM(line.lastUpdatedDate)}
+                </Typography>
+              </Box>
+              <hr
+                style={{
+                  border: `5px solid ${line.colorHex}`,
+                }}
+              />
+            </Grid>
+            {line.latestMemoryImage && (
+              <Grid item xs={4}>
+                <Box paddingLeft={3}>
+                  <img
+                    src={line.latestMemoryImage}
+                    alt={line.name}
+                    className={classes.latestMemoryImage}
+                  />
+                </Box>
+              </Grid>
+            )}
+          </Grid>
         </CardContent>
         {!draft && (
           <CardActions className={classes.cardActionsContainer}>
