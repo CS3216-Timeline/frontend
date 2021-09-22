@@ -8,8 +8,7 @@ import {
   Tooltip,
   Typography,
 } from "@material-ui/core";
-import { getLineById, getLineDataById } from "../../services/lines";
-import { getMemoryById } from "../../services/memories";
+import { getLineDataById } from "../../services/lines";
 import MemoryCard from "./MemoryCard";
 import EditIcon from "@material-ui/icons/Edit";
 import LinearScaleIcon from "@material-ui/icons/LinearScale";
@@ -40,36 +39,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const getLineInfo = (id) => getLineById(id);
-const getMemories = (memoryIds) => memoryIds.map((id) => getMemoryById(id));
-
-const USE_FAKE_DATA = false;
-
 const Line = (props) => {
   const classes = useStyles();
   const { lineId } = useParams();
   const history = useHistory();
-  const { title, color, memoryIds } = getLineInfo(lineId);
+  // const { title, color, memoryIds } = getLineInfo(lineId);
   const [displayDeleteDialog, setDisplayDeleteDialog] = useState(false);
   const [loading, setLoading] = useState(false);
   // https://stackoverflow.com/questions/56608065/fix-cant-perform-a-react-state-update-on-an-unmounted-component-error
   const [deleted, setDeleted] = useState(false);
   const [showMap, setShowMap] = useState(false);
+  const [title, setLineTitle] = useState("");
   const [lineMemories, setLineMemories] = useState([]);
   const [lineColor, setLineColor] = useState("");
 
-  const useFakeData = USE_FAKE_DATA;
-
   useEffect(() => {
     const getLineMemories = async () => {
-      if (!useFakeData) {
-        const lineData = await getLineDataById(lineId);
-        setLineColor(lineData.colorHex);
-        setLineMemories(lineData.memories ? lineData.memories : []);
-      }
+      const lineData = await getLineDataById(lineId);
+      setLineTitle(lineData.name);
+      setLineColor(lineData.colorHex);
+      setLineMemories(lineData.memories ? lineData.memories : []);
     };
     getLineMemories();
-  }, [lineId, useFakeData]);
+  }, [lineId]);
 
   useEffect(() => {
     if (deleted) {
@@ -77,7 +69,7 @@ const Line = (props) => {
     }
   }, [deleted, history]);
 
-  const memoriesData = useFakeData ? getMemories(memoryIds) : lineMemories;
+  const memoriesData = lineMemories;
 
   const lineSize = memoriesData.length;
 
@@ -172,7 +164,7 @@ const Line = (props) => {
         <FadeIn>
           {showMap ? (
             <LineMap
-              lineColor={useFakeData ? color : lineColor}
+              lineColor={lineColor}
               lineMemories={memoriesData}
             />
           ) : (
@@ -187,7 +179,7 @@ const Line = (props) => {
                     title={memory.title}
                     mediaUrl={memory.thumbnailUrl}
                     date={memory.creationDate}
-                    color={color}
+                    color={lineColor}
                   />
                 )
               ) : (
