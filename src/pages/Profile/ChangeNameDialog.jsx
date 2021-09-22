@@ -7,6 +7,7 @@ import { Button, Fade, makeStyles, TextField } from "@material-ui/core";
 import { COLORS } from "../../utils/colors";
 import { useDispatch } from "react-redux";
 import { setAlert } from "../../actions/alert";
+import { userChangeName } from "../../actions/auth";
 
 const useStyles = makeStyles(() => ({
   cancelButton: {
@@ -31,20 +32,22 @@ const ChangeNameDialog = ({
   const changeName = () => {
     if (newName.length === 0) {
       dispatch(setAlert("Please fill in your new name", "error"));
+      return;
     }
-    if (newName.length < 30) {
+    if (newName.length > 30) {
       dispatch(
         setAlert("Your name cannot be more than 30 characters", "error")
       );
+      return;
     }
     try {
       setLoading(true);
-      // call a change password from the backend
-      // no need dispatch
+      dispatch(userChangeName(newName));
       dispatch(setAlert("Successfully changed name!", "success"));
     } catch (err) {
       dispatch(setAlert(err.message, "error"));
     } finally {
+      setNewName("");
       setDisplayChangeNameDialog(false);
       setLoading(false);
     }
@@ -80,7 +83,10 @@ const ChangeNameDialog = ({
           </DialogContent>
           <DialogActions>
             <Button
-              onClick={() => setDisplayChangeNameDialog(false)}
+              onClick={() => {
+                setNewName("");
+                setDisplayChangeNameDialog(false);
+              }}
               color="primary"
               className={classes.cancelButton}
             >

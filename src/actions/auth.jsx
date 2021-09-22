@@ -8,6 +8,7 @@ import {
   LOGIN_FAIL,
   LOGIN_SUCCESS,
   LOGOUT,
+  CHANGE_NAME,
 } from "../action-types/auth";
 import { setAlert } from "./alert";
 import setAuthToken from "../utils/setAuthToken";
@@ -151,10 +152,32 @@ export const deleteUserAccount = () => async (dispatch) => {
   try {
     // TODO: connect to backend
     // const res = await server.delete('/auth/userId)
+    const res = await server.delete("/users/delete");
+    console.log("res from delete acc", res);
     dispatch(logout());
     dispatch(setAlert("Account successfully deleted", "success"));
     logEvent(googleAnalytics, "user_deleted_account");
   } catch (err) {
     throw err;
+  }
+};
+
+export const userChangeName = (newName) => async (dispatch) => {
+  try {
+    const body = {
+      name: newName,
+    };
+    const res = await server.patch("/users/profile", body);
+    const updatedUser = res.data.user;
+    dispatch({
+      type: CHANGE_NAME,
+      payload: updatedUser.name,
+    });
+  } catch (err) {
+    if (err.response) {
+      dispatch(setAlert(err.response.data.error, "error"));
+    } else {
+      dispatch(setAlert(err.message, "error"));
+    }
   }
 };

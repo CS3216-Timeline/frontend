@@ -7,6 +7,7 @@ import { Button, Fade, makeStyles, TextField } from "@material-ui/core";
 import { COLORS } from "../../utils/colors";
 import { useDispatch } from "react-redux";
 import { setAlert } from "../../actions/alert";
+import { userChangePassword } from "../../services/userService";
 
 const useStyles = makeStyles(() => ({
   cancelButton: {
@@ -30,7 +31,7 @@ const ChangePasswordDialog = ({
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const changePassword = () => {
+  const changePassword = async () => {
     if (newPassword !== confirmNewPassword) {
       dispatch(
         setAlert("New password and Confirm password do not match", "error")
@@ -39,16 +40,22 @@ const ChangePasswordDialog = ({
     }
     try {
       setLoading(true);
-      // call a change password from the backend
-      // no need dispatch
-      console.log(oldPassword);
+      await userChangePassword(oldPassword, newPassword);
       dispatch(setAlert("Successfully changed password!", "success"));
     } catch (err) {
-      dispatch(setAlert("Incorrect password", "error"));
+      console.log(err.response);
+      dispatch(setAlert(err.response.data.error, "error"));
     } finally {
+      resetFields();
       setDisplayChangePasswordDialog(false);
       setLoading(false);
     }
+  };
+
+  const resetFields = () => {
+    setOldPassword("");
+    setNewPassword("");
+    setConfirmNewPassword("");
   };
 
   return (
@@ -101,7 +108,10 @@ const ChangePasswordDialog = ({
           </DialogContent>
           <DialogActions>
             <Button
-              onClick={() => setDisplayChangePasswordDialog(false)}
+              onClick={() => {
+                resetFields();
+                setDisplayChangePasswordDialog(false);
+              }}
               color="primary"
               className={classes.cancelButton}
             >

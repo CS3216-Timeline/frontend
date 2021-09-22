@@ -29,8 +29,9 @@ const DeleteProfileDialog = ({
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const deleteAccount = () => {
+  const deleteAccount = async () => {
     try {
+      console.log("delete account button clicked");
       setLoading(true);
       dispatch(deleteUserAccount());
     } catch (err) {
