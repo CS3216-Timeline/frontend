@@ -137,9 +137,9 @@ const Memory = (props) => {
             <Box display="flex" justifyContent="center" paddingTop={2}>
               <PrivatePageHeader text={title} />
             </Box>
-            <Box display="flex" justifyContent="center" marginBottom={3}>
+            {mediaUrls.length > 0 && <Box display="flex" justifyContent="center" marginBottom={3}>
               <MediaDisplay mediaUrls={mediaUrls} />
-            </Box>
+            </Box>}
             <Box className={classes.descriptionStyle} marginBottom={3}>
               <Typography variant="body2">Memory Added on <strong>{creationDate}</strong></Typography>
             </Box>

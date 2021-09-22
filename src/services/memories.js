@@ -1,7 +1,8 @@
 import server from "../utils/server";
 
 const getMockMediaUrls = () => 
-  [0,1,2,3].map(i => ({position: i, url: "https://images.megapixl.com/2485/24853666.jpg"}))
+  // [0,1,2,3].map(i => ({position: i, url: "https://images.megapixl.com/2485/24853666.jpg"}))
+  []
 
 // Use this function to convert blobURL to file
 const blobToFile = (blob, fileName="default-name") => {
@@ -32,24 +33,24 @@ export const createNewMemory = async (title, lineId, description, latitude, long
     body.append("images", im);
   });
 
-  console.log("creating new memory...");
+  console.log("POST memories/...");
   for(var pair of body.entries()) {
     console.log(`FormData[${pair[0]}]: ${pair[1]}`);
   }
-  
+
   const res = await server.post(`memories`, body);
-  console.log("successfully created new memory...");
+  console.log(`done POST memories/${res.data.memory.memoryId}...`);
   return res.data.memory;
 }
 
 export const editMemoryDetailsById = async (memoryId, title, description, line, longitude, latitude, creationDate = null) => {
   const body = {
-    title, description, line, longitude, latitude, creationDate
+    title, description, line, longitude, latitude, lineId: line, creationDate
   }
-  console.log("sending edit memory details for memory id", memoryId);
+  console.log(`sending PATCH memories/${memoryId}...`);
   console.log(body);
   const res = await server.patch(`memories/${memoryId}`, body);
-  console.log("completed edit memory details for memory id", memoryId);
+  console.log(`done PATCH memories/${memoryId}...`);
   console.log(res);
   return res.data.memory;
 }
