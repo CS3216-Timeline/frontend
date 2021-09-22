@@ -3,6 +3,7 @@ import {
   GET_LINES,
   GET_LINES_OFFLINE,
   DELETE_DRAFT_LINE,
+  ADD_LINE,
 } from "../action-types/line";
 import {
   createNewLine,
@@ -31,7 +32,11 @@ export const getLines = () => async (dispatch) => {
 export const createLineAction =
   (lineTitle, selectedColor) => async (dispatch) => {
     try {
-      await createNewLine(lineTitle.trim(), selectedColor);
+      const createdLine = await createNewLine(lineTitle.trim(), selectedColor);
+      dispatch({
+        type: ADD_LINE,
+        payload: createdLine,
+      });
     } catch (err) {
       if (!err.response) {
         dispatch({
