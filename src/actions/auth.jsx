@@ -12,6 +12,8 @@ import {
 import { setAlert } from "./alert";
 import setAuthToken from "../utils/setAuthToken";
 import { persistor } from "../store";
+import { logEvent } from "firebase/analytics";
+import { googleAnalytics } from "../services/firebase";
 
 export const register = (name, email, password) => async (dispatch) => {
   const body = {
@@ -55,6 +57,7 @@ export const login = (email, password) => async (dispatch) => {
       type: LOGIN_SUCCESS,
       payload: res.data,
     });
+    logEvent(googleAnalytics, "user_logged_in");
     dispatch(loadUser());
   } catch (err) {
     if (err.response) {
@@ -79,6 +82,7 @@ export const loginWithGoogle = (googleData) => async (dispatch) => {
       type: LOGIN_SUCCESS,
       payload: res.data,
     });
+    logEvent(googleAnalytics, "user_logged_in");
     dispatch(loadUser());
   } catch (err) {
     if (err.response) {
@@ -102,6 +106,7 @@ export const loginWithFacebook = (facebookData) => async (dispatch) => {
       type: LOGIN_SUCCESS,
       payload: res.data,
     });
+    logEvent(googleAnalytics, "user_logged_in");
     dispatch(loadUser());
   } catch (err) {
     if (err.response) {
@@ -142,12 +147,13 @@ export const logout = () => async (dispatch) => {
   });
 };
 
-export const deleteAccount = () => async (dispatch) => {
+export const deleteUserAccount = () => async (dispatch) => {
   try {
     // TODO: connect to backend
     // const res = await server.delete('/auth/userId)
     dispatch(logout());
     dispatch(setAlert("Account successfully deleted", "success"));
+    logEvent(googleAnalytics, "user_deleted_account");
   } catch (err) {
     throw err;
   }

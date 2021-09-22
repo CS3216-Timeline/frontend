@@ -1,54 +1,25 @@
-import firebase from "firebase/compat/app";
-import "firebase/compat/storage";
+// Import the functions you need from the SDKs you need
 import {
-  postMediaUrl
-} from "./media";
+  initializeApp
+} from "firebase/app";
+import {
+  getAnalytics
+} from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
+// Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyBkwWQMS-vvk8rLj2mC9GU4DdCYnfnNedg",
-  authDomain: "cs3216-timeline.firebaseapp.com",
-  projectId: "cs3216-timeline",
-  storageBucket: "cs3216-timeline.appspot.com",
-  messagingSenderId: "560364790834",
-  appId: "1:560364790834:web:7c51808725abef6283c82b",
-  measurementId: "G-588D4MF4MR"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
-firebase.initializeApp(firebaseConfig);
-
-const storage = firebase.storage();
-
-const ROOT = "user-media/"
-
-const uploadFile = (file, fileName, memoryId, progressHandler, errorHandler, successHandler) => {
-  const uploadTask = storage.ref(ROOT + memoryId + fileName).put(file)
-  uploadTask.on(
-    "state_changed",
-    snapshot => {
-      const progress = Math.round(
-        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-      )
-      progressHandler(progress);
-    },
-    error => {
-      errorHandler();
-    },
-    () => {
-      storage
-        .ref(ROOT)
-        .child(memoryId + fileName)
-        .getDownloadURL()
-        .then(url => {
-          postMediaUrl(url, memoryId); // send to backend
-          successHandler(url); // send success url to component
-        });
-    }
-  )
-}
-
-export {
-  uploadFile,
-  firebase as
-  default
-}
+// Initialize Firebase
+const firebaseApp = initializeApp(firebaseConfig);
+export const googleAnalytics = getAnalytics(firebaseApp);

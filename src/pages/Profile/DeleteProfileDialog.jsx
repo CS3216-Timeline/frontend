@@ -8,6 +8,7 @@ import { Button, Fade, makeStyles } from "@material-ui/core";
 import { COLORS } from "../../utils/colors";
 import { useDispatch } from "react-redux";
 import { setAlert } from "../../actions/alert";
+import { deleteUserAccount } from "../../actions/auth";
 
 const useStyles = makeStyles(() => ({
   cancelButton: {
@@ -31,7 +32,7 @@ const DeleteProfileDialog = ({
   const deleteAccount = () => {
     try {
       setLoading(true);
-      dispatch(deleteAccount());
+      dispatch(deleteUserAccount());
     } catch (err) {
       dispatch(
         setAlert("Failed to delete account, please try again later", "error")

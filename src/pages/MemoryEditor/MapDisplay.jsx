@@ -23,8 +23,6 @@ const MapDisplay = ({ selectedLocation, viewport, setViewport }) => {
             latitude={selectedLocation.geometry.coordinates[1]}
             longitude={selectedLocation.geometry.coordinates[0]}
             // https://github.com/visgl/react-map-gl/issues/1052
-            // NOTE: Honestly, I still dk what should be the right values for offset,
-            // these are the best values I felt that can be used after testing
             offsetTop={-30}
             offsetLeft={-24}
           >
