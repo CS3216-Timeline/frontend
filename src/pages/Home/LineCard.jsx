@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router";
-import { convertUTCtoYYYYMMDDHHMM } from "../../utils/datetime";
+import { convertUTCtoLocalDisplay } from "../../utils/datetime";
 import { useDispatch } from "react-redux";
 import { createDraftLineWhenOnline, deleteDraftLine } from "../../actions/line";
 import { ClipLoader } from "react-spinners";
@@ -86,7 +86,7 @@ const LineCard = ({ line, draft = false }) => {
               <Box paddingY={1}>
                 <Typography variant="body1" align="left">
                   Last Updated At: &nbsp;
-                  {convertUTCtoYYYYMMDDHHMM(line.lastUpdatedDate)}
+                  {convertUTCtoLocalDisplay(line.lastUpdatedDate)}
                 </Typography>
               </Box>
               <hr
