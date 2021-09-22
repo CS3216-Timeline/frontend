@@ -101,10 +101,6 @@ const Memory = (props) => {
     getMemoryDetails();
   }, [memoryId, dispatch, deleted]);
 
-  useEffect(() => {
-    // TODO: trigger updates for every mediaUrl changes?
-  }, [mediaUrls]);
-
   if (loading) {
     return <Loading />;
   }
