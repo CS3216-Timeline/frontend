@@ -32,7 +32,6 @@ export const getMemoryById = async (memoryId) => {
 }
 
 export const createNewMemory = async (title, lineId, description, latitude, longitude, mediaUrls) => {
-  console.log("Blob To File Test", mediaUrls.map(obj => blobToFile(obj.url)));
   const body = new FormData(); 
   body.append("title", title);
   body.append("line", lineId);
