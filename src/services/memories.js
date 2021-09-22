@@ -30,8 +30,9 @@ export const getMemoryById = async (memoryId) => {
   console.log("retrieving memory with id", memoryId);
   const res = await server.get(`memories/${memoryId}`);
   console.log("received memory with id", memoryId);  
-
-  return convertCoordinatesToFloat({ ...res.data.memories, mediaUrls: getMockMediaUrls() });
+  // TODO: Remove check once memories changed to memory
+  const memory = res.data.memory ? res.data.memory : res.data.memories;
+  return convertCoordinatesToFloat({ ...memory, mediaUrls: getMockMediaUrls() });
 }
 
 export const createNewMemory = async (title, lineId, description, latitude, longitude, mediaUrls) => {
