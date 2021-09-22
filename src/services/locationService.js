@@ -2,7 +2,7 @@ import axios from 'axios';
 import _ from 'lodash';
 import server from '../utils/server';
 
-export const getLocationSuggestions = async (searchText, longitude, latitude) => {
+export const getLocationSuggestions = async (searchText, longitude = null, latitude = null) => {
   try {
     let queryParams = `searchText=${searchText}`;
     if (longitude && latitude) {
