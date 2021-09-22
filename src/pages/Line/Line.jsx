@@ -79,7 +79,7 @@ const Line = (props) => {
 
   const memoriesData = useFakeData ? getMemories(memoryIds) : lineMemories;
 
-  const lineSize = memoryIds.length;
+  const lineSize = memoriesData.length;
 
   const isFirstMemory = (idx) => idx === 0;
   const isLastMemory = (idx) => idx === lineSize - 1;
@@ -178,19 +178,18 @@ const Line = (props) => {
           ) : (
             <Timeline align="left">
               {memoriesData.length > 0 ? (
-                memoriesData.map((memory, idx) => (
-                  // TODO: change mediaUrl params to get the first image
+                memoriesData.map((memory, idx) => 
                   <MemoryCard
                     isFirst={isFirstMemory(idx)}
                     isLast={isLastMemory(idx)}
                     memoryId={memory.memoryId}
                     key={memory.memoryId}
                     title={memory.title}
-                    mediaUrl={memory.media[0].source.url}
-                    date={memory.date}
+                    mediaUrl={memory.thumbnailUrl}
+                    date={memory.creationDate}
                     color={color}
                   />
-                ))
+                )
               ) : (
                 <NoneAvailable
                   text={"No memories added yet, add your first memory now!"}
