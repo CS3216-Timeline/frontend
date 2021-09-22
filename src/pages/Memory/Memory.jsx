@@ -143,7 +143,7 @@ const Memory = (props) => {
             <Box className={classes.descriptionStyle} marginBottom={3}>
               <Typography variant="body2">Memory Added on <strong>{creationDate}</strong></Typography>
             </Box>
-            {location &&
+            {location && location.place_name &&
               <Box className={classes.descriptionStyle} marginBottom={3}>
                 <Typography variant="body2">Location: <strong>{location.place_name}</strong></Typography>
               </Box>

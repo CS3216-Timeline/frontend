@@ -79,10 +79,7 @@ const MemoryEditor = () => {
       const memoryData = await getMemoryById(memoryId);
       const { title, description, creationDate, lineId,  latitude, longitude } = memoryData;
       const feature = await getGeographicFeature(latitude, longitude);
-      if (feature) {
-        // guard clause
-        setSelectedLocation(feature);
-      }
+      setSelectedLocation(feature);
       setCreationDate(creationDate); //TODO: REMOVE
       setLineId(lineId);
       setMemoryTitle(title);
