@@ -4,11 +4,14 @@ import secondaryLogo from "../../assets/logo.png";
 
 const useStyles = makeStyles(() => ({
   logoImage: {
-    width: "50%",
+    width: "30%",
     height: "auto",
     display: "block",
     marginLeft: "auto",
     marginRight: "auto",
+    "@media (max-width: 480px)": {
+      width: "50%",
+    },
   },
 }));
 

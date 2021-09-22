@@ -95,7 +95,7 @@ const LineCard = ({ line, draft = false }) => {
                 }}
               />
             </Grid>
-            {line.thumbnailUrl && (
+            {!draft && line.thumbnailUrl && (
               <Grid item xs={4}>
                 <Box paddingLeft={3}>
                   <img
