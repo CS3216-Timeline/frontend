@@ -19,6 +19,8 @@ import MediaDisplay from "./MediaDisplay";
 import FadeIn from "react-fade-in/lib/FadeIn";
 import { Typography } from "@mui/material";
 import { getGeographicFeature } from "../../services/locationService";
+import { useDispatch } from "react-redux";
+import { setAlert } from "../../actions/alert";
 
 const useStyles = makeStyles((theme) => ({
   alignCenter: {
@@ -71,25 +73,30 @@ const Memory = (props) => {
     }
   }, [deleted, history, lineId]);
 
+  const dispatch = useDispatch();
   useEffect(() => {
-    setLoading(true);
     const getMemoryDetails = async () => {
-      const memoryData = await getMemoryById(memoryId);
-      const { title, description, creationDate, lineId,  latitude, longitude, media: mediaUrls } = memoryData;
-      console.log(memoryData);
-      const location = await getGeographicFeature(latitude, longitude);
-      setLocation(location);
-      setTitle(title);
-      setDescription(description);
-      setCreationDate(creationDate);
-      setLineId(lineId);
-      setMediaUrls(mediaUrls)
-
-      // states already loaded
-      setLoading(false);
-    }
-    getMemoryDetails()
-  }, [memoryId]);
+      setLoading(true);
+      try {
+        const memoryData = await getMemoryById(memoryId);
+        const { title, description, creationDate, lineId,  latitude, longitude, media: mediaUrls } = memoryData;
+        console.log(memoryData);
+        const location = await getGeographicFeature(latitude, longitude);
+        setLocation(location);
+        setTitle(title);
+        setDescription(description);
+        setCreationDate(creationDate);
+        setLineId(lineId);
+        setMediaUrls(mediaUrls);
+      } catch (e) {
+        dispatch(setAlert("Unable to load memory details.", "error"));
+      } finally {
+        // states already loaded
+        setLoading(false);
+      }
+    };
+    getMemoryDetails();
+  }, [memoryId, dispatch]);
 
   useEffect(() => {
     const deleteMemory = async () => {
@@ -108,6 +115,7 @@ const Memory = (props) => {
   if (loading) {
     return <Loading />;
   }
+
   if (isMediaEditView) {
     // because states are essentially shared
     return (
@@ -117,6 +125,7 @@ const Memory = (props) => {
             <Grid item xs={12}>
               <Box paddingY={1}>
                 <UploadMediaForm 
+                  memoryId={memoryId}
                   existingMediaUrls={mediaUrls} 
                   onComplete={setMediaUrls} 
                 />
