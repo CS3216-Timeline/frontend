@@ -28,6 +28,7 @@ export const createNewMedia = async (media, memoryId) => {
   }
   const res = await server.post("media", body);
   console.log(`done POST media/${res.data.media.mediaId}...`);
+  console.log("response", res.data.media)
   return res.data.media;
 }
 
@@ -40,21 +41,17 @@ export const updateMediaPositions = async (memoryId, mediaUrls) => {
     updates,
     memoryId,
   }
-  console.log(`sending POST media/updates...`)
+  console.log(`sending POST media/positions...`)
   console.log(body);
-  const res = await server.post(`media`);
-  console.log(`done POST media/updates...`, body);
-  return res.data.media;
-}
-
-export const getMediaUrl = (mediaId) => {
-    // currently not needed
-    console.log("fetching media url for", mediaId)
+  const res = await server.post(`media/positions`);
+  console.log(`done POST media/positions...`, res);
+  return res.data;
 }
 
 export const deleteMediaById = async (mediaId) => {
   console.log(`sending DELETE media/${mediaId}...`)
   const res = await server.delete(`media/${mediaId}`);
   console.log(`done DELETE media/${mediaId}...`);
-  return res.data.media;
+  console.log("response", res.data.media)
+  return res.data.media; // {memoryId, updates: [ {mediaId, position} ]}
 }
