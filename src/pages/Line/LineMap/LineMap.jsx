@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import MapDisplay from "./MapDisplay";
-import { memoriesMockData } from "./data";
 import { Box, makeStyles, Typography } from "@material-ui/core";
 // To show a line map with markers of locations of the memories
 // Will need the exact same data as the Line page
@@ -11,20 +10,39 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// TODO: send memoryData here
+const convertCoordinatesToFloat = (memories) => {
+  return memories.map(memory => {
+    return {
+      ...memory,
+      latitude: parseFloat(memory.latitude),
+      longitude: parseFloat(memory.longitude),
+    }
+  })
+}
+
+const DEFAULT_LATITUDE = 1.3521;
+const DEFAULT_LONGITUDE = 103.8198;
+
+const getDefaultViewport = () => ({
+  latitude: DEFAULT_LATITUDE,
+  longitude: DEFAULT_LONGITUDE,
+  height: "100vh",
+  width: "95vw",
+  zoom: 10,
+});
+
 const LineMap = ({ lineMemories = [], lineColor }) => {
   const classes = useStyles();
-  const { latitude, longitude } = memoriesMockData[0];
+  const latitude = lineMemories[0] ? parseFloat(lineMemories[0].latitude) : DEFAULT_LATITUDE;
+  const longitude = lineMemories[0] ? parseFloat(lineMemories[0].longitude) : DEFAULT_LONGITUDE;
   const [viewport, setViewport] = useState({
-    latitude: latitude,
-    longitude: longitude,
-    height: "100vh",
-    width: "95vw",
-    zoom: 10,
+    ...getDefaultViewport(),
+    latitude,
+    longitude
   });
 
-  const useFakeData = true;
-
+  const memoriesData = convertCoordinatesToFloat(lineMemories);
+  console.log(memoriesData);
   return (
     <>
       <div className={classes.root}>
@@ -34,7 +52,7 @@ const LineMap = ({ lineMemories = [], lineColor }) => {
           </Typography>
         </Box>
         <MapDisplay
-          memoriesData={useFakeData ? memoriesMockData : lineMemories}
+          memoriesData={memoriesData}
           lineColor={lineColor}
           viewport={viewport}
           setViewport={setViewport}
