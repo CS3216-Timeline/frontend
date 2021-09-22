@@ -2,7 +2,7 @@ import { Box, Button, IconButton, Typography } from "@material-ui/core";
 import React, { useState } from "react";
 import LocationOn from "@material-ui/icons/LocationOn";
 import { Marker, Popup } from "react-map-gl";
-import { convertUTCtoYYYYMMDDHHMM } from "../../../utils/datetime";
+import { convertUTCtoLocalDisplay } from "../../../utils/datetime";
 import { useHistory } from "react-router-dom";
 
 const MapMarker = ({ memory }) => {
@@ -31,7 +31,7 @@ const MapMarker = ({ memory }) => {
             <Typography variant="h6">{memory.title}</Typography>
             <Typography variant="body1">{memory.description}</Typography>
             <Typography variant="body1">
-              {convertUTCtoYYYYMMDDHHMM(memory.creationDate)}
+              {convertUTCtoLocalDisplay(memory.creationDate)}
             </Typography>
             <Box paddingTop={1} display="flex" justifyContent="center">
               <Button

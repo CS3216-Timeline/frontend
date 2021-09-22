@@ -4,7 +4,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { useParams } from "react-router";
 import { deleteMemoryById, getMemoryById } from "../../services/memories";
-import { convertUTCtoYYYYMMDDHHMM } from "../../utils/datetime";
+import { convertUTCtoLocalDisplay } from "../../utils/datetime";
 import { COLORS } from "../../utils/colors";
 import { useState } from "react";
 import Loading from "../../components/Loading";
@@ -81,7 +81,7 @@ const Memory = (props) => {
       setLocation(location);
       setTitle(title);
       setDescription(description);
-      setCreationDate(convertUTCtoYYYYMMDDHHMM(creationDate));
+      setCreationDate(convertUTCtoLocalDisplay(creationDate));
       setLineId(lineId);
       setMediaUrls(mediaUrls)
 

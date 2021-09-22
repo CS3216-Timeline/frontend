@@ -1,8 +1,9 @@
 import moment from "moment";
 
-export const convertUTCtoYYYYMMDDHHMM = (timestamp) => {
+export const convertUTCtoLocalDisplay = (timestamp) => {
   return moment
     .utc(timestamp)
     .local()
-    .format("YYYY-MM-DD HH:mm A")
+    // .format("YYYY-MM-DD HH:mm A")
+    .format("DD MMM YYYY — HH:mm A")
 }
