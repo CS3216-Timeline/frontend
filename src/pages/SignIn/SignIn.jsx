@@ -20,9 +20,7 @@ import FadeIn from "react-fade-in/lib/FadeIn";
 
 const GOOGLE_API_TOKEN = process.env.REACT_APP_GOOGLE_KEY;
 const FACEBOOK_API_TOKEN = process.env.REACT_APP_FACEBOOK_KEY;
-const SERVER_BASE_URL = process.env.REACT_APP_SERVER_BASE_URL;
-
-const FACEBOOK_REDIRECT_URI = `${SERVER_BASE_URL}/signin`;
+const FACEBOOK_REDIRECT_URI = `https://cs3216-timeline.netlify.app/signin`;
 
 const useStyles = makeStyles((theme) => ({
   root: {
