@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 const MemoriesCalendar = () => {
   const classes = useStyles();
   // eslint-disable-next-line no-unused-vars
-  const [selectedDay, setSelectedDay] = useState(new Date().getUTCDate());
+  // const [selectedDay, setSelectedDay] = useState(new Date().getUTCDate());
   const [selectedMonth, setSelectedMonth] = useState(new Date().getUTCMonth());
   const [selectedYear, setSelectedYear] = useState(new Date().getUTCFullYear());
   const [memoriesOfSelectedDate, setMemoriesOfSelectedDate] = useState([]);
@@ -38,15 +38,15 @@ const MemoriesCalendar = () => {
   const selectedDate = useSelector((state) => state.calendar.selectedDate);
 
   const onYearOrMonthChange = (newDate) => {
+    // setSelectedDay(newDate.getUTCDate());
     setSelectedMonth(newDate.getUTCMonth());
-    setSelectedDay(newDate.getUTCDate());
     setSelectedYear(newDate.getUTCFullYear());
   };
 
   const onDateChange = async (newDate) => {
-    setSelectedMonth(newDate.getUTCMonth());
-    setSelectedDay(newDate.getUTCDate());
-    setSelectedYear(newDate.getUTCFullYear());
+    // setSelectedDay(newDate.getUTCDate());
+    // setSelectedMonth(newDate.getUTCMonth());
+    // setSelectedYear(newDate.getUTCFullYear());
     dispatch(setChosenDate(newDate));
     const memories = await getMemoriesByDate(selectedDate);
     setMemoriesOfSelectedDate(memories);
