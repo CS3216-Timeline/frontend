@@ -10,16 +10,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const convertCoordinatesToFloat = (memories) => {
-  return memories.map(memory => {
-    return {
-      ...memory,
-      latitude: parseFloat(memory.latitude),
-      longitude: parseFloat(memory.longitude),
-    }
-  })
-}
-
 const DEFAULT_LATITUDE = 1.3521;
 const DEFAULT_LONGITUDE = 103.8198;
 
@@ -41,8 +31,8 @@ const LineMap = ({ lineMemories = [], lineColor }) => {
     longitude
   });
 
-  const memoriesData = convertCoordinatesToFloat(lineMemories);
-  console.log(memoriesData);
+  const memoriesData = lineMemories;
+
   return (
     <>
       <div className={classes.root}>

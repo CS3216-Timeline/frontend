@@ -10,12 +10,28 @@ const blobToFile = (blob, fileName="default-name") => {
   return file
 }
 
+const convertCoordinatesToString = (memory) => {
+  return {
+    ...memory,
+    latitude: memory.latitude.toString(),
+    longitude: memory.longitude.toString(),
+  }
+}
+
+const convertCoordinatesToFloat = (memory) => {
+  return {
+    ...memory,
+    latitude: parseFloat(memory.latitude),
+    longitude: parseFloat(memory.longitude),
+  }
+}
+
 export const getMemoryById = async (memoryId) => {
   console.log("retrieving memory with id", memoryId);
   const res = await server.get(`memories/${memoryId}`);
   console.log("received memory with id", memoryId);  
 
-  return { ...res.data.memories, mediaUrls: getMockMediaUrls() };
+  return convertCoordinatesToFloat({ ...res.data.memories, mediaUrls: getMockMediaUrls() });
 }
 
 export const createNewMemory = async (title, lineId, description, latitude, longitude, mediaUrls) => {
@@ -25,7 +41,7 @@ export const createNewMemory = async (title, lineId, description, latitude, long
   body.append("line", lineId);
   body.append("lineId", lineId); // TODO: Remove either "line" or "lineId"
   body.append("description", description);
-  body.append("latitude", latitude);
+  body.append("latitude", latitude); // will be automatically string
   body.append("longitude", longitude);
 
   // mediaUrls.forEach(im => {
@@ -40,24 +56,25 @@ export const createNewMemory = async (title, lineId, description, latitude, long
 
   const res = await server.post(`memories`, body);
   console.log(`done POST memories/${res.data.memory.memoryId}...`);
-  return res.data.memory;
+  return convertCoordinatesToFloat(res.data.memory);
 }
 
 export const editMemoryDetailsById = async (memoryId, title, description, line, longitude, latitude, creationDate = null) => {
-  const body = {
+  const memoryData = {
     title, description, line, longitude, latitude, lineId: line, creationDate
-  }
+  };
+  const body = convertCoordinatesToString(memoryData);
   console.log(`sending PATCH memories/${memoryId}...`);
   console.log(body);
   const res = await server.patch(`memories/${memoryId}`, body);
   console.log(`done PATCH memories/${memoryId}...`);
   console.log(res);
-  return res.data.memory;
+  return convertCoordinatesToFloat(res.data.memory);
 }
 
 export const deleteMemoryById = async (memoryId) => {
   console.log(`sending DELETE memories/${memoryId}...`)
   const res = await server.delete(`memories/${memoryId}`);
   console.log(`done DELETE memories/${memoryId}...`);
-  return res.data.memory;
+  return convertCoordinatesToFloat(res.data.memory);
 }

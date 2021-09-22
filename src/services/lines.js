@@ -46,10 +46,20 @@ export const deleteLineById = async (lineId) => {
   return res.data.line
 }
 
+const convertCoordinatesToFloat = (memories) => {
+  return memories.map(memory => {
+    return {
+      ...memory,
+      latitude: parseFloat(memory.latitude),
+      longitude: parseFloat(memory.longitude),
+    }
+  })
+}
+
 // this one for now does not return the memories of the line yet
 export const getLineDataById = async (lineId) => {
   const res = await server.get(`/lines/${lineId}?includeMemories=true`);
   let line = res.data.line;
   line["colorHex"] = addHash(line["colorHex"]);
-  return line;
+  return {...line, memories: convertCoordinatesToFloat(line.memories)};
 }
