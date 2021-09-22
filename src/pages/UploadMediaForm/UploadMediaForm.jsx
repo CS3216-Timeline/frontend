@@ -6,7 +6,6 @@ import MemoryMedia from "./MemoryMedia";
 import { COLORS } from "../../utils/colors";
 import { createNewMedia, deleteMediaById } from "../../services/media";
 import UploadedMediaList from "./UploadedMediaList";
-import DeleteMediaDialog from "./DeleteMediaDialog";
 import { useDispatch } from "react-redux";
 import { setAlert } from "../../actions/alert";
 
@@ -32,7 +31,7 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
   const loadImage = (file) => {
     setImageLoading(true);
     setCropView(false);
-    var fileUrl = URL.createObjectURL(file);
+    let fileUrl = URL.createObjectURL(file);
     setEditFileUrl(null);
     fetch(fileUrl)
       .then((res) => res.blob())
@@ -58,7 +57,7 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
   };
 
   const addNewMedia = (e) => {
-    var newFile = e.target.files[0];
+    let newFile = e.target.files[0];
     if (!newFile) {
       return;
     }
@@ -80,26 +79,12 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
     return mediaUrls.length === MEDIA_LIMIT;
   };
 
-  // deletion logic
-  const deleteMedia = async (mediaId, clonedMediaUrls) => {
-    setLoading(true);
-    try {
-      await deleteMediaById(mediaId);
-      setMediaUrls([...clonedMediaUrls]);
-    } catch(e) {
-      console.log(e.message);
-      dispatch(setAlert("Unable to delete media", "error"));
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const deleteMediaByPosition = (positionOfMedia) => {
+  const deleteMediaByPosition = async (positionOfMedia) => {
     console.log("deleting media at position", positionOfMedia)
     if (previewUrl === mediaUrls[positionOfMedia].url) {
       setPreviewUrl(null);
     }
-    var deleteId = -1;
+    let deleteId = null;
     // update positions
     const clonedMediaUrls = [...mediaUrls].filter((media, idx) => {
       if (idx === positionOfMedia) {
@@ -113,12 +98,13 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
         position: idx,
       };
     });
-    if (!memoryId) {
+    if (!memoryId || !deleteId) {
       setMediaUrls([...clonedMediaUrls]);
       return;
     }
-    if ((deleteId !== -1 && deleteId) || deleteId === 0) {
-      deleteMedia(deleteId, clonedMediaUrls);
+    if (deleteId) {
+      await deleteMediaById(deleteId);
+      setMediaUrls([...clonedMediaUrls]);
     }
   };
 
@@ -215,7 +201,6 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
           </Button>
         )}
       </Box>
-      <DeleteMediaDialog />
     </>
   );
 };

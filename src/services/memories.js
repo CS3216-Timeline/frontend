@@ -47,7 +47,7 @@ export const createNewMemory = async (title, lineId, description, latitude, long
       .then(file => body.append("images", file));
   };
 
-  for (var idx = 0; idx < mediaUrls.length; idx++) {
+  for (let idx = 0; idx < mediaUrls.length; idx++) {
     const url = mediaUrls[idx].url;
     await loadImageFile(url, idx);
   }
