@@ -22,6 +22,7 @@ export const createNewMemory = async (title, lineId, description, latitude, long
   const body = new FormData();
   body.append("title", title);
   body.append("line", lineId);
+  body.append("lineId", lineId); // TODO: Remove either "line" or "lineId"
   body.append("description", description);
   body.append("latitude", latitude);
   body.append("longitude", longitude);
@@ -31,11 +32,13 @@ export const createNewMemory = async (title, lineId, description, latitude, long
     body.append("images", im);
   });
 
-  // for(var pair of body.entries()) {
-  //   console.log(pair[0]+ ', '+ pair[1]);
-  // }
+  console.log("creating new memory...");
+  for(var pair of body.entries()) {
+    console.log(`FormData[${pair[0]}]: ${pair[1]}`);
+  }
   
   const res = await server.post(`memories`, body);
+  console.log("successfully created new memory...");
   return res.data.memory;
 }
 
