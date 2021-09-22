@@ -47,7 +47,7 @@ const MemoryEditor = () => {
   const [memoryDescription, setMemoryDescription] = useState("");
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [mediaUrls, setMediaUrls] = useState([]); // blob URL
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [lineId, setLineId] = useState(lineIdFromUrl);
   const [viewport, setViewport] = useState(getDefaultViewport());
 
@@ -59,7 +59,7 @@ const MemoryEditor = () => {
   const isEdit = memoryId ? true : false;
 
   useEffect(() => {
-    if (!isEdit) {
+    if (!memoryId) {
       const getCurrentLocation = async () => {
         navigator.geolocation.getCurrentPosition((position) => {
           if (position.coords) {
@@ -73,46 +73,71 @@ const MemoryEditor = () => {
       getCurrentLocation();
       return;
     }
-    setLoading(false);
+
     const loadExistingMemoryData = async () => {
-      const memoryData = await getMemoryById(memoryId);
-      const { title, description, lineId,  latitude, longitude } = memoryData;
-      const feature = await getGeographicFeature(latitude, longitude);
-      setSelectedLocation(feature);
-      setLineId(lineId);
-      setMemoryTitle(title);
-      setMemoryDescription(description);
       setLoading(true);
+      try {
+        const memoryData = await getMemoryById(memoryId);
+        const { title, description, lineId,  latitude, longitude } = memoryData;
+        const feature = await getGeographicFeature(latitude, longitude);
+        setSelectedLocation(feature);
+        setLineId(lineId);
+        setMemoryTitle(title);
+        setMemoryDescription(description);
+      } catch (e) {
+        dispatch(setAlert("Failed to load memory info", "error"));
+      } finally {
+        setLoading(false);
+      }
     }
     loadExistingMemoryData();
-  }, [isEdit, memoryId])
+  }, [memoryId, dispatch])
 
   const handleEditMemory = async () => {
     console.log("Editing memory...");
-    const memoryChanges = await editMemoryDetailsById(
-      memoryId, 
-      memoryTitle, 
-      memoryDescription, 
-      lineId, 
-      selectedLocation.latitude, 
-      selectedLocation.longitude,
-    )
-    console.log(memoryChanges);
-    history.push(`/memory/${memoryId}`);
+    setLoading(true);
+    try {
+      const memoryChanges = await editMemoryDetailsById(
+        memoryId, 
+        memoryTitle, 
+        memoryDescription, 
+        lineId, 
+        selectedLocation.longitude,
+        selectedLocation.latitude, 
+      )
+      console.log(memoryChanges);
+    } catch (e) {
+      alertError("Unable to save changes.");
+    } finally {
+      setLoading(false);
+      history.push(`/memory/${memoryId}`);
+    }
   }
 
   const handleNewMemoryCreation = async () => {
     console.log("Creating memory...");
-    const memoryDetails = await createNewMemory(
-      memoryTitle, 
-      lineId, 
-      memoryDescription, 
-      selectedLocation.latitude, 
-      selectedLocation.longitude, 
-      mediaUrls
-    );
-    const newId = memoryDetails.memoryId;
-    history.push(`/memory/${newId}`);
+    setLoading(true);
+    let newId = null;
+    try {
+      const memoryDetails = await createNewMemory(
+        memoryTitle, 
+        lineId, 
+        memoryDescription, 
+        selectedLocation.latitude, 
+        selectedLocation.longitude, 
+        mediaUrls
+      );
+      newId = memoryDetails.memoryId;
+    } catch (e) {
+      alertError("Unable to create memory.");
+    } finally {
+      setLoading(false);
+      if (!newId) {
+        history.push(`/line/${lineId}`);
+        return;
+      }
+      history.push(`/memory/${newId}`);
+    }
   }
 
   const saveHandler = (e) => {
@@ -143,7 +168,7 @@ const MemoryEditor = () => {
 
   const mapViewport = {...viewport, ...currentLocation}
 
-  if (!loading) {
+  if (loading) {
     return <Loading />
   }
 
