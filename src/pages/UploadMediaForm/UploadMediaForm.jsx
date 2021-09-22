@@ -15,11 +15,10 @@ const MEDIA_LIMIT = 4; // can tweak
 const MEGABYTE = 1048576;
 const MAX_FILE_SIZE = 10 * MEGABYTE;
 
-const UploadMediaForm = ({
-  existingMediaUrls,
-  onComplete,
-}) => {
-  const initUrls = existingMediaUrls ? existingMediaUrls.map(media => ({...media})) : [];
+const UploadMediaForm = ({ existingMediaUrls, onComplete }) => {
+  const initUrls = existingMediaUrls
+    ? existingMediaUrls.map((media) => ({ ...media }))
+    : [];
   const [mediaUrls, setMediaUrls] = useState(initUrls); // FINAL URLs
   const [editFileUrl, setEditFileUrl] = useState(null); // DRAFT FILE URL
   const [isCropView, setCropView] = useState(false);
@@ -34,12 +33,12 @@ const UploadMediaForm = ({
     setCropView(false);
     setEditFileUrl(null);
     fetch(fileUrl)
-      .then(res => res.blob())
-      .then(blob => heic2any({blob}))
-      .then(res => {
+      .then((res) => res.blob())
+      .then((blob) => heic2any({ blob }))
+      .then((res) => {
         fileUrl = URL.createObjectURL(res);
       })
-      .catch(e => {
+      .catch((e) => {
         // do nothing
       })
       .finally(() => {
@@ -48,11 +47,13 @@ const UploadMediaForm = ({
           setEditFileUrl(fileUrl);
           setCropView(true);
         } else {
-          dispatch(setAlert("Only PNG, JPEG, HEIC images are accepted!", "error"));
+          dispatch(
+            setAlert("Only PNG, JPEG, HEIC images are accepted!", "error")
+          );
           setCropView(false);
         }
-      })
-  }
+      });
+  };
 
   const addNewMedia = (e) => {
     var newFile = e.target.files[0];
@@ -71,11 +72,11 @@ const UploadMediaForm = ({
       return;
     }
     setPreviewUrl(mediaUrls[positionOfMedia].url);
-  }
+  };
 
   const isMediaLimitReached = () => {
     return mediaUrls.length === MEDIA_LIMIT;
-  }
+  };
 
   const deleteMediaByPosition = (positionOfMedia) => {
     let clonedMediaUrls = [...mediaUrls];
@@ -139,7 +140,7 @@ const UploadMediaForm = ({
           />
         )}
         <br />
-        {!isCropView && 
+        {!isCropView && (
           <UploadedMediaList
             mediaUrls={mediaUrls}
             setCropView={setCropView}
@@ -148,14 +149,14 @@ const UploadMediaForm = ({
             deleteMediaByPosition={deleteMediaByPosition}
             selectedMediaUrl={previewUrl}
           />
-        }
+        )}
         {isCropView ? (
           <Button variant="outlined" onClick={handleCancelCrop}>
             Cancel
           </Button>
         ) : (
-          <Button 
-            variant="outlined" 
+          <Button
+            variant="outlined"
             color={loading ? "inherit" : "primary"}
             disabled={loading || isMediaLimitReached()}
           >

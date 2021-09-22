@@ -6,6 +6,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  CHANGE_NAME,
 } from "../action-types/auth";
 
 const initialState = {
@@ -71,6 +72,14 @@ const authReducer = (state = initialState, action) => {
         token: null,
         isAuthenticated: false,
         loading: false,
+      };
+    case CHANGE_NAME:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          name: payload,
+        },
       };
     default:
       return state;

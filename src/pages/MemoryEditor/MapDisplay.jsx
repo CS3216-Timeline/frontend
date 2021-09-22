@@ -1,9 +1,13 @@
 import React from "react";
 import { useState } from "react";
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
-import { MAPBOX_API_TOKEN } from "../../services/locationService";
+import mapboxgl from "mapbox-gl"; // This is a dependency of react-map-gl even if you didn't explicitly install it
 import LocationOn from "@material-ui/icons/LocationOn";
 import { IconButton, Typography } from "@material-ui/core";
+
+mapboxgl.workerClass =
+  // eslint-disable-next-line import/no-webpack-loader-syntax
+  require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
 const MapDisplay = ({ selectedLocation, viewport, setViewport }) => {
   const [showPopup, setShowPopup] = useState(false);
@@ -12,7 +16,7 @@ const MapDisplay = ({ selectedLocation, viewport, setViewport }) => {
     <>
       <ReactMapGL
         {...viewport}
-        mapboxApiAccessToken={MAPBOX_API_TOKEN}
+        mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_KEY}
         mapStyle="mapbox://styles/mapbox/streets-v10"
         // everytime user drag/zoom, will cause map to re-render
         // onViewportChange={(viewport) => renderViewport(viewport)}
@@ -23,8 +27,6 @@ const MapDisplay = ({ selectedLocation, viewport, setViewport }) => {
             latitude={selectedLocation.geometry.coordinates[1]}
             longitude={selectedLocation.geometry.coordinates[0]}
             // https://github.com/visgl/react-map-gl/issues/1052
-            // NOTE: Honestly, I still dk what should be the right values for offset,
-            // these are the best values I felt that can be used after testing
             offsetTop={-30}
             offsetLeft={-24}
           >

@@ -33,7 +33,7 @@ export const createNewLine = async (lineTitle, selectedColor) => {
 // TODO: update request endpoint after backend created the endpoint
 export const editLineById = async (lineId, lineTitle, selectedColor) => {
   const body = {
-    "lineName": lineTitle,
+    "lineName": lineTitle.trim(),
     "colorHex": removeHash(selectedColor),
   }
   const res = await server.patch(`lines/${lineId}`, body);

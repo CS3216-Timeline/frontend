@@ -31,7 +31,7 @@ export const getLines = () => async (dispatch) => {
 export const createLineAction =
   (lineTitle, selectedColor) => async (dispatch) => {
     try {
-      await createNewLine(lineTitle, selectedColor);
+      await createNewLine(lineTitle.trim(), selectedColor);
     } catch (err) {
       if (!err.response) {
         dispatch({

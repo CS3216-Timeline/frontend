@@ -2,11 +2,13 @@ import { Grid, makeStyles, Typography, Box, Button } from "@material-ui/core";
 import React from "react";
 import { useSelector } from "react-redux";
 import FadeIn from "react-fade-in";
+import { googleAnalytics } from "../../services/firebase";
 import { Redirect, useHistory } from "react-router-dom";
 import aroundTheWorldImage from "../../assets/around-the-world.png";
 import friendshipImage from "../../assets/friendship.png";
 import momentsImage from "../../assets/moments.png";
 import AppLogo from "../../components/layout/AppLogo";
+import { logEvent } from "@firebase/analytics";
 
 const useStyles = makeStyles((theme) => ({
   heroContent: {
@@ -69,6 +71,7 @@ const Landing = () => {
           </Box>
           <Button
             onClick={() => {
+              logEvent(googleAnalytics, "visit_landing_page");
               history.push("/signin");
             }}
             color="primary"

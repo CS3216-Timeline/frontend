@@ -17,6 +17,8 @@ import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
 import Loading from "../../components/Loading";
 import { useHistory } from "react-router-dom";
 import { createLineAction } from "../../actions/line";
+import { logEvent } from "firebase/analytics";
+import { googleAnalytics } from "../../services/firebase";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -52,6 +54,7 @@ const CreateNewLine = () => {
       // dispatch(setAlert(err.message, "error"));
     } finally {
       setLoading(false);
+      logEvent(googleAnalytics, "create_line");
       history.push("/");
     }
   };

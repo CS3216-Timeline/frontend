@@ -4,12 +4,11 @@ import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import HomeIcon from "@material-ui/icons/Home";
 import PersonIcon from "@material-ui/icons/Person";
-import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
+import TodayIcon from "@material-ui/icons/Today";
 import { COLORS } from "../../utils/colors";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
-  // https://stackoverflow.com/questions/64351827/material-ui-bottomnavigation-does-not-fill-the-width
   root: {
     width: "100%",
     position: "fixed",
@@ -38,8 +37,8 @@ const BottomNavBar = () => {
       {/* TODO: create a how to use page */}
       <BottomNavigationAction
         component="button"
-        onClick={() => history.push("/info")}
-        icon={<HelpOutlineIcon />}
+        onClick={() => history.push("/calendar")}
+        icon={<TodayIcon />}
       />
       <BottomNavigationAction
         component="button"
