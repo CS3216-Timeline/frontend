@@ -56,6 +56,8 @@ export const editMemoryDetailsById = async (memoryId, title, description, line, 
 }
 
 export const deleteMemoryById = async (memoryId) => {
+  console.log(`sending DELETE memories/${memoryId}...`)
   const res = await server.delete(`memories/${memoryId}`);
+  console.log(`done DELETE memories/${memoryId}...`);
   return res.data.memory;
 }

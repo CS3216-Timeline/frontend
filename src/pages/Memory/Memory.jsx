@@ -3,7 +3,7 @@ import React from "react";
 import EditIcon from "@material-ui/icons/Edit";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { useParams } from "react-router";
-import { getMemoryById } from "../../services/memories";
+import { deleteMemoryById, getMemoryById } from "../../services/memories";
 import { convertUTCtoYYYYMMDDHHMM } from "../../utils/datetime";
 import { COLORS } from "../../utils/colors";
 import { useState } from "react";
@@ -91,6 +91,15 @@ const Memory = (props) => {
     getMemoryDetails()
   }, [memoryId]);
 
+  useEffect(() => {
+    const deleteMemory = async () => {
+      const deletedMemory = await deleteMemoryById(memoryId);
+      history.push(`/line/${deletedMemory.lineId}`);
+    }
+    if (deleted) {
+      deleteMemory();
+    }
+  }, [deleted, history, memoryId]);
 
   useEffect(() => {
     // TODO: trigger updates for every mediaUrl changes?
