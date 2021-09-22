@@ -41,13 +41,14 @@ const isEmpty = (val) => val === null || val === undefined || val === "" || val.
 
 const MemoryEditor = () => {
   const classes = useStyles();
+  const { memoryId, lineId: lineIdFromUrl } = useParams();
   const [currentLocation, setCurrentLocation] = useState({});
   const [memoryTitle, setMemoryTitle] = useState("");
   const [memoryDescription, setMemoryDescription] = useState("");
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [mediaUrls, setMediaUrls] = useState([]); // blob URL
   const [loading, setLoading] = useState(true);
-  const [lineId, setLineId] = useState(null);
+  const [lineId, setLineId] = useState(lineIdFromUrl);
   const [creationDate, setCreationDate] = useState(""); // TODO: REMOVE
   const [viewport, setViewport] = useState(getDefaultViewport());
 
@@ -56,7 +57,6 @@ const MemoryEditor = () => {
 
   const alertError = (msg) => dispatch(setAlert(msg, "error"));
 
-  const { memoryId } = useParams();
   const isEdit = memoryId ? true : false;
 
   useEffect(() => {
