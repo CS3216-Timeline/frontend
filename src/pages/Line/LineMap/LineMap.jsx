@@ -23,8 +23,8 @@ const getDefaultViewport = () => ({
 
 const LineMap = ({ lineMemories = [], lineColor }) => {
   const classes = useStyles();
-  const latitude = lineMemories[0] ? parseFloat(lineMemories[0].latitude) : DEFAULT_LATITUDE;
-  const longitude = lineMemories[0] ? parseFloat(lineMemories[0].longitude) : DEFAULT_LONGITUDE;
+  const latitude = lineMemories[0] ? lineMemories[0].latitude : DEFAULT_LATITUDE;
+  const longitude = lineMemories[0] ? lineMemories[0].longitude : DEFAULT_LONGITUDE;
   const [viewport, setViewport] = useState({
     ...getDefaultViewport(),
     latitude,
