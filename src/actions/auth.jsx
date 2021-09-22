@@ -173,7 +173,6 @@ export const userChangeName = (newName) => async (dispatch) => {
       type: CHANGE_NAME,
       payload: updatedUser.name,
     });
-    // dispatch(loadUser());
   } catch (err) {
     if (err.response) {
       dispatch(setAlert(err.response.data.error, "error"));

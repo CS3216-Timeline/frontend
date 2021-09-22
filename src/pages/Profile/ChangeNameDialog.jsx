@@ -83,7 +83,10 @@ const ChangeNameDialog = ({
           </DialogContent>
           <DialogActions>
             <Button
-              onClick={() => setDisplayChangeNameDialog(false)}
+              onClick={() => {
+                setNewName("");
+                setDisplayChangeNameDialog(false);
+              }}
               color="primary"
               className={classes.cancelButton}
             >

@@ -46,12 +46,16 @@ const ChangePasswordDialog = ({
       console.log(err.response);
       dispatch(setAlert(err.response.data.error, "error"));
     } finally {
-      setOldPassword("");
-      setNewPassword("");
-      setConfirmNewPassword("");
+      resetFields();
       setDisplayChangePasswordDialog(false);
       setLoading(false);
     }
+  };
+
+  const resetFields = () => {
+    setOldPassword("");
+    setNewPassword("");
+    setConfirmNewPassword("");
   };
 
   return (
@@ -104,7 +108,10 @@ const ChangePasswordDialog = ({
           </DialogContent>
           <DialogActions>
             <Button
-              onClick={() => setDisplayChangePasswordDialog(false)}
+              onClick={() => {
+                resetFields();
+                setDisplayChangePasswordDialog(false);
+              }}
               color="primary"
               className={classes.cancelButton}
             >
