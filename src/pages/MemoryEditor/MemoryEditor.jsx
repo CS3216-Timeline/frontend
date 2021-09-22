@@ -101,7 +101,7 @@ const MemoryEditor = () => {
       creationDate //TODO: REMOVE
     )
     console.log(memoryChanges);
-    history.push(`memory/${memoryId}`);
+    history.push(`/memory/${memoryId}`);
   }
 
   const handleNewMemoryCreation = async () => {
@@ -115,7 +115,7 @@ const MemoryEditor = () => {
       mediaUrls
     );
     const newId = memoryDetails.memoryId;
-    history.push(`memory/${newId}`);
+    history.push(`/memory/${newId}`);
   }
 
   const saveHandler = (e) => {
