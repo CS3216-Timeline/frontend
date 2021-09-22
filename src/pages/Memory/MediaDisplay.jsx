@@ -19,10 +19,14 @@ const useStyles = makeStyles((theme) => ({
     overflowX: "visible",
     transitionProperty: "transform",
     willChange: "transform",
+    width: "100vw",
+    height: "100vw"
   },
   displayImg: {
     objectFit: "contain",
-    textAlign: "center"
+    textAlign: "center",
+    width: "100%",
+    height: "100%",
   },
   main: {
     backgroundColor: "#000",
@@ -175,7 +179,7 @@ const MediaDisplay = (props) => {
             if (!src) {
               return null;
             }
-            return (<img alt="memory media" key={idx} src={src} width="100%" height="100%" />);
+            return (<img alt="memory media" key={idx} src={src} className={classes.displayImg} />);
           })}
         </div>
       </div>
