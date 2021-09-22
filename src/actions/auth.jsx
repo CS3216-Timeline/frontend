@@ -18,7 +18,7 @@ import { googleAnalytics } from "../services/firebase";
 
 export const register = (name, email, password) => async (dispatch) => {
   const body = {
-    name,
+    name: name.trim(),
     email,
     password,
   };
@@ -165,7 +165,7 @@ export const deleteUserAccount = () => async (dispatch) => {
 export const userChangeName = (newName) => async (dispatch) => {
   try {
     const body = {
-      name: newName,
+      name: newName.trim(),
     };
     const res = await server.patch("/users/profile", body);
     const updatedUser = res.data.user;
