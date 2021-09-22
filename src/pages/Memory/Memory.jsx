@@ -75,13 +75,13 @@ const Memory = (props) => {
     setLoading(true);
     const getMemoryDetails = async () => {
       const memoryData = await getMemoryById(memoryId);
-      const { title, description, creationDate, lineId,  latitude, longitude, mediaUrls } = memoryData;
+      const { title, description, creationDate, lineId,  latitude, longitude, media: mediaUrls } = memoryData;
       console.log(memoryData);
       const location = await getGeographicFeature(latitude, longitude);
       setLocation(location);
       setTitle(title);
       setDescription(description);
-      setCreationDate(convertUTCtoLocalDisplay(creationDate));
+      setCreationDate(creationDate);
       setLineId(lineId);
       setMediaUrls(mediaUrls)
 
@@ -150,7 +150,7 @@ const Memory = (props) => {
               <MediaDisplay mediaUrls={mediaUrls} />
             </Box>}
             <Box className={classes.descriptionStyle} marginBottom={3}>
-              <Typography variant="body2">Memory Added on <strong>{creationDate}</strong></Typography>
+              <Typography variant="body2">Memory Added on <strong>{convertUTCtoLocalDisplay(creationDate)}</strong></Typography>
             </Box>
             {location && location.place_name &&
               <Box className={classes.descriptionStyle} marginBottom={3}>

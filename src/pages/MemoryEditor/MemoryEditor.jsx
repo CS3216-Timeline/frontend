@@ -49,7 +49,6 @@ const MemoryEditor = () => {
   const [mediaUrls, setMediaUrls] = useState([]); // blob URL
   const [loading, setLoading] = useState(true);
   const [lineId, setLineId] = useState(lineIdFromUrl);
-  const [creationDate, setCreationDate] = useState(""); // TODO: REMOVE
   const [viewport, setViewport] = useState(getDefaultViewport());
 
   const history = useHistory();
@@ -77,10 +76,9 @@ const MemoryEditor = () => {
     setLoading(false);
     const loadExistingMemoryData = async () => {
       const memoryData = await getMemoryById(memoryId);
-      const { title, description, creationDate, lineId,  latitude, longitude } = memoryData;
+      const { title, description, lineId,  latitude, longitude } = memoryData;
       const feature = await getGeographicFeature(latitude, longitude);
       setSelectedLocation(feature);
-      setCreationDate(creationDate); //TODO: REMOVE
       setLineId(lineId);
       setMemoryTitle(title);
       setMemoryDescription(description);
@@ -98,7 +96,6 @@ const MemoryEditor = () => {
       lineId, 
       selectedLocation.latitude, 
       selectedLocation.longitude,
-      creationDate //TODO: REMOVE
     )
     console.log(memoryChanges);
     history.push(`/memory/${memoryId}`);
