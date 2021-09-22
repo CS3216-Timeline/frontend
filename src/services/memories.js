@@ -1,12 +1,8 @@
 import server from "../utils/server";
 
-// const getMockMediaUrls = () => 
-//   // [0,1,2,3].map(i => ({position: i, url: "https://images.megapixl.com/2485/24853666.jpg"}))
-//   []
-
 // Use this function to convert blobURL to file
-const blobToFile = (blob, fileName="default-name") => {
-  const file = new File([blob], fileName, { type: "image/png" });
+const blobToFile = (blob, fileName="default-name", type="image/png") => {
+  const file = new File([blob], fileName, { type });
   return file
 }
 
@@ -37,18 +33,25 @@ export const getMemoryById = async (memoryId) => {
 
 export const createNewMemory = async (title, lineId, description, latitude, longitude, mediaUrls) => {
   console.log("Blob To File Test", mediaUrls.map(obj => blobToFile(obj.url)));
-  const body = new FormData();
+  const body = new FormData(); 
   body.append("title", title);
   body.append("line", lineId);
-  body.append("lineId", lineId); // TODO: Remove either "line" or "lineId"
   body.append("description", description);
-  body.append("latitude", latitude); // will be automatically string
-  body.append("longitude", longitude);
+  body.append("latitude", latitude); // will be automatically be string (text)
+  body.append("longitude", longitude); // will be automatically be string (text)
 
-  mediaUrls.forEach(im => {
-  // getMockMediaUrls().forEach(im => {
-    body.append("images", im);
-  });
+  const loadImageFile = async (url, idx) => {
+    const filename = `im-${idx}`;
+    await fetch(url)
+      .then(res => res.blob())
+      .then(blob => blobToFile(blob, filename))
+      .then(file => body.append("images", file));
+  };
+
+  for (var idx = 0; idx < mediaUrls.length; idx++) {
+    const url = mediaUrls[idx].url;
+    await loadImageFile(url, idx);
+  }
 
   console.log("POST memories/...");
   for (const [key, value] of body.entries()) {
