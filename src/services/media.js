@@ -53,5 +53,5 @@ export const deleteMediaById = async (mediaId) => {
   const res = await server.delete(`media/${mediaId}`);
   console.log(`done DELETE media/${mediaId}...`);
   console.log("response", res.data.media)
-  return res.data.media; // {memoryId, updates: [ {mediaId, position} ]}
+  return res.data.media; // [ deletedMedia ] // by right only one inside array
 }
