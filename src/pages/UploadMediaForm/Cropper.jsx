@@ -3,6 +3,7 @@ import { useState, useCallback } from "react";
 import ReactCrop from "react-easy-crop";
 import { COLORS } from "../../utils/colors";
 import { getCroppedImage } from "../../utils/cropImage";
+import MemoryMedia from "./MemoryMedia";
 
 const cropperContainerStyle = () => ({
   height: "90vw",
@@ -46,14 +47,18 @@ const Cropper = (props) => {
   const [crop, setCrop] = useState(initCrop());
   const [zoom, setZoom] = useState(cropFactor);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const showCroppedImage = useCallback(
     async (e) => {
+      setLoading(true);
       try {
         const croppedImage = await getCroppedImage(fileUrl, croppedAreaPixels);
         cropHandler(croppedImage);
       } catch (e) {
         console.error(e);
+      } finally {
+        setLoading(false);
       }
     },
     [croppedAreaPixels, cropHandler, fileUrl]
@@ -72,6 +77,16 @@ const Cropper = (props) => {
   const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
   }, []);
+
+  if (loading) {
+      return (
+        <MemoryMedia
+          loading={loading}
+          url={""}
+          hasMedia={false}
+        />
+      )
+  }
 
   return (
     <>
