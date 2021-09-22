@@ -132,7 +132,7 @@ const MemoryEditor = () => {
       alertError("Location cannot be empty.");
       return;
     }
-    if (isEmpty(mediaUrls)) {
+    if (!isEdit && isEmpty(mediaUrls)) {
       alertError("Please upload a media.");
       return; // TODO: comment out if media endpoint not set
     }
