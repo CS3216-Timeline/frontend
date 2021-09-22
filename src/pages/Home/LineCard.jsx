@@ -77,8 +77,7 @@ const LineCard = ({ line, draft = false }) => {
       >
         <CardContent>
           <Grid container>
-            {/* TODO: check if this is the right property */}
-            <Grid item xs={line.latestMemoryImage ? 8 : 12}>
+            <Grid item xs={line.thumbnailUrl ? 8 : 12}>
               <Box paddingTop={1}>
                 <Typography variant="h3" align="left">
                   {line.name}
@@ -96,12 +95,12 @@ const LineCard = ({ line, draft = false }) => {
                 }}
               />
             </Grid>
-            {line.latestMemoryImage && (
+            {line.thumbnailUrl && (
               <Grid item xs={4}>
                 <Box paddingLeft={3}>
                   <img
-                    src={line.latestMemoryImage}
-                    alt={line.name}
+                    src={line.thumbnailUrl}
+                    alt={line.memoryTitle}
                     className={classes.latestMemoryImage}
                   />
                 </Box>
