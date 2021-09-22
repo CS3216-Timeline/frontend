@@ -163,10 +163,12 @@ const Line = (props) => {
         {/* TODO: send memories as a prop to LineMap */}
         <FadeIn>
           {showMap ? (
-            <LineMap
-              lineColor={lineColor}
-              lineMemories={memoriesData}
-            />
+            <Box display="flex" justifyContent="center">
+              <LineMap
+                lineColor={lineColor}
+                lineMemories={memoriesData}
+              />
+            </Box>
           ) : (
             <Timeline align="left">
               {memoriesData.length > 0 ? (
