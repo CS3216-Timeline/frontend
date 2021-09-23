@@ -1,9 +1,8 @@
 import { makeStyles } from "@material-ui/core";
 import { Box } from "@mui/system";
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import { COLORS } from "../../utils/colors";
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
-import Loading from "../../components/Loading";
 
 const vpWidth = Math.max(
   document.documentElement.clientWidth || 0,
