@@ -67,12 +67,13 @@ const Line = (props) => {
         setLineMemories(lineData.memories ? lineData.memories : []);
       } catch(e) {
         dispatch(setAlert("Failed to retrieve line", "error"));
+        history.push("/");
       } finally {
         setLoading(false);
       }
     };
     getLineMemories();
-  }, [lineId, dispatch]);
+  }, [lineId, dispatch, history]);
 
   useEffect(() => {
     if (deleted) {

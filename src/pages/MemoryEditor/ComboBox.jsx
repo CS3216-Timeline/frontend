@@ -6,6 +6,9 @@ import { useState } from "react";
 import { CircularProgress, Typography } from "@material-ui/core";
 import { getLocationSuggestions } from "../../services/locationService";
 import useDebounce from "../../hooks/useDebounce";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router";
+import { setAlert } from "../../actions/alert";
 
 export const ComboBox = ({
   currentLocation,
@@ -13,11 +16,15 @@ export const ComboBox = ({
   setSelectedLocation,
   viewport,
   setViewport,
+  lineId
 }) => {
   const [predictions, setPredictions] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
+
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(
     () => {
@@ -36,7 +43,8 @@ export const ComboBox = ({
           });
           return suggestions;
         } catch (err) {
-          console.log(err.message);
+          dispatch(setAlert(err.message, "error"));
+          history.push("/");
         } finally {
         }
       };
@@ -52,7 +60,7 @@ export const ComboBox = ({
         setIsSearching(false);
       }
     },
-    [currentLocation, debouncedSearchTerm] // Only call effect if debounced search term changes
+    [currentLocation, debouncedSearchTerm, dispatch, history, lineId] // Only call effect if debounced search term changes
   );
 
   const handleChangeLocation = (event, value) => {

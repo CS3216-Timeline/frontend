@@ -88,12 +88,13 @@ const MemoryEditor = () => {
         setMemoryDescription(description);
       } catch (e) {
         dispatch(setAlert("Failed to load memory info", "error"));
+        history.push("/");
       } finally {
         setLoading(false);
       }
     }
     loadExistingMemoryData();
-  }, [memoryId, dispatch])
+  }, [memoryId, dispatch, history])
 
   const handleEditMemory = async () => {
     console.log("Editing memory...");
@@ -218,6 +219,7 @@ const MemoryEditor = () => {
                 setSelectedLocation={setSelectedLocation}
                 viewport={mapViewport}
                 setViewport={setViewport}
+                lineId={lineId}
               />
             </Box>
             <Box paddingY={1}>

@@ -93,13 +93,14 @@ const Memory = (props) => {
         setMediaUrls(mediaUrls);
       } catch (e) {
         dispatch(setAlert("Unable to load memory details.", "error"));
+        history.push("/");
       } finally {
         // states already loaded
         setLoading(false);
       }
     };
     getMemoryDetails();
-  }, [memoryId, dispatch, deleted]);
+  }, [memoryId, dispatch, deleted, history]);
 
   if (loading) {
     return <Loading />;

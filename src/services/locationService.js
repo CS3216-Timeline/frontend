@@ -3,39 +3,31 @@ import _ from 'lodash';
 import server from '../utils/server';
 
 export const getLocationSuggestions = async (searchText, longitude = null, latitude = null) => {
-  try {
-    let queryParams = `searchText=${searchText}`;
-    if (longitude && latitude) {
-      queryParams += `&longitude=${longitude}&latitude=${latitude}`
-    }
-    const res = await server.get(`/geolocation/locations?${queryParams}`);
-    console.log(res.data)
-    return res.data
-  } catch (err) {
-    throw err
+  let queryParams = `searchText=${searchText}`;
+  if (longitude && latitude) {
+    queryParams += `&longitude=${longitude}&latitude=${latitude}`
   }
+  const res = await server.get(`/geolocation/locations?${queryParams}`);
+  console.log(res.data)
+  return res.data;
 }
 
 export const getGeographicFeature = async (latitude, longitude) => {
-  try {
-    const queryParams = `longitude=${longitude}&latitude=${latitude}`;
-    const res = await server.get(`geolocation/features?${queryParams}`);
-    const features = res.data.features;
-    if (!features || features.length === 0) {
-      return {
-        latitude,
-        longitude
-      };
-    }
+  const queryParams = `longitude=${longitude}&latitude=${latitude}`;
+  const res = await server.get(`geolocation/features?${queryParams}`);
+  const features = res.data.features;
+  if (!features || features.length === 0) {
     return {
-      place_name: features[0].place_name,
-      geometry: features[0].geometry,
       latitude,
-      longitude,
+      longitude
     };
-  } catch (err) {
-    throw err;
   }
+  return {
+    place_name: features[0].place_name,
+    geometry: features[0].geometry,
+    latitude,
+    longitude,
+  };
 }
 
 export const MAPBOX_API_TOKEN = process.env.REACT_APP_MAPBOX_KEY;
@@ -51,25 +43,17 @@ const url = "https://api.mapbox.com/geocoding/v5/mapbox.places/";
  * @param {{longitude: number, latitude: number}} currentLocation 
  */
 export const getLocationSuggestionss = async (newSearchValue, currentLocation) => {
-  try {
-    const searchTextInQuery = newSearchValue ? newSearchValue : "singapore"; // query needs to include a search text
-    let searchQuery = `${url}${searchTextInQuery}.json?worldview=cn&limit=10&access_token=${MAPBOX_API_TOKEN}`;
-    if (!_.isEmpty(currentLocation)) {
-      searchQuery += `&proximity=${currentLocation.longitude},${currentLocation.latitude}`;
-    }
-    const res = await axios.get(searchQuery);
-    return res;
-  } catch (err) {
-    throw err;
+  const searchTextInQuery = newSearchValue ? newSearchValue : "singapore"; // query needs to include a search text
+  let searchQuery = `${url}${searchTextInQuery}.json?worldview=cn&limit=10&access_token=${MAPBOX_API_TOKEN}`;
+  if (!_.isEmpty(currentLocation)) {
+    searchQuery += `&proximity=${currentLocation.longitude},${currentLocation.latitude}`;
   }
+  const res = await axios.get(searchQuery);
+  return res;
 }
 
 export const getGeographicFeatures = async (latitude, longitude) => {
-  try {
-    let searchQuery = `${url}${longitude},${latitude}.json?worldview=cn&access_token=${MAPBOX_API_TOKEN}`;
-    const res = await axios.get(searchQuery);
-    return res;
-  } catch (err) {
-    throw err;
-  }
+  let searchQuery = `${url}${longitude},${latitude}.json?worldview=cn&access_token=${MAPBOX_API_TOKEN}`;
+  const res = await axios.get(searchQuery);
+  return res;
 }
