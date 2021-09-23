@@ -146,10 +146,6 @@ const MemoryEditor = () => {
       alertError("Title cannot be empty.");
       return;
     }
-    if (isEmpty(memoryDescription)) {
-      alertError("Description cannot be empty.");
-      return;
-    }
     if (isEmpty(selectedLocation)) {
       alertError("Location cannot be empty.");
       return;
