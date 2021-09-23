@@ -10,21 +10,17 @@ export const getDatesWithMemoriesByMonthAndYear =
   (selectedMonth, selectedYear) => async (dispatch) => {
     try {
       const res = await server.get(
-        `/memories/${selectedYear}/${selectedMonth}`
+        `/memories/${selectedYear}/${selectedMonth + 1}`
       );
-      console.log("selectedYear", selectedYear);
-      console.log("selectedMonth", selectedMonth);
       const memoriesDateArr = res.data.numberOfMemories;
       let dateWithMemories = [];
+      // No need to add 1 for selectedMonth because month starts from 0 for the moment library
       memoriesDateArr.forEach((memory) => {
-        let formattedDate = moment([
-          selectedYear,
-          selectedMonth - 1, // somehow this is required to make it work works
-          memory.day,
-        ])
+        let formattedDate = moment([selectedYear, selectedMonth, memory.day])
           .utc()
           .local()
           .format("DD-MM-YYYY");
+        console.log(formattedDate);
         dateWithMemories.push(formattedDate);
       });
       dispatch({

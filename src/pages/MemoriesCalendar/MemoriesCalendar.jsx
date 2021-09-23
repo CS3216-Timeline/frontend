@@ -1,7 +1,7 @@
 import "react-calendar/dist/Calendar.css";
 import React, { useEffect, useState } from "react";
 import Calendar from "react-calendar";
-import { Box, Button, makeStyles, Typography } from "@material-ui/core";
+import { Box, makeStyles, Typography } from "@material-ui/core";
 import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
 import TodayIcon from "@material-ui/icons/Today";
 import { COLORS } from "../../utils/colors";
@@ -36,13 +36,13 @@ const MemoriesCalendar = () => {
   const selectedDate = useSelector((state) => state.calendar.selectedDate);
 
   const onYearOrMonthChange = (newDate) => {
-    setSelectedMonth(newDate.getMonth() + 1);
+    setSelectedMonth(newDate.getMonth());
     setSelectedYear(newDate.getUTCFullYear());
   };
 
   const onDateChange = async (newDate) => {
     dispatch(setChosenDate(newDate));
-    setSelectedMonth(newDate.getMonth() + 1);
+    setSelectedMonth(newDate.getMonth());
     setSelectedYear(newDate.getUTCFullYear());
   };
 
@@ -62,13 +62,6 @@ const MemoriesCalendar = () => {
 
   return (
     <>
-      <Button
-        onClick={() => {
-          console.log(selectedDate);
-        }}
-      >
-        test
-      </Button>
       <Box display="flex" justifyContent="center">
         <PrivatePageHeader
           text="Calendar"
