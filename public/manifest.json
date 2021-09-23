@@ -3,10 +3,10 @@
   "name": "Timeline",
   "icons": [
     {
-      "src": "maskable_icon.png",
+      "src": "maskable_icon_2.png",
       "sizes": "1024x1024",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "maskable"
     }
   ],
   "start_url": ".",
