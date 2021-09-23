@@ -32,6 +32,13 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     width: "100%",
   },
+  linearScaleIcon: {
+    fontSize: "30pt", 
+    color: COLORS.PRIMARY_PURPLE
+  },
+  chooseColorInstruction: {
+    color: COLORS.BLACK,
+  },
 }));
 
 const CreateNewLine = () => {
@@ -73,7 +80,7 @@ const CreateNewLine = () => {
               icon={
                 <Tooltip title="Create a line to add memories to it!">
                   <LinearScaleIcon
-                    style={{ fontSize: "30pt", color: COLORS.PRIMARY_PURPLE }}
+                    className={classes.linearScaleIcon}
                   />
                 </Tooltip>
               }
@@ -91,7 +98,7 @@ const CreateNewLine = () => {
               {lineTitle}
             </TextField>
             <Grid item xs={12} className={classes.selectColorContainer}>
-              <Typography variant="h4" style={{ color: COLORS.BLACK }}>
+              <Typography variant="h4" className={classes.chooseColorInstruction}>
                 Choose your line color
               </Typography>
               <hr
