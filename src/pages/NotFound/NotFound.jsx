@@ -47,7 +47,7 @@ const NotFound = () => {
       </>
     );
   } else {
-    return <Redirect to="/landing" />;
+    return <Redirect to="/signin" />;
   }
 };
 

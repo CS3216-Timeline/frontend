@@ -20,7 +20,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
             <BottomNavBar />
           </>
         ) : (
-          <Redirect to="/landing" />
+          <Redirect to="/signin" />
         )
       }
     />

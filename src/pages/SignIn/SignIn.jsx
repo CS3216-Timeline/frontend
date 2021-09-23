@@ -97,23 +97,11 @@ const SignIn = () => {
   };
 
   const loginUserWithGoogle = async (googleData) => {
-    try {
-      setLoading(true);
-      dispatch(loginWithGoogle(googleData));
-    } catch (err) {
-    } finally {
-      setLoading(false);
-    }
+    dispatch(loginWithGoogle(googleData));
   };
 
   const loginUserWithFacebook = async (facebookData) => {
-    try {
-      setLoading(true);
-      dispatch(loginWithFacebook(facebookData));
-    } catch (err) {
-    } finally {
-      setLoading(false);
-    }
+    dispatch(loginWithFacebook(facebookData));
   };
 
   if (auth.isAuthenticated) {

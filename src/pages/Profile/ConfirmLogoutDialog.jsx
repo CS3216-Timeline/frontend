@@ -9,6 +9,7 @@ import { COLORS } from "../../utils/colors";
 import { useDispatch } from "react-redux";
 import { setAlert } from "../../actions/alert";
 import { logout } from "../../actions/auth";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
   cancelButton: {
@@ -28,11 +29,13 @@ const ConfirmLogoutDialog = ({
 }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const onLogoutButtonClicked = async () => {
     try {
       setLoading(true);
       dispatch(logout());
+      history.push("/signin");
     } catch (err) {
       dispatch(setAlert(err.message, "error"));
     } finally {
