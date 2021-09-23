@@ -125,7 +125,7 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
   const handleCropDone = (url) => {
     if (!url) {
       setCropView(false);
-      setEditFileUrl(false);
+      setEditFileUrl(null);
       return;
     }
     setEditFileUrl(null);

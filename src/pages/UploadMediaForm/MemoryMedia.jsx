@@ -26,6 +26,7 @@ const MemoryMedia = (props) => {
   if (loading) {
     return (
       <div className={classes.imageContainerStyle}>
+        <p>Loading image...</p>
         <ClipLoader color={COLORS.PRIMARY_PURPLE} loading={true} size={50} />
       </div>
     )
