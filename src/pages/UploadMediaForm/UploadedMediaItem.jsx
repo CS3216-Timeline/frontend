@@ -63,12 +63,15 @@ const UploadedMediaItem = ({
                 </IconButton>
               </Box>
             }
-            <img 
+            <Box
               onClick={() => setMediaPreview(media.position)} 
-              className={isSelected ? classes.selectedImage : classes.image} 
-              src={media.url} 
-              alt={"uploaded media"} 
-            />
+            >
+              <img 
+                className={isSelected ? classes.selectedImage : classes.image} 
+                src={media.url} 
+                alt={"uploaded media"} 
+              />
+            </Box>
           </Box>
         </Grid>
       )}
