@@ -8,13 +8,12 @@ import { setAlert } from "./alert";
 export const getDatesWithMemoriesByMonthAndYear =
   (selectedMonth, selectedYear) => async (dispatch) => {
     try {
-      const res = await server.get(
-        `/memories/${selectedYear}/${selectedMonth}`
-      );
+      let x = selectedMonth + 1;
+      const res = await server.get(`/memories/${selectedYear}/${x}`);
       const memoriesDateArr = res.data.numberOfMemories;
       let dateWithMemories = [];
       memoriesDateArr.forEach((memory) =>
-        dateWithMemories.push(`${memory.day}-${selectedMonth}-${selectedYear}`)
+        dateWithMemories.push(`${memory.day}-${x}-${selectedYear}`)
       );
       dispatch({
         type: GET_DATES_WITH_MEMORIES,

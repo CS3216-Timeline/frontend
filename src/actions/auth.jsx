@@ -76,6 +76,9 @@ export const loginWithGoogle = (googleData) => async (dispatch) => {
   const body = {
     token: googleData.tokenId,
   };
+  if (!googleData.tokenId) {
+    return;
+  }
   try {
     const res = await server.post("auth/login/google", body);
     console.log(res.data);

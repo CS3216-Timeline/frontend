@@ -81,24 +81,26 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
   };
 
   const deleteMediaByPosition = async (positionOfMedia) => {
-    console.log("deleting media at position", positionOfMedia)
+    console.log("deleting media at position", positionOfMedia);
     if (previewUrl === mediaUrls[positionOfMedia].url) {
       setPreviewUrl(null);
     }
     let deleteId = null;
     // update positions
-    const clonedMediaUrls = [...mediaUrls].filter((media, idx) => {
-      if (idx === positionOfMedia) {
-        deleteId = media.mediaId;
-        return false;
-      }
-      return true;
-    }).map((media, idx) => {
-      return {
-        ...media,
-        position: idx,
-      };
-    });
+    const clonedMediaUrls = [...mediaUrls]
+      .filter((media, idx) => {
+        if (idx === positionOfMedia) {
+          deleteId = media.mediaId;
+          return false;
+        }
+        return true;
+      })
+      .map((media, idx) => {
+        return {
+          ...media,
+          position: idx,
+        };
+      });
     if (deleteId) {
       await deleteMediaById(deleteId);
     }
@@ -119,10 +121,7 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
       url,
     };
     if (!memoryId) {
-      setMediaUrls([
-        ...clonedMediaUrls,
-        newMedia
-      ]);
+      setMediaUrls([...clonedMediaUrls, newMedia]);
       setCropView(false);
       setPreviewUrl(newMedia.url);
       return;
@@ -132,10 +131,11 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
       setLoading(true);
       setCropView(false);
       try {
-        const createdMedia = await createNewMedia({...newMedia}, memoryId);
+        const createdMedia = await createNewMedia({ ...newMedia }, memoryId);
         setMediaUrls([...createdMedia]);
         setPreviewUrl(createdMedia.url);
-      } catch(e) {
+        dispatch(setAlert("Media has been added!", "success"));
+      } catch (e) {
         dispatch(setAlert("Unable to add media. (302)", "error"));
       } finally {
         setLoading(false);
@@ -181,8 +181,8 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
           />
         )}
         {isCropView ? (
-          <Button 
-            variant="outlined" 
+          <Button
+            variant="outlined"
             onClick={handleCancelCrop}
             disabled={loading}
           >
