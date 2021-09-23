@@ -48,7 +48,7 @@ const MemoriesCalendar = () => {
     // setSelectedMonth(newDate.getUTCMonth());
     // setSelectedYear(newDate.getUTCFullYear());
     dispatch(setChosenDate(newDate));
-    const memories = await getMemoriesByDate(selectedDate);
+    const memories = await getMemoriesByDate(newDate);
     setMemoriesOfSelectedDate(memories);
   };
 
@@ -89,7 +89,6 @@ const MemoriesCalendar = () => {
       </Box>
       <Box padding={2}>
         <Typography variant="h4" align="center">
-          {/* TODO: FORMAT THIS */}
           Memories made on {convertUTCtoDate(selectedDate)}
         </Typography>
       </Box>
