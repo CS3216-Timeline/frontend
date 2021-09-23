@@ -32,6 +32,10 @@ const useStyles = makeStyles((theme) => ({
   textFieldContainer: {
     padding: theme.spacing(1, 0, 1, 0),
   },
+  homeIcon: {
+    fontSize: "30pt", 
+    color: COLORS.PRIMARY_PURPLE
+  },
 }));
 
 const Home = () => {
@@ -79,9 +83,7 @@ const Home = () => {
               text={"Home"}
               icon={
                 <Tooltip title="Add/ find lines to create your memory!">
-                  <HomeIcon
-                    style={{ fontSize: "30pt", color: COLORS.PRIMARY_PURPLE }}
-                  />
+                  <HomeIcon className={classes.homeIcon} />
                 </Tooltip>
               }
             />

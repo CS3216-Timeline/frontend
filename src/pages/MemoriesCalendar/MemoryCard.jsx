@@ -26,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
     // maxWidth: "100px",
     maxHeight: "100px",
   },
+  button: {
+    textTransform: "none",
+  },
 }));
 
 const MemoryCard = ({ memory }) => {
@@ -74,7 +77,7 @@ const MemoryCard = ({ memory }) => {
             onClick={() => {
               history.push(`/memory/${memory.memoryId}`);
             }}
-            style={{ textTransform: "none" }}
+            className={classes.button}
           >
             <Typography variant="body1">View Memory</Typography>
           </Button>

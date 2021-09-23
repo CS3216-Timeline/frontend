@@ -158,6 +158,11 @@ const MediaDisplay = (props) => {
     }, duration * 100));
   };
 
+  const getSwiperDynamicStyles = (movement, transitionDuration) => ({
+    transform: `translateX(${movement * -1}px)`,
+    transitionDuration: transitionDuration,
+  });
+
   return (
     <Box display="flex" flexDirection="column">
       <div
@@ -169,10 +174,7 @@ const MediaDisplay = (props) => {
       >
         <div 
           className={classes.swiper}
-          style={{
-            transform: `translateX(${movement * -1}px)`,
-            transitionDuration: transitionDuration,
-          }}
+          style={getSwiperDynamicStyles(movement, transitionDuration)}
         >
           {mediaUrls.map((media, idx) => {
             const src = media.url;

@@ -70,6 +70,10 @@ const CreateNewLine = () => {
     return <Loading />;
   }
 
+  const getColoredLineStyle = () => ({
+    border: `5px solid ${selectedColor}`,
+  });
+
   return (
     <Fragment>
       <Grid container>
@@ -101,11 +105,7 @@ const CreateNewLine = () => {
               <Typography variant="h4" className={classes.chooseColorInstruction}>
                 Choose your line color
               </Typography>
-              <hr
-                style={{
-                  border: `5px solid ${selectedColor}`,
-                }}
-              />
+              <hr style={getColoredLineStyle()} />
               {/* https://casesandberg.github.io/react-color/ */}
               <GithubPicker
                 color={selectedColor}

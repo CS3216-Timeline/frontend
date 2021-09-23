@@ -1,4 +1,4 @@
-import { Box, Button } from "@material-ui/core";
+import { Box, Button, makeStyles } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import HiddenFileInput from "./HiddenFileInput";
 import Cropper from "./Cropper";
@@ -15,7 +15,18 @@ const MEDIA_LIMIT = 4; // can tweak
 const MEGABYTE = 1048576;
 const MAX_FILE_SIZE = 10 * MEGABYTE;
 
+const useStyles = makeStyles((theme) => ({
+  formContainer: { 
+    textAlign: "center",
+  },
+  formTitle: {
+    color: COLORS.PRIMARY_PURPLE,
+  },
+}));
+
 const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
+  const classes = useStyles();
+
   const initUrls = existingMediaUrls
     ? existingMediaUrls.map((media) => ({ ...media }))
     : [];
@@ -155,10 +166,9 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
       <Box
         display="flex"
         flexDirection="column"
-        style={{ textAlign: "center" }}
-        // marginBottom={12}
+        className={classes.formContainer}
       >
-        <h3 style={{ color: COLORS.PRIMARY_PURPLE }}>Upload Media</h3>
+        <h3 className={classes.formTitle}>Upload Media</h3>
         <p>Please upload 1 - {MEDIA_LIMIT} photos.</p>
         {isCropView ? (
           <Cropper fileUrl={editFileUrl} cropHandler={handleCropDone} />

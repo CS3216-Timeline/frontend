@@ -35,6 +35,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: COLORS.RED,
     color: COLORS.WHITE,
   },
+  linearScaleIcon: {
+    fontSize: "30pt", 
+    color: COLORS.PRIMARY_PURPLE
+  },
 }));
 
 const EditLine = () => {
@@ -76,6 +80,10 @@ const EditLine = () => {
     return <Loading />;
   }
 
+  const getColoredLineStyle = () => ({
+    border: `5px solid ${selectedColor}`,
+  });
+
   return (
     <>
       <Grid container spacing={3}>
@@ -84,9 +92,7 @@ const EditLine = () => {
             <PrivatePageHeader
               text={"Edit your line"}
               icon={
-                <LinearScaleIcon
-                  style={{ fontSize: "30pt", color: COLORS.PRIMARY_PURPLE }}
-                />
+                <LinearScaleIcon className={classes.linearScaleIcon}/>
               }
             />
             <TextField
@@ -102,11 +108,7 @@ const EditLine = () => {
             />
             <Grid item xs={12} className={classes.selectColorContainer}>
               <Typography variant="h4">Choose your new line color</Typography>
-              <hr
-                style={{
-                  border: `5px solid ${selectedColor}`,
-                }}
-              />
+              <hr style={getColoredLineStyle()} />
               {/* https://casesandberg.github.io/react-color/ */}
               <GithubPicker
                 color={selectedColor}
