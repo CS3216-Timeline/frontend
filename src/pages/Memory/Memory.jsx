@@ -69,7 +69,7 @@ const Memory = (props) => {
 
   useEffect(() => {
     if (deleted) {
-      history.push(`line/${lineId}`);
+      history.push(`/line/${lineId}`);
     }
   }, [deleted, history, lineId]);
 

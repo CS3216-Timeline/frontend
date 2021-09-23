@@ -155,7 +155,7 @@ const MemoryEditor = () => {
       return;
     }
     if (!isEdit && isEmpty(mediaUrls)) {
-      alertError("Please upload a media.");
+      alertError("Please upload a PNG or JPG photo.");
       return; // TODO: comment out if media endpoint not set
     }
 
@@ -236,16 +236,6 @@ const MemoryEditor = () => {
                   onComplete={setMediaUrls}
                 />
               </Box>
-            }
-            {!isEdit && // TODO: REMOVE THIS BLOCK
-              <p>
-                [TEST] Media:{" "}
-                {mediaUrls.length > 0 && (
-                  <a key={mediaUrls[0].position} href={mediaUrls[0].url} rel="noreferrer" target="_blank">
-                    {mediaUrls[0].url}
-                  </a>
-                )}
-              </p>
             }
             <Box paddingY={1}>
               <Button

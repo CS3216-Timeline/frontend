@@ -100,9 +100,16 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
       };
     });
     if (deleteId) {
-      await deleteMediaById(deleteId);
+      try {
+        await deleteMediaById(deleteId);
+        dispatch(setAlert("Deletion successful!", "success"))
+        setMediaUrls([...clonedMediaUrls]);
+      } catch(e) {
+        dispatch(setAlert("Failed to delete media", "error"));
+      }
+    } else {
+      setMediaUrls([...clonedMediaUrls]);
     }
-    setMediaUrls([...clonedMediaUrls]);
   };
 
   useEffect(() => {
@@ -110,6 +117,8 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
       onComplete([...mediaUrls]);
     }
   }, [mediaUrls, onComplete]);
+
+  console.log(mediaUrls);
 
   const handleCropDone = (url) => {
     if (!url) {
@@ -138,10 +147,11 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
       setCropView(false);
       try {
         const createdMedia = await createNewMedia({...newMedia}, memoryId);
+        dispatch(setAlert("Successfully added photo!", "success"));
         setMediaUrls([...createdMedia]);
-        setPreviewUrl(createdMedia.url);
+        setPreviewUrl(createdMedia[createdMedia.length - 1].url);
       } catch(e) {
-        dispatch(setAlert("Unable to add media. (302)", "error"));
+        dispatch(setAlert("Unable to add media, please try again later.", "error"));
       } finally {
         setLoading(false);
       }
@@ -163,7 +173,7 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
         style={{ textAlign: "center" }}
         // marginBottom={12}
       >
-        <h3 style={{ color: COLORS.PRIMARY_PURPLE }}>Upload Media</h3>
+        <h3 style={{ color: COLORS.PRIMARY_PURPLE }}>Upload Photos</h3>
         <p>Please upload 1 - {MEDIA_LIMIT} photos.</p>
         {isCropView ? (
           <Cropper fileUrl={editFileUrl} cropHandler={handleCropDone} />
