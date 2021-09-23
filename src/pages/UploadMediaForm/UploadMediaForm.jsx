@@ -172,7 +172,9 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
         style={{ textAlign: "center" }}
         // marginBottom={12}
       >
-        <h3 style={{ color: COLORS.PRIMARY_PURPLE }}>Upload Photos</h3>
+        {memoryId && 
+          <h3 style={{ color: COLORS.PRIMARY_PURPLE }}>Upload Photos</h3>
+        }
         <p>Please upload 1 - {MEDIA_LIMIT} photos.</p>
         {isCropView ? (
           <Cropper fileUrl={editFileUrl} cropHandler={handleCropDone} />
