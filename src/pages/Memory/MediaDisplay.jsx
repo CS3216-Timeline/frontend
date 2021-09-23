@@ -19,17 +19,21 @@ const useStyles = makeStyles((theme) => ({
     overflowX: "visible",
     transitionProperty: "transform",
     willChange: "transform",
+    width: "100vw",
+    height: "100vw"
   },
   displayImg: {
     objectFit: "contain",
-    textAlign: "center"
+    textAlign: "center",
+    width: "100%",
+    height: "100%",
   },
   main: {
     backgroundColor: "#000",
     overflow: "hidden",
     position: "relative",
-    width: `${IMG_WIDTH}px`,
-    height: `${IMG_WIDTH}px`,
+    width: "100vw",
+    height: "100vw",
   },
   move: {
     display: "flex",
@@ -75,7 +79,7 @@ const HorizontalScrollDots = (props) => {
   return (
     <Box display="flex" flexDirection="row" width="100%" justifyContent="center">
       {templateArray.map((_, idx) => (
-          <FiberManualRecordIcon className={getDotClassByIndex(idx)} />
+          <FiberManualRecordIcon key={idx} className={getDotClassByIndex(idx)} />
         )
       )}
     </Box>
@@ -175,7 +179,7 @@ const MediaDisplay = (props) => {
             if (!src) {
               return null;
             }
-            return (<img alt="memory media" key={idx} src={src} width="100%" height="100%" />);
+            return (<img alt="memory media" key={idx} src={src} className={classes.displayImg} />);
           })}
         </div>
       </div>

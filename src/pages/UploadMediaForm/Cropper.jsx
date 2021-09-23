@@ -1,6 +1,8 @@
 import { Box, Button } from "@material-ui/core";
 import { useState, useCallback } from "react";
 import ReactCrop from "react-easy-crop";
+import { useDispatch } from "react-redux";
+import { setAlert } from "../../actions/alert";
 import { COLORS } from "../../utils/colors";
 import { getCroppedImage } from "../../utils/cropImage";
 
@@ -46,17 +48,22 @@ const Cropper = (props) => {
   const [crop, setCrop] = useState(initCrop());
   const [zoom, setZoom] = useState(cropFactor);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+  const [disableDone, setDisableDone] = useState(false);
 
+  const dispatch = useDispatch();
   const showCroppedImage = useCallback(
     async (e) => {
+      setDisableDone(true);
       try {
         const croppedImage = await getCroppedImage(fileUrl, croppedAreaPixels);
         cropHandler(croppedImage);
       } catch (e) {
+        dispatch(setAlert("Unable to crop image, please try again.", "error"));
         console.error(e);
+        setDisableDone(false);
       }
     },
-    [croppedAreaPixels, cropHandler, fileUrl]
+    [croppedAreaPixels, cropHandler, fileUrl, dispatch]
   );
 
   const saveCroppedImage = (e) => {
@@ -99,8 +106,8 @@ const Cropper = (props) => {
         <Button
           variant="outlined"
           onClick={saveCroppedImage}
-          color="primary"
-          // Improve design
+          color={disableDone ? "inherit" : "primary"}
+          disabled={disableDone}
         >
           Done
         </Button>

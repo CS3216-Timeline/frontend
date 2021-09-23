@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import { useHistory } from "react-router-dom";
 import { Box, Button } from "@material-ui/core";
 import { COLORS } from "../../utils/colors";
+import { convertUTCtoLocalDisplay } from "../../utils/datetime";
 
 const getPaperStyle = () => ({
   padding: "6px 16px",
@@ -72,7 +73,7 @@ const MemoryCard = (props) => {
                   <Typography variant="h6" component="h1">
                     <strong>{title}</strong>
                   </Typography>
-                  <Typography variant="body1">{date}</Typography>
+                  <Typography variant="body1">{convertUTCtoLocalDisplay(date)}</Typography>
                 </Box>
                 <Box
                   display="flex"

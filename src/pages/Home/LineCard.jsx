@@ -33,7 +33,9 @@ const useStyles = makeStyles((theme) => ({
   },
   latestMemoryImage: {
     // maxWidth: "100px",
-    maxHeight: "100px",
+    objectFit: "contain",
+    maxHeight: "100%",
+    maxWidth: "100%",
   },
 }));
 
@@ -97,7 +99,7 @@ const LineCard = ({ line, draft = false }) => {
             </Grid>
             {!draft && line.thumbnailUrl && (
               <Grid item xs={4}>
-                <Box paddingLeft={3}>
+                <Box paddingX={1}>
                   <img
                     src={line.thumbnailUrl}
                     alt={line.memoryTitle}

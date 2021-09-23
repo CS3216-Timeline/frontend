@@ -5,7 +5,7 @@ export const convertUTCtoLocalDisplay = (timestamp) => {
     .utc(timestamp)
     .local()
     // .format("YYYY-MM-DD HH:mm A")
-    .format("DD MMM YYYY — HH:mm A")
+    .format("DD MMM YYYY — HH:mm A");
 }
 
 export const convertUTCtoDate = (timestamp) => {
@@ -13,5 +13,5 @@ export const convertUTCtoDate = (timestamp) => {
     .utc(timestamp)
     .local()
     // .format("YYYY-MM-DD HH:mm A")
-    .format("DD MMM YYYY")
+    .format("DD MMM YYYY");
 }

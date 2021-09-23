@@ -4,8 +4,8 @@ import HiddenFileInput from "./HiddenFileInput";
 import Cropper from "./Cropper";
 import MemoryMedia from "./MemoryMedia";
 import { COLORS } from "../../utils/colors";
+import { createNewMedia, deleteMediaById } from "../../services/media";
 import UploadedMediaList from "./UploadedMediaList";
-import DeleteMediaDialog from "./DeleteMediaDialog";
 import { useDispatch } from "react-redux";
 import { setAlert } from "../../actions/alert";
 
@@ -15,7 +15,7 @@ const MEDIA_LIMIT = 4; // can tweak
 const MEGABYTE = 1048576;
 const MAX_FILE_SIZE = 10 * MEGABYTE;
 
-const UploadMediaForm = ({ existingMediaUrls, onComplete }) => {
+const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
   const initUrls = existingMediaUrls
     ? existingMediaUrls.map((media) => ({ ...media }))
     : [];
@@ -24,14 +24,14 @@ const UploadMediaForm = ({ existingMediaUrls, onComplete }) => {
   const [isCropView, setCropView] = useState(false);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [imageLoading, setImageLoading] = useState(false);
 
-  console.log(mediaUrls);
   const dispatch = useDispatch();
 
   const loadImage = (file) => {
-    var fileUrl = URL.createObjectURL(file);
-    setLoading(true);
+    setImageLoading(true);
     setCropView(false);
+    let fileUrl = URL.createObjectURL(file);
     setEditFileUrl(null);
     fetch(fileUrl)
       .then((res) => res.blob())
@@ -43,7 +43,7 @@ const UploadMediaForm = ({ existingMediaUrls, onComplete }) => {
         // do nothing
       })
       .finally(() => {
-        setLoading(false);
+        setImageLoading(false);
         if (fileUrl) {
           setEditFileUrl(fileUrl);
           setCropView(true);
@@ -57,7 +57,8 @@ const UploadMediaForm = ({ existingMediaUrls, onComplete }) => {
   };
 
   const addNewMedia = (e) => {
-    var newFile = e.target.files[0];
+    e.preventDefault();
+    let newFile = e.target.files[0];
     if (!newFile) {
       return;
     }
@@ -69,7 +70,6 @@ const UploadMediaForm = ({ existingMediaUrls, onComplete }) => {
   };
 
   const setMediaPreview = (positionOfMedia) => {
-    console.log(positionOfMedia);
     if (positionOfMedia >= mediaUrls.length) {
       return;
     }
@@ -80,20 +80,29 @@ const UploadMediaForm = ({ existingMediaUrls, onComplete }) => {
     return mediaUrls.length === MEDIA_LIMIT;
   };
 
-  const deleteMediaByPosition = (positionOfMedia) => {
-    let clonedMediaUrls = [...mediaUrls];
-    if (previewUrl === clonedMediaUrls[positionOfMedia].url) {
+  const deleteMediaByPosition = async (positionOfMedia) => {
+    console.log("deleting media at position", positionOfMedia)
+    if (previewUrl === mediaUrls[positionOfMedia].url) {
       setPreviewUrl(null);
     }
-    clonedMediaUrls.splice(positionOfMedia, 1);
-    // Push the position. (Damn troublesome cause this means if we delete one photo, we need to update all the photos position as well)
-    clonedMediaUrls = clonedMediaUrls.map((media) => {
+    let deleteId = null;
+    // update positions
+    const clonedMediaUrls = [...mediaUrls].filter((media, idx) => {
+      if (idx === positionOfMedia) {
+        deleteId = media.mediaId;
+        return false;
+      }
+      return true;
+    }).map((media, idx) => {
       return {
         ...media,
-        position: clonedMediaUrls.indexOf(media),
+        position: idx,
       };
     });
-    setMediaUrls(clonedMediaUrls);
+    if (deleteId) {
+      await deleteMediaById(deleteId);
+    }
+    setMediaUrls([...clonedMediaUrls]);
   };
 
   useEffect(() => {
@@ -105,15 +114,34 @@ const UploadMediaForm = ({ existingMediaUrls, onComplete }) => {
   const handleCropDone = (url) => {
     setEditFileUrl(null);
     const clonedMediaUrls = [...mediaUrls];
-    setMediaUrls([
-      ...clonedMediaUrls,
-      {
-        position: mediaUrls.length,
-        url: url,
-      },
-    ]);
-    setCropView(false);
-    setPreviewUrl(url);
+    const newMedia = {
+      position: clonedMediaUrls.length,
+      url,
+    };
+    if (!memoryId) {
+      setMediaUrls([
+        ...clonedMediaUrls,
+        newMedia
+      ]);
+      setCropView(false);
+      setPreviewUrl(newMedia.url);
+      return;
+    }
+    console.log(newMedia.position);
+    const addMedia = async () => {
+      setLoading(true);
+      setCropView(false);
+      try {
+        const createdMedia = await createNewMedia({...newMedia}, memoryId);
+        setMediaUrls([...createdMedia]);
+        setPreviewUrl(createdMedia.url);
+      } catch(e) {
+        dispatch(setAlert("Unable to add media. (302)", "error"));
+      } finally {
+        setLoading(false);
+      }
+    };
+    addMedia();
   };
 
   const handleCancelCrop = (e) => {
@@ -136,7 +164,7 @@ const UploadMediaForm = ({ existingMediaUrls, onComplete }) => {
           <Cropper fileUrl={editFileUrl} cropHandler={handleCropDone} />
         ) : (
           <MemoryMedia
-            loading={loading}
+            loading={imageLoading}
             url={previewUrl}
             hasMedia={mediaUrls.length === 0 ? false : true}
           />
@@ -153,13 +181,17 @@ const UploadMediaForm = ({ existingMediaUrls, onComplete }) => {
           />
         )}
         {isCropView ? (
-          <Button variant="outlined" onClick={handleCancelCrop}>
+          <Button 
+            variant="outlined" 
+            onClick={handleCancelCrop}
+            disabled={loading}
+          >
             Cancel
           </Button>
         ) : (
           <Button
             variant="outlined"
-            color={loading ? "inherit" : "primary"}
+            color={loading || isMediaLimitReached() ? "inherit" : "primary"}
             disabled={loading || isMediaLimitReached()}
           >
             <label htmlFor="image-upload">
@@ -169,7 +201,6 @@ const UploadMediaForm = ({ existingMediaUrls, onComplete }) => {
           </Button>
         )}
       </Box>
-      <DeleteMediaDialog />
     </>
   );
 };

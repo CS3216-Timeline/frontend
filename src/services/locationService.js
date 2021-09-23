@@ -2,7 +2,7 @@ import axios from 'axios';
 import _ from 'lodash';
 import server from '../utils/server';
 
-export const getLocationSuggestions = async (searchText, longitude, latitude) => {
+export const getLocationSuggestions = async (searchText, longitude = null, latitude = null) => {
   try {
     let queryParams = `searchText=${searchText}`;
     if (longitude && latitude) {
@@ -20,7 +20,19 @@ export const getGeographicFeature = async (latitude, longitude) => {
   try {
     const queryParams = `longitude=${longitude}&latitude=${latitude}`;
     const res = await server.get(`geolocation/features?${queryParams}`);
-    return res.data.features;
+    const features = res.data.features;
+    if (!features || features.length === 0) {
+      return {
+        latitude,
+        longitude
+      };
+    }
+    return {
+      place_name: features[0].place_name,
+      geometry: features[0].geometry,
+      latitude,
+      longitude,
+    };
   } catch (err) {
     throw err;
   }
