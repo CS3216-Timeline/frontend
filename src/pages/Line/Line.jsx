@@ -58,8 +58,8 @@ const Line = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setLoading(true);
     const getLineMemories = async () => {
+      setLoading(true);
       try {
         const lineData = await getLineDataById(lineId);
         setLineTitle(lineData.name);
