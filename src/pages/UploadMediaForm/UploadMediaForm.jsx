@@ -112,6 +112,11 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
   }, [mediaUrls, onComplete]);
 
   const handleCropDone = (url) => {
+    if (!url) {
+      setCropView(false);
+      setEditFileUrl(false);
+      return;
+    }
     setEditFileUrl(null);
     const clonedMediaUrls = [...mediaUrls];
     const newMedia = {

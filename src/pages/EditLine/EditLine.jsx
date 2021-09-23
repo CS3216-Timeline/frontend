@@ -67,6 +67,7 @@ const EditLine = () => {
       history.push(`/line/${lineId}`);
     } catch (err) {
       dispatch(setAlert(err.message, "error"));
+      history.push("/");
     } finally {
       setLoading(false);
     }
