@@ -10,6 +10,7 @@ import DeleteProfileDialog from "./DeleteProfileDialog";
 import { Box, Typography } from "@material-ui/core";
 import ChangePasswordDialog from "./ChangePasswordDialog";
 import ChangeNameDialog from "./ChangeNameDialog";
+import ConfirmLogoutDialog from "./ConfirmLogoutDialog";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,6 +25,7 @@ const Info = () => {
   const [displayDeleteDialog, setDisplayDeleteDialog] = useState(false);
   const [displayChangePasswordDialog, setDisplayChangePasswordDialog] =
     useState(false);
+  const [displayLogoutDialog, setDisplayLogoutDialog] = useState(false);
   const [loading, setLoading] = useState(false);
 
   if (loading) {
@@ -48,6 +50,10 @@ const Info = () => {
           <Divider />
           <ListItem button onClick={() => setDisplayDeleteDialog(true)}>
             <ListItemText primary="Delete Account" />
+          </ListItem>
+          <Divider />
+          <ListItem button onClick={() => setDisplayLogoutDialog(true)}>
+            <ListItemText primary="Logout" />
           </ListItem>
           <Divider />
           <Box padding={2}>
@@ -80,6 +86,11 @@ const Info = () => {
         <ChangeNameDialog
           displayChangeNameDialog={displayChangeNameDialog}
           setDisplayChangeNameDialog={setDisplayChangeNameDialog}
+          setLoading={setLoading}
+        />
+        <ConfirmLogoutDialog
+          displayLogoutDialog={displayLogoutDialog}
+          setDisplayLogoutDialog={setDisplayLogoutDialog}
           setLoading={setLoading}
         />
       </div>

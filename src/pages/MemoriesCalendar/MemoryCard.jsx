@@ -22,6 +22,10 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     paddingBottom: theme.spacing(3),
   },
+  memoryImage: {
+    // maxWidth: "100px",
+    maxHeight: "100px",
+  },
 }));
 
 const MemoryCard = ({ memory }) => {
@@ -39,24 +43,26 @@ const MemoryCard = ({ memory }) => {
       >
         <CardContent>
           <Grid container>
-            <Grid item xs={12}>
+            <Grid item xs={8}>
               <Box paddingTop={1}>
                 <Typography variant="h3" align="left">
-                  Memory Name
+                  {memory?.title}
                 </Typography>
               </Box>
               <Box paddingTop={1}>
                 <Typography variant="body1" align="left">
-                  Memory Description
+                  {memory?.description}
                 </Typography>
               </Box>
-              {/* TODO: get colorHex of the memory too */}
-              {/* <hr
-                style={{
-                  border: `5px solid ${line.colorHex}`,
-                }}
-              /> */}
-              {/* TODO: Might want to add image as well, will check with backend team */}
+            </Grid>
+            <Grid item xs={4}>
+              <Box paddingLeft={3}>
+                <img
+                  src={memory?.thumbnailUrl}
+                  alt={memory?.title}
+                  className={classes.memoryImage}
+                />
+              </Box>
             </Grid>
           </Grid>
         </CardContent>

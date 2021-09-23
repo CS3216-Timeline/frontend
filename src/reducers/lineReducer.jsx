@@ -1,4 +1,5 @@
 import {
+  ADD_LINE,
   CREATE_DRAFT_LINE,
   DELETE_DRAFT_LINE,
   GET_LINES,
@@ -13,6 +14,11 @@ const initialState = {
 const lineReducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
+    case ADD_LINE:
+      return {
+        ...state,
+        onlineLines: [...state.onlineLines, payload],
+      };
     case GET_LINES:
       return {
         ...state,
