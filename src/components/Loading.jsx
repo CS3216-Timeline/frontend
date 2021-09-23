@@ -17,12 +17,12 @@ const useStyles = makeStyles(() => ({
     },
   },
   bottom: {
-    height: "28%",
+    height: "35%",
     width: "auto",
     position: "fixed",
     bottom: 0,
     "@media (max-width: 480px)": {
-      height: "20%",
+      height: "35%",
     },
   },
   loaderContainer: {

@@ -56,7 +56,7 @@ const MemoryCard = ({ memory }) => {
               </Box>
             </Grid>
             <Grid item xs={4}>
-              <Box paddingLeft={3}>
+              <Box paddingLeft={3} paddingRight={1}>
                 <img
                   src={memory?.thumbnailUrl}
                   alt={memory?.title}
