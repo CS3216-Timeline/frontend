@@ -35,15 +35,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// const DEFAULT_LOCATION = {
+const DEFAULT_LONGITUDE = 103.8198;
+const DEFAULT_LATITUDE =  1.3521;
+
+// const getDefaultLocation = () => ({
 //   geometry: {
-//     coordinates: [103.8198, 1.3521],
+//     coordinates: [DEFAULT_LONGITUDE, DEFAULT_LATITUDE],
 //   },
-// };
+// });
 
 const getDefaultViewport = () => ({
-  latitude: 1.3521,
-  longitude: 103.8198,
+  latitude: DEFAULT_LATITUDE,
+  longitude: DEFAULT_LONGITUDE,
   height: "50vh",
   width: "100%",
   zoom: 10,
@@ -99,12 +102,13 @@ const MemoryEditor = () => {
         setMemoryDescription(description);
       } catch (e) {
         dispatch(setAlert("Failed to load memory info", "error"));
+        history.push("/");
       } finally {
         setLoading(false);
       }
     };
     loadExistingMemoryData();
-  }, [memoryId, dispatch]);
+  }, [memoryId, dispatch, history])
 
   const handleEditMemory = async () => {
     console.log("Editing memory...");
@@ -165,7 +169,7 @@ const MemoryEditor = () => {
       return;
     }
     if (!isEdit && isEmpty(mediaUrls)) {
-      alertError("Please upload a media.");
+      alertError("Please upload a PNG or JPG photo.");
       return; // TODO: comment out if media endpoint not set
     }
 
@@ -229,13 +233,13 @@ const MemoryEditor = () => {
                 setSelectedLocation={setSelectedLocation}
                 viewport={mapViewport}
                 setViewport={setViewport}
+                lineId={lineId}
               />
             </Box>
             <Box paddingY={1}>
               <MapDisplay
                 selectedLocation={selectedLocation}
                 viewport={mapViewport}
-                setViewport={setViewport}
               />
             </Box>
             {!isEdit && (
@@ -245,21 +249,6 @@ const MemoryEditor = () => {
                   onComplete={setMediaUrls}
                 />
               </Box>
-            )}
-            {!isEdit && ( // TODO: REMOVE THIS BLOCK
-              <p>
-                [TEST] Media:{" "}
-                {mediaUrls.length > 0 && (
-                  <a
-                    key={mediaUrls[0].position}
-                    href={mediaUrls[0].url}
-                    rel="noreferrer"
-                    target="_blank"
-                  >
-                    {mediaUrls[0].url}
-                  </a>
-                )}
-              </p>
             )}
             <Box paddingY={1}>
               <Button

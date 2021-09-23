@@ -3,9 +3,12 @@ import React, { useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useState } from "react";
-import { CircularProgress, Typography } from "@material-ui/core";
+import { CircularProgress } from "@material-ui/core";
 import { getLocationSuggestions } from "../../services/locationService";
 import useDebounce from "../../hooks/useDebounce";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router";
+import { setAlert } from "../../actions/alert";
 
 export const ComboBox = ({
   currentLocation,
@@ -13,11 +16,15 @@ export const ComboBox = ({
   setSelectedLocation,
   viewport,
   setViewport,
+  lineId
 }) => {
   const [predictions, setPredictions] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
+
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(
     () => {
@@ -36,7 +43,8 @@ export const ComboBox = ({
           });
           return suggestions;
         } catch (err) {
-          console.log(err.message);
+          dispatch(setAlert(err.message, "error"));
+          history.push("/");
         } finally {
         }
       };
@@ -52,7 +60,7 @@ export const ComboBox = ({
         setIsSearching(false);
       }
     },
-    [currentLocation, debouncedSearchTerm] // Only call effect if debounced search term changes
+    [currentLocation, debouncedSearchTerm, dispatch, history, lineId] // Only call effect if debounced search term changes
   );
 
   const handleChangeLocation = (event, value) => {
@@ -106,17 +114,6 @@ export const ComboBox = ({
           />
         )}
       />
-      {/* just to show that it works */}
-      <Typography variant="body1">for testing</Typography>
-      <Typography variant="body1">
-        place_name: {selectedLocation && selectedLocation.place_name}
-      </Typography>
-      <Typography variant="body1">
-        coordinates:{" "}
-        {selectedLocation &&
-          `longitude: ${selectedLocation.geometry.coordinates[0]}, latitude: 
-         ${selectedLocation.geometry.coordinates[1]}`}
-      </Typography>
     </>
   );
 };

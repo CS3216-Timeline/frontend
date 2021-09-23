@@ -26,6 +26,7 @@ const MemoryMedia = (props) => {
   if (loading) {
     return (
       <div className={classes.imageContainerStyle}>
+        <p>Loading image...</p>
         <ClipLoader color={COLORS.PRIMARY_PURPLE} loading={true} size={50} />
       </div>
     )
@@ -36,8 +37,8 @@ const MemoryMedia = (props) => {
       {url && (
         <img className={classes.imageStyle} src={url} alt="memory preview" />
       )}
-      {!url && !hasMedia && <p>No Media Selected</p>}
-      {!url && hasMedia && <p>No Media Selected</p>}
+      {!url && !hasMedia && <p>No Photo Selected</p>}
+      {!url && hasMedia && <p>No Photo Selected</p>}
     </div>
   );
 };
