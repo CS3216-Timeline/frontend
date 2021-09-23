@@ -23,6 +23,8 @@ import Loading from "../../components/Loading";
 import LineMap from "./LineMap/LineMap";
 import NoneAvailable from "../../components/NoneAvailable";
 import FadeIn from "react-fade-in/lib/FadeIn";
+import { useDispatch } from "react-redux";
+import { setAlert } from "../../actions/alert";
 
 const useStyles = makeStyles((theme) => ({
   mapButton: {
@@ -53,12 +55,21 @@ const Line = (props) => {
   const [lineMemories, setLineMemories] = useState([]);
   const [lineColor, setLineColor] = useState("");
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
+    setLoading(true);
     const getLineMemories = async () => {
-      const lineData = await getLineDataById(lineId);
-      setLineTitle(lineData.name);
-      setLineColor(lineData.colorHex);
-      setLineMemories(lineData.memories ? lineData.memories : []);
+      try {
+        const lineData = await getLineDataById(lineId);
+        setLineTitle(lineData.name);
+        setLineColor(lineData.colorHex);
+        setLineMemories(lineData.memories ? lineData.memories : []);
+      } catch(e) {
+        dispatch(setAlert("Failed to retrieve line", "error"));
+      } finally {
+        setLoading(false);
+      }
     };
     getLineMemories();
   }, [lineId]);
