@@ -16,7 +16,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const MapDisplay = ({ selectedLocation, viewport, setViewport }) => {
+const MapDisplay = ({ selectedLocation, viewport }) => {
   const classes = useStyles();
   const [showPopup, setShowPopup] = useState(false);
 
@@ -26,9 +26,9 @@ const MapDisplay = ({ selectedLocation, viewport, setViewport }) => {
         {...viewport}
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_KEY}
         mapStyle="mapbox://styles/mapbox/streets-v10"
-        // everytime user drag/zoom, will cause map to re-render
-        // onViewportChange={(viewport) => renderViewport(viewport)}
-        onViewportChange={(v) => setViewport(v)}
+        scrollZoom={false}
+        dragPan={false}
+        dragRotate={false}
       >
         {selectedLocation && (
           <Marker

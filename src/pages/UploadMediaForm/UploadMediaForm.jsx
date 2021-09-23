@@ -1,5 +1,5 @@
 import { Box, Button } from "@material-ui/core";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ImageUploadButton from "./ImageUploadButton";
 import Cropper from "./Cropper";
 import MemoryMedia from "./MemoryMedia";
@@ -105,20 +105,21 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
       try {
         await deleteMediaById(deleteId);
         dispatch(setAlert("Deletion successful!", "success"))
-        setMediaUrls([...clonedMediaUrls]);
+        updateMediaUrls([...clonedMediaUrls]);
       } catch(e) {
         dispatch(setAlert("Failed to delete media", "error"));
       }
     } else {
-      setMediaUrls([...clonedMediaUrls]);
+      updateMediaUrls([...clonedMediaUrls]);
     }
   };
 
-  useEffect(() => {
+  const updateMediaUrls = (urls) => {
+    setMediaUrls(urls);
     if (onComplete) {
-      onComplete([...mediaUrls]);
+      onComplete(urls);
     }
-  }, [mediaUrls, onComplete]);
+  }
 
   console.log(mediaUrls);
 
@@ -135,9 +136,9 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
       url,
     };
     if (!memoryId) {
-      setMediaUrls([...clonedMediaUrls, newMedia]);
       setCropView(false);
       setPreviewUrl(newMedia.url);
+      updateMediaUrls([...clonedMediaUrls, newMedia]);
       return;
     }
     console.log(newMedia.position);
@@ -147,8 +148,8 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
       try {
         const createdMedia = await createNewMedia({...newMedia}, memoryId);
         dispatch(setAlert("Successfully added photo!", "success"));
-        setMediaUrls([...createdMedia]);
         setPreviewUrl(createdMedia[createdMedia.length - 1].url);
+        updateMediaUrls([...createdMedia]);
       } catch(e) {
         dispatch(setAlert("Unable to add media, please try again later.", "error"));
       } finally {

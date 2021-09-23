@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useState } from "react";
-import { CircularProgress, Typography } from "@material-ui/core";
+import { CircularProgress } from "@material-ui/core";
 import { getLocationSuggestions } from "../../services/locationService";
 import useDebounce from "../../hooks/useDebounce";
 import { useDispatch } from "react-redux";
@@ -114,17 +114,6 @@ export const ComboBox = ({
           />
         )}
       />
-      {/* just to show that it works */}
-      <Typography variant="body1">for testing</Typography>
-      <Typography variant="body1">
-        place_name: {selectedLocation && selectedLocation.place_name}
-      </Typography>
-      <Typography variant="body1">
-        coordinates:{" "}
-        {selectedLocation &&
-          `longitude: ${selectedLocation.geometry.coordinates[0]}, latitude: 
-         ${selectedLocation.geometry.coordinates[1]}`}
-      </Typography>
     </>
   );
 };

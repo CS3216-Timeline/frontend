@@ -35,15 +35,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// const DEFAULT_LOCATION = {
+const DEFAULT_LONGITUDE = 103.8198;
+const DEFAULT_LATITUDE =  1.3521;
+
+// const getDefaultLocation = () => ({
 //   geometry: {
-//     coordinates: [103.8198, 1.3521],
+//     coordinates: [DEFAULT_LONGITUDE, DEFAULT_LATITUDE],
 //   },
-// };
+// });
 
 const getDefaultViewport = () => ({
-  latitude: 1.3521,
-  longitude: 103.8198,
+  latitude: DEFAULT_LATITUDE,
+  longitude: DEFAULT_LONGITUDE,
   height: "50vh",
   width: "100%",
   zoom: 10,
@@ -237,7 +240,6 @@ const MemoryEditor = () => {
               <MapDisplay
                 selectedLocation={selectedLocation}
                 viewport={mapViewport}
-                setViewport={setViewport}
               />
             </Box>
             {!isEdit && (
