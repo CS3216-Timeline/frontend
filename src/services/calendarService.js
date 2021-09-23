@@ -2,13 +2,10 @@ import server from "../utils/server";
 
 export const getMemoriesByDate = async (selectedDate) => {
   try {
-    console.log(selectedDate)
+    // console.log(selectedDate)
     const year = selectedDate.getUTCFullYear();
-    const month = selectedDate.getUTCMonth() + 1;
-    const day = selectedDate.getUTCDate() + 1;
-    console.log("year", year)
-    console.log("month", month)
-    console.log("day", day)
+    const month = selectedDate.getMonth() + 1; // Because javascript getMonth starts from 0
+    const day = selectedDate.getDate();
     const res = await server.get(`/memories/${year}/${month}/${day}`)
     return res.data.memories
   } catch (err) {

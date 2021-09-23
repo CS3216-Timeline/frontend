@@ -28,8 +28,6 @@ const useStyles = makeStyles((theme) => ({
 
 const MemoriesCalendar = () => {
   const classes = useStyles();
-  // eslint-disable-next-line no-unused-vars
-  // const [selectedDay, setSelectedDay] = useState(new Date().getUTCDate());
   const [selectedMonth, setSelectedMonth] = useState(new Date().getUTCMonth());
   const [selectedYear, setSelectedYear] = useState(new Date().getUTCFullYear());
   const [memoriesOfSelectedDate, setMemoriesOfSelectedDate] = useState([]);
@@ -38,26 +36,29 @@ const MemoriesCalendar = () => {
   const selectedDate = useSelector((state) => state.calendar.selectedDate);
 
   const onYearOrMonthChange = (newDate) => {
-    // setSelectedDay(newDate.getUTCDate());
-    setSelectedMonth(newDate.getUTCMonth());
+    setSelectedMonth(newDate.getMonth());
     setSelectedYear(newDate.getUTCFullYear());
   };
 
   const onDateChange = async (newDate) => {
-    // setSelectedDay(newDate.getUTCDate());
-    // setSelectedMonth(newDate.getUTCMonth());
-    // setSelectedYear(newDate.getUTCFullYear());
     dispatch(setChosenDate(newDate));
-    const memories = await getMemoriesByDate(newDate);
-    console.log(memories);
-    setMemoriesOfSelectedDate(memories);
+    setSelectedMonth(newDate.getMonth());
+    setSelectedYear(newDate.getUTCFullYear());
   };
 
   // const mark = ["06-09-2021", "07-09-2021", "09-09-2021"];
 
   useEffect(() => {
     dispatch(getDatesWithMemoriesByMonthAndYear(selectedMonth, selectedYear));
-  }, [selectedMonth, selectedYear, dispatch]);
+  }, [dispatch, selectedMonth, selectedYear]);
+
+  useEffect(() => {
+    const getMemoriesBySelectedDate = async () => {
+      const memories = await getMemoriesByDate(new Date(selectedDate));
+      setMemoriesOfSelectedDate(memories);
+    };
+    getMemoriesBySelectedDate();
+  }, [selectedDate]);
 
   return (
     <>
