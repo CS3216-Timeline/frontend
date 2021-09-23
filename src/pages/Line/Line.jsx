@@ -72,7 +72,7 @@ const Line = (props) => {
       }
     };
     getLineMemories();
-  }, [lineId]);
+  }, [lineId, dispatch]);
 
   useEffect(() => {
     if (deleted) {
