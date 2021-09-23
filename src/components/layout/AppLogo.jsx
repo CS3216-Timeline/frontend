@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
 
 const AppLogo = () => {
   const classes = useStyles();
-  return <img className={classes.logoImage} src={secondaryLogo} alt={"logo"} />;
+  return <img className={classes.logoImage} src={secondaryLogo} alt="logo" />;
 };
 
 export default AppLogo;

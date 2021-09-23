@@ -55,7 +55,13 @@ const MemoryCard = (props) => {
         <TimelineContent>
           <Paper elevation={3} style={getPaperStyle()}>
             <Box display="flex" flexDirection="column">
-              {mediaUrl && <img alt={title} src={mediaUrl} style={{ width: "100%", height: "100%" }} />}
+              {mediaUrl && (
+                <img
+                  alt={title}
+                  src={mediaUrl}
+                  style={{ width: "100%", height: "100%" }}
+                />
+              )}
               <br />
               <Box
                 display="flex"

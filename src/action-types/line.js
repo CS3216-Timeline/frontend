@@ -1,4 +1,5 @@
 export const GET_LINES = "GET_LINES";
+export const ADD_LINE = "ADD_LINE";
 export const CREATE_DRAFT_LINE = "CREATE_DRAFT_LINE";
 export const GET_LINES_OFFLINE = "GET_LINES_OFFLINE"
 export const RETRY_CREATE_DRAFT = "RETRY_CREATE_DRAFT"

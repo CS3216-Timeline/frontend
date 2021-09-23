@@ -17,12 +17,11 @@ import FacebookLogin from "react-facebook-login";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import Copyright from "../../components/layout/CopyRight";
 import FadeIn from "react-fade-in/lib/FadeIn";
+import Loading from "../../components/Loading";
 
 const GOOGLE_API_TOKEN = process.env.REACT_APP_GOOGLE_KEY;
 const FACEBOOK_API_TOKEN = process.env.REACT_APP_FACEBOOK_KEY;
-const SERVER_BASE_URL = process.env.REACT_APP_SERVER_BASE_URL;
-
-const FACEBOOK_REDIRECT_URI = `${SERVER_BASE_URL}/signin`;
+const FACEBOOK_REDIRECT_URI = `https://cs3216-timeline.netlify.app/signin`;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -79,13 +78,20 @@ const SignIn = () => {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const history = useHistory();
 
-  const loginUser = (e) => {
-    e.preventDefault();
-    dispatch(login(email, password));
+  const loginUser = async (e) => {
+    try {
+      setLoading(true);
+      e.preventDefault();
+      dispatch(login(email, password));
+    } catch (err) {
+    } finally {
+      setLoading(false);
+    }
   };
 
   const loginUserWithGoogle = async (googleData) => {
@@ -98,6 +104,10 @@ const SignIn = () => {
 
   if (auth.isAuthenticated) {
     return <Redirect to="/" />;
+  }
+
+  if (loading) {
+    return <Loading />;
   }
 
   return (

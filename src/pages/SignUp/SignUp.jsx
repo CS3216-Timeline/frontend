@@ -15,6 +15,7 @@ import AppLogo from "../../components/layout/AppLogo";
 import AuthHeader from "../../components/layout/AuthHeader";
 import Copyright from "../../components/layout/CopyRight";
 import FadeIn from "react-fade-in/lib/FadeIn";
+import Loading from "../../components/Loading";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,11 +46,12 @@ const SignUp = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassowrd] = useState("");
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const history = useHistory();
 
-  const onRegisterClick = (e) => {
+  const onRegisterClick = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       dispatch(
@@ -60,8 +62,18 @@ const SignUp = () => {
       );
       return;
     }
-    dispatch(register(name, email, password));
+    try {
+      setLoading(true);
+      dispatch(register(name, email, password));
+    } catch (err) {
+    } finally {
+      setLoading(false);
+    }
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   if (auth.isAuthenticated) {
     return <Redirect to="/" />;

@@ -1,7 +1,6 @@
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
-import TopNavBar from "./layout/TopNavBar";
 import BottomNavBar from "./layout/BottomNavBar";
 import Loading from "./Loading";
 
@@ -16,12 +15,12 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
           <Loading />
         ) : auth.isAuthenticated ? (
           <>
-            <TopNavBar />
+            {/* <TopNavBar /> */}
             <Component {...props} />
             <BottomNavBar />
           </>
         ) : (
-          <Redirect to="/landing" />
+          <Redirect to="/signin" />
         )
       }
     />
