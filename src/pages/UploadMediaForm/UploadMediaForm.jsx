@@ -81,24 +81,26 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
   };
 
   const deleteMediaByPosition = async (positionOfMedia) => {
-    console.log("deleting media at position", positionOfMedia)
+    console.log("deleting media at position", positionOfMedia);
     if (previewUrl === mediaUrls[positionOfMedia].url) {
       setPreviewUrl(null);
     }
     let deleteId = null;
     // update positions
-    const clonedMediaUrls = [...mediaUrls].filter((media, idx) => {
-      if (idx === positionOfMedia) {
-        deleteId = media.mediaId;
-        return false;
-      }
-      return true;
-    }).map((media, idx) => {
-      return {
-        ...media,
-        position: idx,
-      };
-    });
+    const clonedMediaUrls = [...mediaUrls]
+      .filter((media, idx) => {
+        if (idx === positionOfMedia) {
+          deleteId = media.mediaId;
+          return false;
+        }
+        return true;
+      })
+      .map((media, idx) => {
+        return {
+          ...media,
+          position: idx,
+        };
+      });
     if (deleteId) {
       try {
         await deleteMediaById(deleteId);
@@ -133,10 +135,7 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
       url,
     };
     if (!memoryId) {
-      setMediaUrls([
-        ...clonedMediaUrls,
-        newMedia
-      ]);
+      setMediaUrls([...clonedMediaUrls, newMedia]);
       setCropView(false);
       setPreviewUrl(newMedia.url);
       return;
@@ -196,8 +195,8 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
           />
         )}
         {isCropView ? (
-          <Button 
-            variant="outlined" 
+          <Button
+            variant="outlined"
             onClick={handleCancelCrop}
             disabled={loading}
           >

@@ -3,14 +3,14 @@
   "name": "Timeline",
   "icons": [
     {
-      "src": "maskable_icon_2.png",
+      "src": "maskable_icon2.png",
       "sizes": "1024x1024",
       "type": "image/png",
       "purpose": "maskable"
     }
   ],
   "start_url": ".",
-  "display": "standalone",
+  "display": "fullscreen",
   "theme_color": "#ffffff",
   "background_color": "#ffffff"
 }

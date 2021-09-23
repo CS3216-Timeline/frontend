@@ -82,7 +82,15 @@ const Memory = (props) => {
       setLoading(true);
       try {
         const memoryData = await getMemoryById(memoryId);
-        const { title, description, creationDate, lineId,  latitude, longitude, media: mediaUrls } = memoryData;
+        const {
+          title,
+          description,
+          creationDate,
+          lineId,
+          latitude,
+          longitude,
+          media: mediaUrls,
+        } = memoryData;
         console.log(memoryData);
         const location = await getGeographicFeature(latitude, longitude);
         setLocation(location);
@@ -114,10 +122,10 @@ const Memory = (props) => {
           <Grid container className={classes.memoryContainer}>
             <Grid item xs={12}>
               <Box paddingY={1}>
-                <UploadMediaForm 
+                <UploadMediaForm
                   memoryId={memoryId}
-                  existingMediaUrls={mediaUrls} 
-                  onComplete={setMediaUrls} 
+                  existingMediaUrls={mediaUrls}
+                  onComplete={setMediaUrls}
                 />
               </Box>
               <Box paddingY={1}>
@@ -134,28 +142,35 @@ const Memory = (props) => {
           </Grid>
         </div>
       </>
-    )
+    );
   }
 
   return (
     <>
       <FadeIn>
         <Box paddingBottom={7}>
-          <Box >
+          <Box>
             <Box display="flex" justifyContent="center" paddingTop={2}>
               <PrivatePageHeader text={title} />
             </Box>
-            {mediaUrls.length > 0 && <Box display="flex" justifyContent="center" marginBottom={3}>
-              <MediaDisplay mediaUrls={mediaUrls} />
-            </Box>}
-            <Box className={classes.descriptionStyle} marginBottom={3}>
-              <Typography variant="body2">Memory Added on <strong>{convertUTCtoLocalDisplay(creationDate)}</strong></Typography>
-            </Box>
-            {location && location.place_name &&
-              <Box className={classes.descriptionStyle} marginBottom={3}>
-                <Typography variant="body2">Location: <strong>{location.place_name}</strong></Typography>
+            {mediaUrls.length > 0 && (
+              <Box display="flex" justifyContent="center" marginBottom={3}>
+                <MediaDisplay mediaUrls={mediaUrls} />
               </Box>
-            }
+            )}
+            <Box className={classes.descriptionStyle} marginBottom={3}>
+              <Typography variant="body2">
+                Memory Added on{" "}
+                <strong>{convertUTCtoLocalDisplay(creationDate)}</strong>
+              </Typography>
+            </Box>
+            {location && location.place_name && (
+              <Box className={classes.descriptionStyle} marginBottom={3}>
+                <Typography variant="body2">
+                  Location: <strong>{location.place_name}</strong>
+                </Typography>
+              </Box>
+            )}
             <Box className={classes.descriptionStyle}>
               <Typography variant="body2">{description}</Typography>
             </Box>
@@ -182,7 +197,7 @@ const Memory = (props) => {
               <Box paddingX={0.5}>
                 <Button
                   onClick={() => {
-                    setIsMediaEditView(!isMediaEditView)
+                    setIsMediaEditView(!isMediaEditView);
                   }}
                   fullWidth
                   className={classes.editMediaButton}
@@ -211,7 +226,7 @@ const Memory = (props) => {
           </Grid>
           <Grid container>
             <Grid item xs={12}>
-              <Box paddingX={0.5} paddingY={5}>
+              <Box paddingX={0.5} paddingBottom={8} paddingTop={4}>
                 <Button
                   fullWidth
                   color="primary"

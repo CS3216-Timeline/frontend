@@ -10,7 +10,11 @@ import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
 import { COLORS } from "../../utils/colors";
 import UploadMediaForm from "../UploadMediaForm/UploadMediaForm";
 import { useHistory, useParams } from "react-router";
-import { createNewMemory, editMemoryDetailsById, getMemoryById } from "../../services/memories";
+import {
+  createNewMemory,
+  editMemoryDetailsById,
+  getMemoryById,
+} from "../../services/memories";
 import { useDispatch } from "react-redux";
 import { setAlert } from "../../actions/alert";
 import { getGeographicFeature } from "../../services/locationService";
@@ -31,6 +35,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// const DEFAULT_LOCATION = {
+//   geometry: {
+//     coordinates: [103.8198, 1.3521],
+//   },
+// };
+
 const getDefaultViewport = () => ({
   latitude: 1.3521,
   longitude: 103.8198,
@@ -39,7 +49,8 @@ const getDefaultViewport = () => ({
   zoom: 10,
 });
 
-const isEmpty = (val) => val === null || val === undefined || val === "" || val.length === 0;
+const isEmpty = (val) =>
+  val === null || val === undefined || val === "" || val.length === 0;
 
 const MemoryEditor = () => {
   const classes = useStyles();
@@ -80,7 +91,7 @@ const MemoryEditor = () => {
       setLoading(true);
       try {
         const memoryData = await getMemoryById(memoryId);
-        const { title, description, lineId,  latitude, longitude } = memoryData;
+        const { title, description, lineId, latitude, longitude } = memoryData;
         const feature = await getGeographicFeature(latitude, longitude);
         setSelectedLocation(feature);
         setLineId(lineId);
@@ -88,11 +99,11 @@ const MemoryEditor = () => {
         setMemoryDescription(description);
       } catch (e) {
         dispatch(setAlert("Failed to load memory info", "error"));
-        history.push("/");
+        history.goBack();
       } finally {
         setLoading(false);
       }
-    }
+    };
     loadExistingMemoryData();
   }, [memoryId, dispatch, history])
 
@@ -101,13 +112,13 @@ const MemoryEditor = () => {
     setLoading(true);
     try {
       const memoryChanges = await editMemoryDetailsById(
-        memoryId, 
-        memoryTitle, 
-        memoryDescription, 
-        lineId, 
+        memoryId,
+        memoryTitle,
+        memoryDescription,
+        lineId,
         selectedLocation.longitude,
-        selectedLocation.latitude, 
-      )
+        selectedLocation.latitude
+      );
       console.log(memoryChanges);
     } catch (e) {
       alertError("Unable to save changes.");
@@ -115,7 +126,7 @@ const MemoryEditor = () => {
       setLoading(false);
       history.push(`/memory/${memoryId}`);
     }
-  }
+  };
 
   const handleNewMemoryCreation = async () => {
     console.log("Creating memory...");
@@ -123,11 +134,11 @@ const MemoryEditor = () => {
     let newId = null;
     try {
       const memoryDetails = await createNewMemory(
-        memoryTitle, 
-        lineId, 
-        memoryDescription, 
-        selectedLocation.latitude, 
-        selectedLocation.longitude, 
+        memoryTitle,
+        lineId,
+        memoryDescription,
+        selectedLocation.latitude,
+        selectedLocation.longitude,
         mediaUrls
       );
       newId = memoryDetails.memoryId;
@@ -142,7 +153,7 @@ const MemoryEditor = () => {
       }
       history.push(`/memory/${newId}`);
     }
-  }
+  };
 
   const saveHandler = (e) => {
     e.preventDefault();
@@ -166,10 +177,10 @@ const MemoryEditor = () => {
     }
   };
 
-  const mapViewport = {...viewport, ...currentLocation}
+  const mapViewport = { ...viewport, ...selectedLocation };
 
   if (loading) {
-    return <Loading />
+    return <Loading />;
   }
 
   return (
@@ -229,14 +240,14 @@ const MemoryEditor = () => {
                 setViewport={setViewport}
               />
             </Box>
-            {!isEdit && 
+            {!isEdit && (
               <Box paddingY={1}>
-                <UploadMediaForm 
+                <UploadMediaForm
                   existingMediaUrls={mediaUrls} // will be empty
                   onComplete={setMediaUrls}
                 />
               </Box>
-            }
+            )}
             <Box paddingY={1}>
               <Button
                 fullWidth
@@ -247,7 +258,7 @@ const MemoryEditor = () => {
                 Save Memory
               </Button>
             </Box>
-            <Box paddingY={1}>
+            <Box paddingY={1} paddingBottom={3}>
               <Button
                 fullWidth
                 color="primary"
