@@ -40,11 +40,6 @@ const minZoom = 0.3;
 const cropAspectRatio = 1; // SQUARE
 
 const Cropper = (props) => {
-  // TODO: How to handle invalid photo URLS?
-  // TODO: Allow BOTH videos and images
-  // TODO: In future, can allow Rotation
-  // TODO: Loading state
-
   const { cropHandler, fileUrl } = props;
   const [crop, setCrop] = useState(initCrop());
   const [zoom, setZoom] = useState(cropFactor);
