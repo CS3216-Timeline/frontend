@@ -15,6 +15,8 @@ import { useDispatch } from "react-redux";
 import { setAlert } from "../../actions/alert";
 import { getGeographicFeature } from "../../services/locationService";
 import Loading from "../../components/Loading";
+import { googleAnalytics } from "../../services/firebase";
+import { logEvent } from "@firebase/analytics";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -128,6 +130,7 @@ const MemoryEditor = () => {
         mediaUrls
       );
       newId = memoryDetails.memoryId;
+      logEvent(googleAnalytics, "create_memory");
     } catch (e) {
       alertError("Unable to create memory.");
     } finally {
