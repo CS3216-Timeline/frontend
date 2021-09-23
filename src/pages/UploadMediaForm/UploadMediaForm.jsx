@@ -57,6 +57,7 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
   };
 
   const addNewMedia = (e) => {
+    e.preventDefault();
     let newFile = e.target.files[0];
     if (!newFile) {
       return;
@@ -98,14 +99,10 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
         position: idx,
       };
     });
-    if (!memoryId || !deleteId) {
-      setMediaUrls([...clonedMediaUrls]);
-      return;
-    }
     if (deleteId) {
       await deleteMediaById(deleteId);
-      setMediaUrls([...clonedMediaUrls]);
     }
+    setMediaUrls([...clonedMediaUrls]);
   };
 
   useEffect(() => {
@@ -114,7 +111,6 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
     }
   }, [mediaUrls, onComplete]);
 
-  console.log(mediaUrls);
   const handleCropDone = (url) => {
     setEditFileUrl(null);
     const clonedMediaUrls = [...mediaUrls];
@@ -185,13 +181,17 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
           />
         )}
         {isCropView ? (
-          <Button variant="outlined" onClick={handleCancelCrop}>
+          <Button 
+            variant="outlined" 
+            onClick={handleCancelCrop}
+            disabled={loading}
+          >
             Cancel
           </Button>
         ) : (
           <Button
             variant="outlined"
-            color={loading ? "inherit" : "primary"}
+            color={loading || isMediaLimitReached() ? "inherit" : "primary"}
             disabled={loading || isMediaLimitReached()}
           >
             <label htmlFor="image-upload">

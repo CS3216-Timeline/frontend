@@ -1,8 +1,9 @@
 import { makeStyles } from "@material-ui/core";
 import { Box } from "@mui/system";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { COLORS } from "../../utils/colors";
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import Loading from "../../components/Loading";
 
 const vpWidth = Math.max(
   document.documentElement.clientWidth || 0,
@@ -32,8 +33,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#000",
     overflow: "hidden",
     position: "relative",
-    width: `${IMG_WIDTH}px`,
-    height: `${IMG_WIDTH}px`,
+    width: "100vw",
+    height: "100vw",
   },
   move: {
     display: "flex",
