@@ -49,6 +49,7 @@ const MemoriesCalendar = () => {
     // setSelectedYear(newDate.getUTCFullYear());
     dispatch(setChosenDate(newDate));
     const memories = await getMemoriesByDate(newDate);
+    console.log(memories);
     setMemoriesOfSelectedDate(memories);
   };
 
