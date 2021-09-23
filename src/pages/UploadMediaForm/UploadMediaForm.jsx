@@ -1,6 +1,6 @@
 import { Box, Button } from "@material-ui/core";
 import { useEffect, useState } from "react";
-import HiddenFileInput from "./HiddenFileInput";
+import ImageUploadButton from "./ImageUploadButton";
 import Cropper from "./Cropper";
 import MemoryMedia from "./MemoryMedia";
 import { COLORS } from "../../utils/colors";
@@ -203,16 +203,10 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
             Cancel
           </Button>
         ) : (
-          <Button
-            variant="outlined"
-            color={loading || isMediaLimitReached() ? "inherit" : "primary"}
+          <ImageUploadButton 
+            handleChange={addNewMedia} 
             disabled={loading || isMediaLimitReached()}
-          >
-            <label htmlFor="image-upload">
-              Add New Media
-              <HiddenFileInput handleChange={addNewMedia} />
-            </label>
-          </Button>
+          />
         )}
       </Box>
     </>
