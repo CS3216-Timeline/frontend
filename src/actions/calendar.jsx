@@ -1,3 +1,4 @@
+import moment from "moment";
 import {
   GET_DATES_WITH_MEMORIES,
   SET_SELECTED_DATE,
@@ -8,13 +9,24 @@ import { setAlert } from "./alert";
 export const getDatesWithMemoriesByMonthAndYear =
   (selectedMonth, selectedYear) => async (dispatch) => {
     try {
-      let x = selectedMonth + 1;
-      const res = await server.get(`/memories/${selectedYear}/${x}`);
+      const res = await server.get(
+        `/memories/${selectedYear}/${selectedMonth}`
+      );
+      console.log("selectedYear", selectedYear);
+      console.log("selectedMonth", selectedMonth);
       const memoriesDateArr = res.data.numberOfMemories;
       let dateWithMemories = [];
-      memoriesDateArr.forEach((memory) =>
-        dateWithMemories.push(`${memory.day}-${x}-${selectedYear}`)
-      );
+      memoriesDateArr.forEach((memory) => {
+        let formattedDate = moment([
+          selectedYear,
+          selectedMonth - 1, // somehow this is required to make it work works
+          memory.day,
+        ])
+          .utc()
+          .local()
+          .format("DD-MM-YYYY");
+        dateWithMemories.push(formattedDate);
+      });
       dispatch({
         type: GET_DATES_WITH_MEMORIES,
         payload: dateWithMemories,
