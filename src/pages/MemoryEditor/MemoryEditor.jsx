@@ -102,7 +102,7 @@ const MemoryEditor = () => {
         setMemoryDescription(description);
       } catch (e) {
         dispatch(setAlert("Failed to load memory info", "error"));
-        history.goBack();
+        history.push("/");
       } finally {
         setLoading(false);
       }
