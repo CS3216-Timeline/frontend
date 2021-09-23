@@ -132,7 +132,7 @@ export const loadUser = () => async (dispatch) => {
 
   try {
     // this one bascially only job is to get the user.
-    const res = await server.get("auth");
+    const res = await server.get("/users");
     dispatch({
       type: USER_LOADED,
       payload: res.data,
