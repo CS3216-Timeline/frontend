@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router";
+import NotFoundImage from "../../assets/not-found.png";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -65,6 +66,10 @@ const MemoryCard = ({ memory }) => {
                 <img
                   src={memory?.thumbnailUrl}
                   alt={memory?.title}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = NotFoundImage;
+                  }}
                   className={classes.memoryImage}
                 />
               </Box>

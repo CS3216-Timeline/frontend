@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { createDraftLineWhenOnline, deleteDraftLine } from "../../actions/line";
 import { ClipLoader } from "react-spinners";
 import { COLORS } from "../../utils/colors";
+import NotFoundImage from "../../assets/not-found.png";
 
 const getColoredLineStyle = (color) => ({
   border: `5px solid ${color}`,
@@ -38,9 +39,9 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: "100%",
     maxWidth: "100%",
   },
-  button: { 
-    textTransform: "none" 
-  }
+  button: {
+    textTransform: "none",
+  },
 }));
 
 const LineCard = ({ line, draft = false }) => {
@@ -103,6 +104,10 @@ const LineCard = ({ line, draft = false }) => {
                   <img
                     src={line.thumbnailUrl}
                     alt={line.memoryTitle}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = NotFoundImage;
+                    }}
                     className={classes.latestMemoryImage}
                   />
                 </Box>
@@ -120,7 +125,9 @@ const LineCard = ({ line, draft = false }) => {
               }}
               className={classes.button}
             >
-              <Typography variant="body1">View&nbsp;/&nbsp;Add Memories</Typography>
+              <Typography variant="body1">
+                View&nbsp;/&nbsp;Add Memories
+              </Typography>
             </Button>
           </CardActions>
         )}
