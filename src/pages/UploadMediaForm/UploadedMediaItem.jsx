@@ -4,6 +4,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { COLORS } from "../../utils/colors";
 import DeleteMediaDialog from "./DeleteMediaDialog";
 import { ClipLoader } from "react-spinners";
+import NotFoundImage from "../../assets/not-found.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,20 +59,22 @@ const UploadedMediaItem = ({
       ) : (
         <Grid item xs={3} className={classes.root}>
           <Box position="relative">
-            { isDeletable &&
+            {isDeletable && (
               <Box className={classes.deleteButtonContainer}>
                 <IconButton onClick={() => setDisplayDeleteDialog(true)}>
                   <DeleteIcon className={classes.iconStyle} />
                 </IconButton>
               </Box>
-            }
-            <Box
-              onClick={() => setMediaPreview(media.position)} 
-            >
-              <img 
-                className={isSelected ? classes.selectedImage : classes.image} 
-                src={media.url} 
-                alt={"uploaded media"} 
+            )}
+            <Box onClick={() => setMediaPreview(media.position)}>
+              <img
+                className={isSelected ? classes.selectedImage : classes.image}
+                src={media.url}
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = NotFoundImage;
+                }}
+                alt={"uploaded media"}
               />
             </Box>
           </Box>
