@@ -15,9 +15,7 @@ import { useDispatch } from "react-redux";
 import { createDraftLineWhenOnline, deleteDraftLine } from "../../actions/line";
 import { ClipLoader } from "react-spinners";
 import { COLORS } from "../../utils/colors";
-// import HorizontalTimeline from "react-horizontal-timeline";
-// https://www.npmjs.com/package/react-vertical-timeline-component
-// https://www.npmjs.com/package/react-horizontal-timeline
+import { getColoredLineStyle } from "../../styles/lines";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -41,10 +39,6 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "none" 
   }
 }));
-
-const getColoredLineStyle = (color) => ({
-  border: `5px solid ${color}`,
-});
 
 const LineCard = ({ line, draft = false }) => {
   const classes = useStyles();
