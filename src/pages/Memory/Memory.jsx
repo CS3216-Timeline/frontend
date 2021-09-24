@@ -158,20 +158,20 @@ const Memory = (props) => {
               </Box>
             )}
             <Box className={classes.descriptionStyle} marginBottom={3}>
-              <Typography variant="body2">
+              <Typography variant="body1">
                 Memory Added on{" "}
                 <strong>{convertUTCtoLocalDisplay(creationDate)}</strong>
               </Typography>
             </Box>
             {location && location.place_name && (
               <Box className={classes.descriptionStyle} marginBottom={3}>
-                <Typography variant="body2">
+                <Typography variant="body1">
                   Location: <strong>{location.place_name}</strong>
                 </Typography>
               </Box>
             )}
             <Box className={classes.descriptionStyle}>
-              <Typography variant="body2">{description}</Typography>
+              <Typography variant="body1">{description}</Typography>
             </Box>
           </Box>
         </Box>
