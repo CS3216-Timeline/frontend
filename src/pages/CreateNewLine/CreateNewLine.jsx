@@ -19,7 +19,6 @@ import { useHistory } from "react-router-dom";
 import { createLineAction } from "../../actions/line";
 import { logEvent } from "firebase/analytics";
 import { googleAnalytics } from "../../services/firebase";
-import { getColoredLineStyle } from "../../styles/lines";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -41,6 +40,10 @@ const useStyles = makeStyles((theme) => ({
     color: COLORS.BLACK,
   },
 }));
+
+const getColoredLineStyle = (color) => ({
+  border: `5px solid ${color}`,
+});
 
 const CreateNewLine = () => {
   const classes = useStyles();

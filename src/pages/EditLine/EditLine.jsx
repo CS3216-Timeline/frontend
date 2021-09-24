@@ -18,7 +18,6 @@ import { editLineById, getLineDataById } from "../../services/lines";
 import PrivatePageHeader from "../../components/layout/PrivatePageHeader";
 import Loading from "../../components/Loading";
 import { useHistory, useParams } from "react-router-dom";
-import { getColoredLineStyle } from "../../styles/lines";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -41,6 +40,10 @@ const useStyles = makeStyles((theme) => ({
     color: COLORS.PRIMARY_PURPLE
   },
 }));
+
+const getColoredLineStyle = (color) => ({
+  border: `5px solid ${color}`,
+});
 
 const EditLine = () => {
   const classes = useStyles();

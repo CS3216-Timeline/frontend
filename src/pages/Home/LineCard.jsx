@@ -15,7 +15,10 @@ import { useDispatch } from "react-redux";
 import { createDraftLineWhenOnline, deleteDraftLine } from "../../actions/line";
 import { ClipLoader } from "react-spinners";
 import { COLORS } from "../../utils/colors";
-import { getColoredLineStyle } from "../../styles/lines";
+
+const getColoredLineStyle = (color) => ({
+  border: `5px solid ${color}`,
+});
 
 const useStyles = makeStyles((theme) => ({
   card: {
