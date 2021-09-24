@@ -27,7 +27,6 @@ export const createNewLine = async (lineTitle, selectedColor) => {
   return res.data.line;
 }
 
-// TODO: update request endpoint after backend created the endpoint
 export const editLineById = async (lineId, lineTitle, selectedColor) => {
   const body = {
     "lineName": lineTitle.trim(),
@@ -37,7 +36,6 @@ export const editLineById = async (lineId, lineTitle, selectedColor) => {
   return res.lines;
 }
 
-// TODO: connect to backend after delete by id route is created
 export const deleteLineById = async (lineId) => {
   const res = await server.delete(`lines/${lineId}`);
   return res.data.line
@@ -53,7 +51,6 @@ const convertCoordinatesToFloat = (memories) => {
   })
 }
 
-// this one for now does not return the memories of the line yet
 export const getLineDataById = async (lineId) => {
   const res = await server.get(`/lines/${lineId}?includeMemories=true`);
   let line = res.data.line;

@@ -86,6 +86,11 @@ const HorizontalScrollDots = (props) => {
   )
 }
 
+const getSwiperStyle = (movement, transitionDuration) => ({
+  transform: `translateX(${movement * -1}px)`,
+  transitionDuration: transitionDuration,
+});
+
 const MediaDisplay = (props) => {
   const classes = useStyles();
   const { mediaUrls } = props;
@@ -169,16 +174,10 @@ const MediaDisplay = (props) => {
       >
         <div 
           className={classes.swiper}
-          style={{
-            transform: `translateX(${movement * -1}px)`,
-            transitionDuration: transitionDuration,
-          }}
+          style={getSwiperStyle(movement, transitionDuration)}
         >
           {mediaUrls.map((media, idx) => {
             const src = media.url;
-            if (!src) {
-              return null;
-            }
             return (<img alt="memory media" key={idx} src={src} className={classes.displayImg} />);
           })}
         </div>

@@ -8,34 +8,47 @@ import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import { useHistory } from "react-router-dom";
-import { Box, Button } from "@material-ui/core";
+import { Box, Button, makeStyles } from "@material-ui/core";
 import { COLORS } from "../../utils/colors";
 import { convertUTCtoLocalDisplay } from "../../utils/datetime";
 
-const getPaperStyle = () => ({
-  padding: "6px 16px",
-});
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    padding: "6px 16px",
+  },
+  memoryImage: { 
+    width: "100%", 
+    height: "100%" 
+  },
+  timelineDot: {
+    padding: 0,
+  }
+}));
 
-const getConnectorStyle = (color) => ({
-  backgroundColor: color,
+const getConnectorStyle = (lineColor) => ({
+  backgroundColor: lineColor,
   width: "5px",
 });
 
 const CardConnector = (props) => {
   const { color, isFirst, isLast } = props;
   const lineColor = isFirst || isLast ? COLORS.TRANSPARENT : color;
-  const connectorStyle = getConnectorStyle(lineColor);
-  return <TimelineConnector style={connectorStyle} />;
+  return <TimelineConnector style={getConnectorStyle(lineColor)} />;
 };
 
+const getCircleIconStyle = (color) => ({
+  width: "15px", height: "15px", color: color,
+})
+
 const LineSeparator = (props) => {
+  const classes = useStyles();
   const { color, isFirst, isLast } = props;
   return (
     <TimelineSeparator color={color}>
       <CardConnector color={color} isFirst={isFirst} />
-      <TimelineDot color="inherit" style={{ padding: 0 }}>
+      <TimelineDot color="inherit" className={classes.timelineDot}>
         <FiberManualRecordIcon
-          style={{ color: color, width: "15px", height: "15px" }}
+          style={getCircleIconStyle(color)}
         />
       </TimelineDot>
       <CardConnector color={color} isLast={isLast} />
@@ -44,6 +57,7 @@ const LineSeparator = (props) => {
 };
 
 const MemoryCard = (props) => {
+  const classes = useStyles();
   const { memoryId, isFirst, isLast, color, date, mediaUrl, title } = props;
 
   const history = useHistory();
@@ -53,13 +67,13 @@ const MemoryCard = (props) => {
       <LineSeparator color={color} isFirst={isFirst} isLast={isLast} />
       <Box width="100%">
         <TimelineContent>
-          <Paper elevation={3} style={getPaperStyle()}>
+          <Paper elevation={3} className={classes.paper}>
             <Box display="flex" flexDirection="column">
               {mediaUrl && (
                 <img
                   alt={title}
                   src={mediaUrl}
-                  style={{ width: "100%", height: "100%" }}
+                  className={classes.memoryImage}
                 />
               )}
               <br />

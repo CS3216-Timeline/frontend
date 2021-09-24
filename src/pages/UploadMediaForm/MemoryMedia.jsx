@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
 
 const MemoryMedia = (props) => {
   const classes = useStyles();
-  // TODO: How to handle invalid photo URLS?
   const { url, hasMedia, loading } = props;
 
   if (loading) {

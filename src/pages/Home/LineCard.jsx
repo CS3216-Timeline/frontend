@@ -15,9 +15,10 @@ import { useDispatch } from "react-redux";
 import { createDraftLineWhenOnline, deleteDraftLine } from "../../actions/line";
 import { ClipLoader } from "react-spinners";
 import { COLORS } from "../../utils/colors";
-// import HorizontalTimeline from "react-horizontal-timeline";
-// https://www.npmjs.com/package/react-vertical-timeline-component
-// https://www.npmjs.com/package/react-horizontal-timeline
+
+const getColoredLineStyle = (color) => ({
+  border: `5px solid ${color}`,
+});
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -37,6 +38,9 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: "100%",
     maxWidth: "100%",
   },
+  button: { 
+    textTransform: "none" 
+  }
 }));
 
 const LineCard = ({ line, draft = false }) => {
@@ -66,6 +70,7 @@ const LineCard = ({ line, draft = false }) => {
       <ClipLoader color={COLORS.PRIMARY_PURPLE} loading={true} size={30} />
     );
   }
+
   return (
     <>
       <Box
@@ -90,11 +95,7 @@ const LineCard = ({ line, draft = false }) => {
                   {convertUTCtoLocalDisplay(line.lastUpdatedDate)}
                 </Typography>
               </Box>
-              <hr
-                style={{
-                  border: `5px solid ${line.colorHex}`,
-                }}
-              />
+              <hr style={getColoredLineStyle(line.colorHex)} />
             </Grid>
             {!draft && line.thumbnailUrl && (
               <Grid item xs={4}>
@@ -117,9 +118,9 @@ const LineCard = ({ line, draft = false }) => {
               onClick={() => {
                 history.push(`/line/${line.lineId}`);
               }}
-              style={{ textTransform: "none" }}
+              className={classes.button}
             >
-              <Typography variant="body1">View/ Add Memories</Typography>
+              <Typography variant="body1">View&nbsp;/&nbsp;Add Memories</Typography>
             </Button>
           </CardActions>
         )}
@@ -129,7 +130,7 @@ const LineCard = ({ line, draft = false }) => {
               color="primary"
               variant="contained"
               onClick={() => retryCreateDraft()}
-              style={{ textTransform: "none" }}
+              className={classes.button}
             >
               <Typography variant="body1">Retry Create</Typography>
             </Button>
@@ -137,7 +138,7 @@ const LineCard = ({ line, draft = false }) => {
               color="primary"
               variant="contained"
               onClick={deleteDraft}
-              style={{ textTransform: "none" }}
+              className={classes.button}
             >
               <Typography variant="body1">Delete Draft</Typography>
             </Button>

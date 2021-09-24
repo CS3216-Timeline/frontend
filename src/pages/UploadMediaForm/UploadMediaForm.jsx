@@ -1,4 +1,4 @@
-import { Box, Button } from "@material-ui/core";
+import { Box, Button, makeStyles } from "@material-ui/core";
 import { useState } from "react";
 import ImageUploadButton from "./ImageUploadButton";
 import Cropper from "./Cropper";
@@ -15,7 +15,18 @@ const MEDIA_LIMIT = 4; // can tweak
 const MEGABYTE = 1048576;
 const MAX_FILE_SIZE = 10 * MEGABYTE;
 
+const useStyles = makeStyles(() => ({
+  formContainer: { 
+    textAlign: "center",
+  },
+  formTitle: {
+    color: COLORS.PRIMARY_PURPLE,
+  },
+}));
+
 const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
+  const classes = useStyles();
+
   const initUrls = existingMediaUrls
     ? existingMediaUrls.map((media) => ({ ...media }))
     : [];
@@ -81,7 +92,6 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
   };
 
   const deleteMediaByPosition = async (positionOfMedia) => {
-    console.log("deleting media at position", positionOfMedia);
     if (previewUrl === mediaUrls[positionOfMedia].url) {
       setPreviewUrl(null);
     }
@@ -121,8 +131,6 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
     }
   };
 
-  console.log(mediaUrls);
-
   const handleCropDone = (url) => {
     if (!url) {
       setCropView(false);
@@ -141,7 +149,6 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
       updateMediaUrls([...clonedMediaUrls, newMedia]);
       return;
     }
-    console.log(newMedia.position);
     const addMedia = async () => {
       setLoading(true);
       setCropView(false);
@@ -172,12 +179,11 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
       <Box
         display="flex"
         flexDirection="column"
-        style={{ textAlign: "center" }}
-        // marginBottom={12}
+        className={classes.formContainer}
       >
-        {memoryId && (
-          <h3 style={{ color: COLORS.PRIMARY_PURPLE }}>Upload Photos</h3>
-        )}
+        {memoryId && 
+          <h3 className={classes.formTitle}>Upload Photos</h3>
+        }
         <p>Please upload 1 - {MEDIA_LIMIT} photos.</p>
         {isCropView ? (
           <Cropper fileUrl={editFileUrl} cropHandler={handleCropDone} />

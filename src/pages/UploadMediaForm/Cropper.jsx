@@ -1,4 +1,4 @@
-import { Box, Button } from "@material-ui/core";
+import { Box, Button, makeStyles } from "@material-ui/core";
 import { useState, useCallback } from "react";
 import ReactCrop from "react-easy-crop";
 import { useDispatch } from "react-redux";
@@ -7,16 +7,21 @@ import { setAlert } from "../../actions/alert";
 import { COLORS } from "../../utils/colors";
 import { getCroppedImage } from "../../utils/cropImage";
 
-const cropperContainerStyle = () => ({
-  height: "90vw",
-  width: "90vw",
-  maxHeight: "500px",
-  maxWidth: "500px",
-  backgroundColor: COLORS.LIGHT_PURPLE,
-  margin: "auto",
-  padding: 0,
-  position: "relative",
-});
+const useStyles = makeStyles(() => ({
+  cropperContainer: {
+    height: "90vw",
+    width: "90vw",
+    maxHeight: "500px",
+    maxWidth: "500px",
+    backgroundColor: COLORS.LIGHT_PURPLE,
+    margin: "auto",
+    padding: 0,
+    position: "relative",
+  },
+  alignCenter: {
+    textAlign: "center",
+  }
+}));
 
 const vpWidth = Math.max(
   document.documentElement.clientWidth || 0,
@@ -40,6 +45,7 @@ const minZoom = 0.3;
 const cropAspectRatio = 1; // SQUARE
 
 const Cropper = (props) => {
+  const classes = useStyles();
   const { cropHandler, fileUrl } = props;
   const [crop, setCrop] = useState(initCrop());
   const [zoom, setZoom] = useState(cropFactor);
@@ -82,7 +88,7 @@ const Cropper = (props) => {
 
   if (loading) {
     return (
-      <div style={cropperContainerStyle()}>
+      <div className={classes.cropperContainer}>
         <p>Loading image...</p>
         <ClipLoader color={COLORS.PRIMARY_PURPLE} loading={true} size={50} />
       </div>
@@ -91,7 +97,7 @@ const Cropper = (props) => {
 
   return (
     <>
-      <div style={cropperContainerStyle()}>
+      <div className={classes.cropperContainer}>
         <ReactCrop
           cropSize={cropSize}
           image={fileUrl}
@@ -110,7 +116,7 @@ const Cropper = (props) => {
       <Box
         display="flex"
         flexDirection="column"
-        style={{ textAlign: "center" }}
+        className={classes.alignCenter}
       >
         <Button
           variant="outlined"

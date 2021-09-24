@@ -26,6 +26,10 @@ const useStyles = makeStyles((theme) => ({
   highlight: {
     backgroundColor: COLORS.PRIMARY_PURPLE,
   },
+  todayIcon: {
+    fontSize: "30pt", 
+    color: COLORS.PRIMARY_PURPLE
+  },
 }));
 
 const MemoriesCalendar = () => {
@@ -78,9 +82,7 @@ const MemoriesCalendar = () => {
         <PrivatePageHeader
           text="Calendar"
           icon={
-            <TodayIcon
-              style={{ fontSize: "30pt", color: COLORS.PRIMARY_PURPLE }}
-            />
+            <TodayIcon className={classes.todayIcon} />
           }
         />
       </Box>

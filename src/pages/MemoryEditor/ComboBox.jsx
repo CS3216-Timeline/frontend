@@ -1,6 +1,7 @@
 /* eslint-disable no-use-before-define */
 import React, { useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
+import { makeStyles } from "@material-ui/core/styles";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useState } from "react";
 import { CircularProgress } from "@material-ui/core";
@@ -10,6 +11,12 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { setAlert } from "../../actions/alert";
 
+const useStyles = makeStyles((theme) => ({
+  autocomplete: {
+    width: "100%",
+  }
+}));
+
 export const ComboBox = ({
   currentLocation,
   selectedLocation,
@@ -18,6 +25,7 @@ export const ComboBox = ({
   setViewport,
   lineId,
 }) => {
+  const classes = useStyles();
   const [predictions, setPredictions] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isSearching, setIsSearching] = useState(false);
@@ -94,8 +102,8 @@ export const ComboBox = ({
         getOptionLabel={(option) => option.place_name}
         getOptionSelected={(option, value) => (option.id = value.place_name)}
         onChange={handleChangeLocation}
-        style={{ width: "100%" }}
         value={selectedLocation}
+        className={classes.autocomplete}
         onInputChange={handleInputChange}
         renderInput={(params) => (
           <TextField

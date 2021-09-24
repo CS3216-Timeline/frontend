@@ -33,6 +33,10 @@ const useStyles = makeStyles((theme) => ({
   linesContainer: {
     padding: theme.spacing(2, 2, 15, 2),
   },
+  photoIcon: {
+    fontSize: "30pt", 
+    color: COLORS.PRIMARY_PURPLE,
+  }
 }));
 
 const DEFAULT_LONGITUDE = 103.8198;
@@ -167,7 +171,7 @@ const MemoryEditor = () => {
     }
     if (!isEdit && isEmpty(mediaUrls)) {
       alertError("Please upload a PNG or JPG photo.");
-      return; // TODO: comment out if media endpoint not set
+      return;
     }
 
     if (isEdit) {
@@ -191,9 +195,7 @@ const MemoryEditor = () => {
             <PrivatePageHeader
               text={`${isEdit ? "Edit" : "Add"} Memory`}
               icon={
-                <AddAPhotoIcon
-                  style={{ fontSize: "30pt", color: COLORS.PRIMARY_PURPLE }}
-                />
+                <AddAPhotoIcon className={classes.photoIcon} />
               }
             />
             <Box paddingY={1}>
