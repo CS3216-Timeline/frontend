@@ -81,7 +81,6 @@ export const loginWithGoogle = (googleData) => async (dispatch) => {
   }
   try {
     const res = await server.post("auth/login/google", body);
-    console.log(res.data);
     dispatch({
       type: LOGIN_SUCCESS,
       payload: res.data,
@@ -153,8 +152,7 @@ export const logout = () => async (dispatch) => {
 
 export const deleteUserAccount = () => async (dispatch) => {
   try {
-    const res = await server.delete("/users/delete");
-    console.log("res from delete acc", res);
+    await server.delete("/users/delete");
     dispatch(logout());
     dispatch(setAlert("Account successfully deleted", "success"));
     logEvent(googleAnalytics, "user_deleted_account");

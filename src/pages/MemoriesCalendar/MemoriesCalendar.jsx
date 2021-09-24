@@ -61,7 +61,6 @@ const MemoriesCalendar = () => {
   useEffect(() => {
     const getMemoriesBySelectedDate = async () => {
       try {
-        console.log("called");
         const memories = await getMemoriesByDate(new Date(selectedDate));
         dispatch(addMemoriesOfDateToStore(memories, new Date(selectedDate)));
       } catch (err) {

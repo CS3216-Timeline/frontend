@@ -9,7 +9,6 @@ import { setAlert } from "./alert";
 
 export const addMemoriesOfDateToStore =
   (memories, selectedDate) => async (dispatch) => {
-    console.log(selectedDate.toLocaleDateString());
     const dateInString = selectedDate.toLocaleDateString();
     dispatch({
       type: ADD_MEMORIES_OF_SELECTED_DATE,
@@ -34,7 +33,6 @@ export const getDatesWithMemoriesByMonthAndYear =
           .utc()
           .local()
           .format("DD-MM-YYYY");
-        console.log(formattedDate);
         dateWithMemories.push(formattedDate);
       });
       dispatch({

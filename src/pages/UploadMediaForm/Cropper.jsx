@@ -75,7 +75,6 @@ const Cropper = (props) => {
 
   const saveCroppedImage = (e) => {
     e.preventDefault();
-    console.log("saving cropped image");
     showCroppedImage();
   };
 
@@ -93,7 +92,7 @@ const Cropper = (props) => {
         <p>Loading image...</p>
         <ClipLoader color={COLORS.PRIMARY_PURPLE} loading={true} size={50} />
       </div>
-    )
+    );
   }
 
   return (

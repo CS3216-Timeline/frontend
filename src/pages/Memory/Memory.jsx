@@ -91,7 +91,6 @@ const Memory = (props) => {
           longitude,
           media: mediaUrls,
         } = memoryData;
-        console.log(memoryData);
         const location = await getGeographicFeature(latitude, longitude);
         setLocation(location);
         setTitle(title);
