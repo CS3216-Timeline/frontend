@@ -18,7 +18,6 @@ export const getLocationSuggestions = async (searchText, longitude = null, latit
         geometry: location.geometry,
       };
     });
-    console.log('suggestionsFromSearch')
     return suggestionsFromSearch;
   } catch (err) {
     throw err

@@ -12,11 +12,8 @@ export const getAllLinesByUserIdOrderByMostRecentMemory = async () => {
       return {
         ...line,
         'colorHex': addHash(line["colorHex"]),
-        // TODO: remove once backend is fixed to camelCase
-        lineId: line.lineId ? line.lineId : line.line_id
       }
     });
-    console.log(lines);
   }
   return lines;
 }
@@ -61,5 +58,8 @@ export const getLineDataById = async (lineId) => {
   const res = await server.get(`/lines/${lineId}?includeMemories=true`);
   let line = res.data.line;
   line["colorHex"] = addHash(line["colorHex"]);
-  return {...line, memories: convertCoordinatesToFloat(line.memories)};
+  return {
+    ...line,
+    memories: convertCoordinatesToFloat(line.memories)
+  };
 }

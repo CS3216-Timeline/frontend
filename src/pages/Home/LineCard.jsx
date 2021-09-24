@@ -52,7 +52,6 @@ const LineCard = ({ line, draft = false }) => {
         createDraftLineWhenOnline(line.name, line.colorHex, line.lineId)
       );
     } catch (err) {
-      console.log(err.message);
     } finally {
       setLoading(false);
     }
