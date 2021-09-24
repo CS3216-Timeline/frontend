@@ -76,7 +76,6 @@ const Home = () => {
   return (
     <Fragment>
       <div className={classes.root}>
-        {/* TODO: Add some info on how to use the app if there are no lines at first */}
         <Grid container className={classes.linesContainer}>
           <Grid item xs={12} className={classes.addLineButtonContainer}>
             <PrivatePageHeader

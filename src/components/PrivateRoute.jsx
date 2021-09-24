@@ -12,7 +12,6 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
       render={(props) =>
         auth.isAuthenticated ? (
           <>
-            {/* <TopNavBar /> */}
             <Component {...props} />
             <BottomNavBar />
           </>

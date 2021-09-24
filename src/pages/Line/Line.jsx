@@ -106,7 +106,6 @@ const Line = (props) => {
                   title={showMap ? "Toggle timeline view" : "Toggle map view"}
                 >
                   <Button
-                    // TODO: add lineId as params
                     onClick={() => setShowMap(!showMap)}
                     fullWidth
                     className={classes.mapButton}
@@ -172,7 +171,6 @@ const Line = (props) => {
             </Grid>
           </Grid>
         </Box>
-        {/* TODO: send memories as a prop to LineMap */}
         <FadeIn>
           {showMap ? (
             <Box display="flex" justifyContent="center">

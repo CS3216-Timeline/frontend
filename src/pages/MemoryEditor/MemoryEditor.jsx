@@ -174,7 +174,7 @@ const MemoryEditor = () => {
     }
     if (!isEdit && isEmpty(mediaUrls)) {
       alertError("Please upload a PNG or JPG photo.");
-      return; // TODO: comment out if media endpoint not set
+      return;
     }
 
     if (isEdit) {

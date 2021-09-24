@@ -1,6 +1,5 @@
 import server from "../utils/server";
 
-// Use this function to convert blobURL to file
 const blobToFile = (blob, fileName="default-name", type="image/png") => {
   const file = new File([blob], fileName, { type });
   return file
@@ -23,10 +22,7 @@ const convertCoordinatesToFloat = (memory) => {
 }
 
 export const getMemoryById = async (memoryId) => {
-  console.log("retrieving memory with id", memoryId);
   const res = await server.get(`memories/${memoryId}`);
-  console.log("received memory with id", memoryId);  
-  // TODO: Remove check once memories changed to memory
   const memory = res.data.memory
   return convertCoordinatesToFloat(memory);
 }
@@ -52,13 +48,7 @@ export const createNewMemory = async (title, lineId, description, latitude, long
     await loadImageFile(url, idx);
   }
 
-  console.log("POST memories/...");
-  for (const [key, value] of body.entries()) {
-    console.log(`FormData[${key}]: ${value}`);
-  }
-
   const res = await server.post(`memories`, body);
-  console.log(`done POST memories/${res.data.memory.memoryId}...`);
   return convertCoordinatesToFloat(res.data.memory);
 }
 
@@ -67,17 +57,11 @@ export const editMemoryDetailsById = async (memoryId, title, description, line, 
     title, description, line, longitude, latitude, 
   };
   const body = convertCoordinatesToString(memoryData);
-  console.log(`sending PATCH memories/${memoryId}...`);
-  console.log(body);
   const res = await server.patch(`memories/${memoryId}`, body);
-  console.log(`done PATCH memories/${memoryId}...`);
-  console.log(res);
   return convertCoordinatesToFloat(res.data.memory);
 }
 
 export const deleteMemoryById = async (memoryId) => {
-  console.log(`sending DELETE memories/${memoryId}...`)
   const res = await server.delete(`memories/${memoryId}`);
-  console.log(`done DELETE memories/${memoryId}...`);
   return convertCoordinatesToFloat(res.data.memory);
 }
