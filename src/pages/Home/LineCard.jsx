@@ -120,7 +120,7 @@ const LineCard = ({ line, draft = false }) => {
               }}
               className={classes.button}
             >
-              <Typography variant="body1">View/ Add Memories</Typography>
+              <Typography variant="body1">View&nbsp;/&nbsp;Add Memories</Typography>
             </Button>
           </CardActions>
         )}
