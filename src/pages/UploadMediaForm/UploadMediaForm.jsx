@@ -104,9 +104,9 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
     if (deleteId) {
       try {
         await deleteMediaById(deleteId);
-        dispatch(setAlert("Deletion successful!", "success"))
+        dispatch(setAlert("Deletion successful!", "success"));
         updateMediaUrls([...clonedMediaUrls]);
-      } catch(e) {
+      } catch (e) {
         dispatch(setAlert("Failed to delete media", "error"));
       }
     } else {
@@ -119,7 +119,7 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
     if (onComplete) {
       onComplete(urls);
     }
-  }
+  };
 
   console.log(mediaUrls);
 
@@ -146,12 +146,14 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
       setLoading(true);
       setCropView(false);
       try {
-        const createdMedia = await createNewMedia({...newMedia}, memoryId);
+        const createdMedia = await createNewMedia({ ...newMedia }, memoryId);
         dispatch(setAlert("Successfully added photo!", "success"));
         setPreviewUrl(createdMedia[createdMedia.length - 1].url);
         updateMediaUrls([...createdMedia]);
-      } catch(e) {
-        dispatch(setAlert("Unable to add media, please try again later.", "error"));
+      } catch (e) {
+        dispatch(
+          setAlert("Unable to add media, please try again later.", "error")
+        );
       } finally {
         setLoading(false);
       }
@@ -173,9 +175,9 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
         style={{ textAlign: "center" }}
         // marginBottom={12}
       >
-        {memoryId && 
+        {memoryId && (
           <h3 style={{ color: COLORS.PRIMARY_PURPLE }}>Upload Photos</h3>
-        }
+        )}
         <p>Please upload 1 - {MEDIA_LIMIT} photos.</p>
         {isCropView ? (
           <Cropper fileUrl={editFileUrl} cropHandler={handleCropDone} />
@@ -206,8 +208,8 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
             Cancel
           </Button>
         ) : (
-          <ImageUploadButton 
-            handleChange={addNewMedia} 
+          <ImageUploadButton
+            handleChange={addNewMedia}
             disabled={loading || isMediaLimitReached()}
           />
         )}

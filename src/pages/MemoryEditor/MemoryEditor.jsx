@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DEFAULT_LONGITUDE = 103.8198;
-const DEFAULT_LATITUDE =  1.3521;
+const DEFAULT_LATITUDE = 1.3521;
 
 // const getDefaultLocation = () => ({
 //   geometry: {
@@ -108,13 +108,12 @@ const MemoryEditor = () => {
       }
     };
     loadExistingMemoryData();
-  }, [memoryId, dispatch, history])
+  }, [memoryId, dispatch, history]);
 
   const handleEditMemory = async () => {
-    console.log("Editing memory...");
     setLoading(true);
     try {
-      const memoryChanges = await editMemoryDetailsById(
+      await editMemoryDetailsById(
         memoryId,
         memoryTitle,
         memoryDescription,
@@ -122,7 +121,6 @@ const MemoryEditor = () => {
         selectedLocation.longitude,
         selectedLocation.latitude
       );
-      console.log(memoryChanges);
     } catch (e) {
       alertError("Unable to save changes.");
     } finally {
@@ -132,7 +130,6 @@ const MemoryEditor = () => {
   };
 
   const handleNewMemoryCreation = async () => {
-    console.log("Creating memory...");
     setLoading(true);
     let newId = null;
     try {
