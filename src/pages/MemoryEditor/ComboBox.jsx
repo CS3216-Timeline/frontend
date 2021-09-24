@@ -16,7 +16,7 @@ export const ComboBox = ({
   setSelectedLocation,
   viewport,
   setViewport,
-  lineId
+  lineId,
 }) => {
   const [predictions, setPredictions] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -30,12 +30,12 @@ export const ComboBox = ({
     () => {
       const getSearchResults = async (newSearchValue) => {
         try {
-          const res = await getLocationSuggestions(
+          const suggestionsFromSearch = await getLocationSuggestions(
             newSearchValue,
             currentLocation.longitude,
             currentLocation.latitude
           );
-          const suggestions = res.suggestions.map((location) => {
+          const suggestions = suggestionsFromSearch.map((location) => {
             return {
               place_name: location.place_name,
               geometry: location.geometry,
@@ -67,10 +67,10 @@ export const ComboBox = ({
     setSelectedLocation(value); // selected location object
     if (value !== null) {
       setSelectedLocation({
-        ...value, 
-        latitude: value.geometry.coordinates[1], 
-        longitude: value.geometry.coordinates[0]
-      })
+        ...value,
+        latitude: value.geometry.coordinates[1],
+        longitude: value.geometry.coordinates[0],
+      });
       setViewport({
         ...viewport,
         latitude: value.geometry.coordinates[1],
