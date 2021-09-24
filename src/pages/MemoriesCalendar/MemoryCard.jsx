@@ -24,7 +24,9 @@ const useStyles = makeStyles((theme) => ({
   },
   memoryImage: {
     // maxWidth: "100px",
-    maxHeight: "100px",
+    objectFit: "contain",
+    maxHeight: "100%",
+    maxWidth: "100%",
   },
   button: {
     textTransform: "none",
@@ -59,7 +61,7 @@ const MemoryCard = ({ memory }) => {
               </Box>
             </Grid>
             <Grid item xs={4}>
-              <Box paddingLeft={3} paddingRight={1}>
+              <Box paddingLeft={1} paddingRight={1}>
                 <img
                   src={memory?.thumbnailUrl}
                   alt={memory?.title}
