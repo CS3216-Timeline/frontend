@@ -152,7 +152,7 @@ export const logout = () => async (dispatch) => {
 
 export const deleteUserAccount = () => async (dispatch) => {
   try {
-    await server.delete("/users/delete");
+    await server.delete("/users");
     dispatch(logout());
     dispatch(setAlert("Account successfully deleted", "success"));
     logEvent(googleAnalytics, "user_deleted_account");
@@ -166,7 +166,7 @@ export const userChangeName = (newName) => async (dispatch) => {
     const body = {
       name: newName.trim(),
     };
-    const res = await server.patch("/users/profile", body);
+    const res = await server.patch("/users", body);
     const updatedUser = res.data.user;
     dispatch({
       type: CHANGE_NAME,
