@@ -1,10 +1,24 @@
 import moment from "moment";
 import {
+  ADD_MEMORIES_OF_SELECTED_DATE,
   GET_DATES_WITH_MEMORIES,
   SET_SELECTED_DATE,
 } from "../action-types/calendar";
 import server from "../utils/server";
 import { setAlert } from "./alert";
+
+export const addMemoriesOfDateToStore =
+  (memories, selectedDate) => async (dispatch) => {
+    console.log(selectedDate.toLocaleDateString());
+    const dateInString = selectedDate.toLocaleDateString();
+    dispatch({
+      type: ADD_MEMORIES_OF_SELECTED_DATE,
+      payload: {
+        date: dateInString,
+        memories,
+      },
+    });
+  };
 
 export const getDatesWithMemoriesByMonthAndYear =
   (selectedMonth, selectedYear) => async (dispatch) => {
