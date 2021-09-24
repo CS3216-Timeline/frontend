@@ -42,6 +42,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const getColoredLineStyle = (color) => ({
+  border: `5px solid ${color}`,
+});
+
 const LineCard = ({ line, draft = false }) => {
   const classes = useStyles();
   const history = useHistory();
@@ -71,10 +75,6 @@ const LineCard = ({ line, draft = false }) => {
     );
   }
 
-  const getColoredLineStyle = () => ({
-    border: `5px solid ${line.colorHex}`,
-  });
-
   return (
     <>
       <Box
@@ -99,7 +99,7 @@ const LineCard = ({ line, draft = false }) => {
                   {convertUTCtoLocalDisplay(line.lastUpdatedDate)}
                 </Typography>
               </Box>
-              <hr style={getColoredLineStyle()} />
+              <hr style={getColoredLineStyle(line.colorHex)} />
             </Grid>
             {!draft && line.thumbnailUrl && (
               <Grid item xs={4}>

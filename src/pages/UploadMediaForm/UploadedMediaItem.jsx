@@ -4,7 +4,7 @@ import { makeStyles, Grid, Box, IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { COLORS } from "../../utils/colors";
 import DeleteMediaDialog from "./DeleteMediaDialog";
-import Loading from "../../components/Loading";
+import { ClipLoader } from "react-spinners";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,7 +52,10 @@ const UploadedMediaItem = ({
   return (
     <>
       {loading ? (
-        <Loading />
+        <Grid item xs={3} className={classes.root}>
+          <p>Deleting</p>
+          <ClipLoader color={COLORS.PRIMARY_PURPLE} loading={true} size={20} />
+        </Grid>
       ) : (
         <Grid item xs={3} className={classes.root}>
           <Box position="relative">

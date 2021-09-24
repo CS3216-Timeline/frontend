@@ -55,7 +55,7 @@ const DeleteMediaDialog = ({
           aria-describedby="alert-dialog-slide-description"
         >
           <DialogTitle id="alert-dialog-slide-title">
-            Are you sure you want to delete this photo
+            Are you sure you want to delete this photo?
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-slide-description">

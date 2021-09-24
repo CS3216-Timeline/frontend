@@ -1,6 +1,6 @@
 import { Box, Button, makeStyles } from "@material-ui/core";
-import { useEffect, useState } from "react";
-import HiddenFileInput from "./HiddenFileInput";
+import { useState } from "react";
+import ImageUploadButton from "./ImageUploadButton";
 import Cropper from "./Cropper";
 import MemoryMedia from "./MemoryMedia";
 import { COLORS } from "../../utils/colors";
@@ -15,7 +15,7 @@ const MEDIA_LIMIT = 4; // can tweak
 const MEGABYTE = 1048576;
 const MAX_FILE_SIZE = 10 * MEGABYTE;
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   formContainer: { 
     textAlign: "center",
   },
@@ -113,18 +113,33 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
         };
       });
     if (deleteId) {
-      await deleteMediaById(deleteId);
+      try {
+        await deleteMediaById(deleteId);
+        dispatch(setAlert("Deletion successful!", "success"))
+        updateMediaUrls([...clonedMediaUrls]);
+      } catch(e) {
+        dispatch(setAlert("Failed to delete media", "error"));
+      }
+    } else {
+      updateMediaUrls([...clonedMediaUrls]);
     }
-    setMediaUrls([...clonedMediaUrls]);
   };
 
-  useEffect(() => {
+  const updateMediaUrls = (urls) => {
+    setMediaUrls(urls);
     if (onComplete) {
-      onComplete([...mediaUrls]);
+      onComplete(urls);
     }
-  }, [mediaUrls, onComplete]);
+  }
+
+  console.log(mediaUrls);
 
   const handleCropDone = (url) => {
+    if (!url) {
+      setCropView(false);
+      setEditFileUrl(null);
+      return;
+    }
     setEditFileUrl(null);
     const clonedMediaUrls = [...mediaUrls];
     const newMedia = {
@@ -132,9 +147,9 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
       url,
     };
     if (!memoryId) {
-      setMediaUrls([...clonedMediaUrls, newMedia]);
       setCropView(false);
       setPreviewUrl(newMedia.url);
+      updateMediaUrls([...clonedMediaUrls, newMedia]);
       return;
     }
     console.log(newMedia.position);
@@ -142,12 +157,12 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
       setLoading(true);
       setCropView(false);
       try {
-        const createdMedia = await createNewMedia({ ...newMedia }, memoryId);
-        setMediaUrls([...createdMedia]);
-        setPreviewUrl(createdMedia.url);
-        dispatch(setAlert("Media has been added!", "success"));
-      } catch (e) {
-        dispatch(setAlert("Unable to add media. (302)", "error"));
+        const createdMedia = await createNewMedia({...newMedia}, memoryId);
+        dispatch(setAlert("Successfully added photo!", "success"));
+        setPreviewUrl(createdMedia[createdMedia.length - 1].url);
+        updateMediaUrls([...createdMedia]);
+      } catch(e) {
+        dispatch(setAlert("Unable to add media, please try again later.", "error"));
       } finally {
         setLoading(false);
       }
@@ -168,7 +183,9 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
         flexDirection="column"
         className={classes.formContainer}
       >
-        <h3 className={classes.formTitle}>Upload Media</h3>
+        {memoryId && 
+          <h3 className={classes.formTitle}>Upload Photos</h3>
+        }
         <p>Please upload 1 - {MEDIA_LIMIT} photos.</p>
         {isCropView ? (
           <Cropper fileUrl={editFileUrl} cropHandler={handleCropDone} />
@@ -199,16 +216,10 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
             Cancel
           </Button>
         ) : (
-          <Button
-            variant="outlined"
-            color={loading || isMediaLimitReached() ? "inherit" : "primary"}
+          <ImageUploadButton 
+            handleChange={addNewMedia} 
             disabled={loading || isMediaLimitReached()}
-          >
-            <label htmlFor="image-upload">
-              Add New Media
-              <HiddenFileInput handleChange={addNewMedia} />
-            </label>
-          </Button>
+          />
         )}
       </Box>
     </>

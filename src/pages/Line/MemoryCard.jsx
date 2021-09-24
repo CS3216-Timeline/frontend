@@ -12,34 +12,6 @@ import { Box, Button, makeStyles } from "@material-ui/core";
 import { COLORS } from "../../utils/colors";
 import { convertUTCtoLocalDisplay } from "../../utils/datetime";
 
-const CardConnector = (props) => {
-  const { color, isFirst, isLast } = props;
-  const lineColor = isFirst || isLast ? COLORS.TRANSPARENT : color;
-  const getConnectorStyle = () => ({
-    backgroundColor: lineColor,
-    width: "5px",
-  });
-  return <TimelineConnector style={getConnectorStyle()} />;
-};
-
-const LineSeparator = (props) => {
-  const getCircleIconStyle = (color) => ({
-    width: "15px", height: "15px", color: color,
-  })
-  const { color, isFirst, isLast } = props;
-  return (
-    <TimelineSeparator color={color}>
-      <CardConnector color={color} isFirst={isFirst} />
-      <TimelineDot color="inherit" style={{ padding: 0 }}>
-        <FiberManualRecordIcon
-          style={getCircleIconStyle(color)}
-        />
-      </TimelineDot>
-      <CardConnector color={color} isLast={isLast} />
-    </TimelineSeparator>
-  );
-};
-
 const useStyles = makeStyles((theme) => ({
   paper: {
     padding: "6px 16px",
@@ -48,7 +20,41 @@ const useStyles = makeStyles((theme) => ({
     width: "100%", 
     height: "100%" 
   },
+  timelineDot: {
+    padding: 0,
+  }
 }));
+
+const getConnectorStyle = (lineColor) => ({
+  backgroundColor: lineColor,
+  width: "5px",
+});
+
+const CardConnector = (props) => {
+  const { color, isFirst, isLast } = props;
+  const lineColor = isFirst || isLast ? COLORS.TRANSPARENT : color;
+  return <TimelineConnector style={getConnectorStyle(lineColor)} />;
+};
+
+const getCircleIconStyle = (color) => ({
+  width: "15px", height: "15px", color: color,
+})
+
+const LineSeparator = (props) => {
+  const classes = useStyles();
+  const { color, isFirst, isLast } = props;
+  return (
+    <TimelineSeparator color={color}>
+      <CardConnector color={color} isFirst={isFirst} />
+      <TimelineDot color="inherit" className={classes.timelineDot}>
+        <FiberManualRecordIcon
+          style={getCircleIconStyle(color)}
+        />
+      </TimelineDot>
+      <CardConnector color={color} isLast={isLast} />
+    </TimelineSeparator>
+  );
+};
 
 const MemoryCard = (props) => {
   const classes = useStyles();

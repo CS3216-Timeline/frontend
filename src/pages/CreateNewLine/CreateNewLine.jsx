@@ -1,11 +1,11 @@
 import {
   Button,
   Grid,
-  makeStyles,
   TextField,
   Tooltip,
   Typography,
 } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import React, { Fragment, useState } from "react";
 import AddIcon from "@material-ui/icons/Add";
 import LinearScaleIcon from "@material-ui/icons/LinearScale";
@@ -19,6 +19,7 @@ import { useHistory } from "react-router-dom";
 import { createLineAction } from "../../actions/line";
 import { logEvent } from "firebase/analytics";
 import { googleAnalytics } from "../../services/firebase";
+import { getColoredLineStyle } from "../../styles/lines";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -70,10 +71,6 @@ const CreateNewLine = () => {
     return <Loading />;
   }
 
-  const getColoredLineStyle = () => ({
-    border: `5px solid ${selectedColor}`,
-  });
-
   return (
     <Fragment>
       <Grid container>
@@ -105,7 +102,7 @@ const CreateNewLine = () => {
               <Typography variant="h4" className={classes.chooseColorInstruction}>
                 Choose your line color
               </Typography>
-              <hr style={getColoredLineStyle()} />
+              <hr style={getColoredLineStyle(selectedColor)} />
               {/* https://casesandberg.github.io/react-color/ */}
               <GithubPicker
                 color={selectedColor}

@@ -41,6 +41,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const getColoredLineStyle = (color) => ({
+  border: `5px solid ${color}`,
+});
+
 const EditLine = () => {
   const classes = useStyles();
   const { lineId } = useParams();
@@ -71,6 +75,7 @@ const EditLine = () => {
       history.push(`/line/${lineId}`);
     } catch (err) {
       dispatch(setAlert(err.message, "error"));
+      history.push("/");
     } finally {
       setLoading(false);
     }
@@ -79,10 +84,6 @@ const EditLine = () => {
   if (loading) {
     return <Loading />;
   }
-
-  const getColoredLineStyle = () => ({
-    border: `5px solid ${selectedColor}`,
-  });
 
   return (
     <>
@@ -108,7 +109,7 @@ const EditLine = () => {
             />
             <Grid item xs={12} className={classes.selectColorContainer}>
               <Typography variant="h4">Choose your new line color</Typography>
-              <hr style={getColoredLineStyle()} />
+              <hr style={getColoredLineStyle(selectedColor)} />
               {/* https://casesandberg.github.io/react-color/ */}
               <GithubPicker
                 color={selectedColor}

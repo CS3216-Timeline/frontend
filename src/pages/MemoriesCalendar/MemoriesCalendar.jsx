@@ -8,12 +8,14 @@ import { COLORS } from "../../utils/colors";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  addMemoriesOfDateToStore,
   getDatesWithMemoriesByMonthAndYear,
   setChosenDate,
 } from "../../actions/calendar";
-import { getMemoriesByDate } from "../../services/calendarService";
 import MemoryCard from "./MemoryCard";
 import { convertUTCtoDate } from "../../utils/datetime";
+import { setAlert } from "../../actions/alert";
+import { getMemoriesByDate } from "../../services/calendarService";
 
 const useStyles = makeStyles((theme) => ({
   calendar: {
@@ -34,10 +36,10 @@ const MemoriesCalendar = () => {
   const classes = useStyles();
   const [selectedMonth, setSelectedMonth] = useState(new Date().getUTCMonth());
   const [selectedYear, setSelectedYear] = useState(new Date().getUTCFullYear());
-  const [memoriesOfSelectedDate, setMemoriesOfSelectedDate] = useState([]);
   const dispatch = useDispatch();
   const markedDates = useSelector((state) => state.calendar.markedDates);
   const selectedDate = useSelector((state) => state.calendar.selectedDate);
+  const memoriesByDate = useSelector((state) => state.calendar.memoriesByDate);
 
   const onYearOrMonthChange = (newDate) => {
     setSelectedMonth(newDate.getMonth());
@@ -58,12 +60,23 @@ const MemoriesCalendar = () => {
 
   useEffect(() => {
     const getMemoriesBySelectedDate = async () => {
-      const memories = await getMemoriesByDate(new Date(selectedDate));
-      setMemoriesOfSelectedDate(memories);
+      try {
+        console.log("called");
+        const memories = await getMemoriesByDate(new Date(selectedDate));
+        dispatch(addMemoriesOfDateToStore(memories, new Date(selectedDate)));
+      } catch (err) {
+        dispatch(setAlert(err.message, "error"));
+      }
     };
     getMemoriesBySelectedDate();
-  }, [selectedDate]);
+  }, [dispatch, selectedDate]);
 
+  const getMemories = () => {
+    let cachedMemory = memoriesByDate.find(
+      (obj) => obj.date === new Date(selectedDate).toLocaleDateString()
+    );
+    return cachedMemory ? cachedMemory.memories : [];
+  };
   return (
     <>
       <Box display="flex" justifyContent="center">
@@ -97,10 +110,9 @@ const MemoriesCalendar = () => {
         </Typography>
       </Box>
       <Box padding={2} marginBottom={7}>
-        {memoriesOfSelectedDate.length > 0 &&
-          memoriesOfSelectedDate.map((memory) => (
-            <MemoryCard memory={memory} key={memory.memoryId} />
-          ))}
+        {getMemories().map((memory) => (
+          <MemoryCard memory={memory} key={memory.memoryId} />
+        ))}
       </Box>
     </>
   );
