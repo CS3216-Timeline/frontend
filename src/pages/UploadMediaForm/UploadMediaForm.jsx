@@ -92,7 +92,6 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
   };
 
   const deleteMediaByPosition = async (positionOfMedia) => {
-    console.log("deleting media at position", positionOfMedia);
     if (previewUrl === mediaUrls[positionOfMedia].url) {
       setPreviewUrl(null);
     }
@@ -132,8 +131,6 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
     }
   };
 
-  console.log(mediaUrls);
-
   const handleCropDone = (url) => {
     if (!url) {
       setCropView(false);
@@ -152,7 +149,6 @@ const UploadMediaForm = ({ memoryId, existingMediaUrls, onComplete }) => {
       updateMediaUrls([...clonedMediaUrls, newMedia]);
       return;
     }
-    console.log(newMedia.position);
     const addMedia = async () => {
       setLoading(true);
       setCropView(false);
