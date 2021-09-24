@@ -134,7 +134,7 @@ export const loadUser = () => async (dispatch) => {
     const res = await server.get("/users");
     dispatch({
       type: USER_LOADED,
-      payload: res.data,
+      payload: res.data.user,
     });
   } catch (err) {
     dispatch({
