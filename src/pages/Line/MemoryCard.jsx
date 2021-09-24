@@ -11,18 +11,19 @@ import { useHistory } from "react-router-dom";
 import { Box, Button, makeStyles } from "@material-ui/core";
 import { COLORS } from "../../utils/colors";
 import { convertUTCtoLocalDisplay } from "../../utils/datetime";
+import NotFoundImage from "../../assets/not-found.png";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
     padding: "6px 16px",
   },
-  memoryImage: { 
-    width: "100%", 
-    height: "100%" 
+  memoryImage: {
+    width: "100%",
+    height: "100%",
   },
   timelineDot: {
     padding: 0,
-  }
+  },
 }));
 
 const getConnectorStyle = (lineColor) => ({
@@ -37,8 +38,10 @@ const CardConnector = (props) => {
 };
 
 const getCircleIconStyle = (color) => ({
-  width: "15px", height: "15px", color: color,
-})
+  width: "15px",
+  height: "15px",
+  color: color,
+});
 
 const LineSeparator = (props) => {
   const classes = useStyles();
@@ -47,9 +50,7 @@ const LineSeparator = (props) => {
     <TimelineSeparator color={color}>
       <CardConnector color={color} isFirst={isFirst} />
       <TimelineDot color="inherit" className={classes.timelineDot}>
-        <FiberManualRecordIcon
-          style={getCircleIconStyle(color)}
-        />
+        <FiberManualRecordIcon style={getCircleIconStyle(color)} />
       </TimelineDot>
       <CardConnector color={color} isLast={isLast} />
     </TimelineSeparator>
@@ -73,6 +74,10 @@ const MemoryCard = (props) => {
                 <img
                   alt={title}
                   src={mediaUrl}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = NotFoundImage;
+                  }}
                   className={classes.memoryImage}
                 />
               )}
@@ -87,7 +92,9 @@ const MemoryCard = (props) => {
                   <Typography variant="h6" component="h1">
                     <strong>{title}</strong>
                   </Typography>
-                  <Typography variant="body1">{convertUTCtoLocalDisplay(date)}</Typography>
+                  <Typography variant="body1">
+                    {convertUTCtoLocalDisplay(date)}
+                  </Typography>
                 </Box>
                 <Box
                   display="flex"
